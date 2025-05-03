@@ -6,76 +6,75 @@ layout: ../../layouts/DocsLayout.astro
 
 # Keymint Security
 
-At Keymint, security is our top priority. We understand the critical nature of software licensing infrastructure and have implemented robust security measures to protect our customers and their applications.
+At Keymint, we prioritize the security and privacy of your data. We understand that managing software licenses requires trust, and we are committed to implementing robust security measures to protect our platform and your information.
 
-## Overview
+## Core Security Principles
 
-Keymint provides a secure, reliable platform for software licensing with a comprehensive approach to security that covers:
+Our approach to security is built on these fundamental principles:
 
-- Infrastructure protection
-- Data encryption
-- Access management
-- Vulnerability prevention
-- Continuous monitoring
+1.  **Data Protection:** Safeguarding the personal and licensing data you entrust to us.
+2.  **Secure Infrastructure:** Utilizing reliable technologies and partners to maintain a secure operational environment.
+3.  **Transparency:** Clearly communicating how we handle and protect your data.
+4.  **Compliance:** Adhering to relevant data protection regulations and best practices.
 
-## Security Principles
+## Key Security Measures
 
-1. **Minimal Access**: We follow the principle of least privilege.
-2. **Encryption Everywhere**: All data is encrypted in transit and at rest.
-3. **Continuous Improvement**: Regular security audits and updates.
+We implement multiple layers of security to protect the Keymint platform and your data:
 
-## Key Security Features
+### 🔐 Data Encryption & Handling
 
-### 🔐 Authentication & Authorization
+- **Encryption in Transit:** All communication between your browser/client and the Keymint platform is encrypted using industry-standard HTTPS (SSL/TLS).
+- **Password Security:** User account passwords are securely stored using strong hashing algorithms (as mentioned in our Privacy Policy). We never store plaintext passwords.
+- **Payment Security:** We utilize trusted third-party payment processors (Stripe for card payments, CoinPayments for cryptocurrency). We **do not store** your full credit card details or private crypto wallet information on our servers. Payment data is handled directly by these processors according to their high security standards.
+- **Database Security:** We use secure database hosting solutions (like Neon.tech) designed with data protection in mind.
 
-- Strong two-factor authentication (2FA)
-- Role-based access control (RBAC)
-- Secure password hashing with bcrypt
-- API token management with SHA-256 HMAC
+### 👤 Access Control
 
-### 🌐 Infrastructure Security
+- **Enhanced Authentication:** We employ multiple factors to secure your account access. In addition to secure password hashing for your primary login, access attempts may involve verification via a code sent to your registered email address. We also utilize security checks based on factors like device information and IP address analysis to help detect and prevent potentially unauthorized activity.
+- **Role-Based Access Control (RBAC):** Internal access to systems and data is restricted based on employee roles and responsibilities, following the principle of least privilege.
+- **API Key Security:** Users are responsible for keeping their API keys secure. We recommend following best practices for API key management.
 
-- Hosted on Heroku (AWS infrastructure)
-- DDoS protection
-- Multiple availability zone support
-- Continuous backup and recovery mechanisms
+### 🛡️ Platform & Operational Security
 
-### 🔒 Data Protection
+- **Secure Hosting Infrastructure:** Keymint leverages modern cloud infrastructure for hosting. Our primary application is hosted on Vercel, which provides benefits like a global CDN and infrastructure resilience. Our database is securely managed by Neon.tech.
+- **Secure Development:** We incorporate security considerations throughout our development lifecycle.
+- **Third-Party Vetting:** We select third-party service providers (like Neon.tech for database hosting and PostHog for analytics) based on their security practices and require them contractually to handle data securely.
+- **Internal Security Assessments:** We conduct regular internal security reviews of our codebase and infrastructure to identify and address potential vulnerabilities. This is complemented by continuous monitoring for platform abuse and violations of our terms.
+- **Data Backups:** We perform regular backups of critical platform data to ensure availability and support recovery processes.
 
-- AES-256 encryption
-- TLS for all communications
-- Secure payment processing via Stripe
-- No long-term storage of sensitive information
+### 🌍 International Data Transfers
 
-## Compliance & Certifications
+- As outlined in our Privacy Policy, when data is transferred internationally (e.g., to servers or service providers in the US or EEA), we ensure appropriate safeguards like Standard Contractual Clauses (SCCs) are in place.
 
-While we're working towards formal certifications, our infrastructure meets high security standards:
+## Your Role in Security
 
-- AWS Security Certifications
-- ISO 27001 alignment
-- SOC 2 principles adherence
+Security is a shared responsibility. You can help keep your account secure by:
 
-## Vulnerability Management
+- Using a strong, unique password.
+- Keeping your login credentials and API keys confidential.
+- Promptly notifying us if you suspect unauthorized access to your account.
+- Using the Service responsibly and in accordance with our Acceptable Use policy (see Terms of Service).
 
-- Automated security scanning
-- Quarterly code audits
-- Yearly penetration testing
-- Rapid response to security reports
+## Third-Party Services
+
+We leverage specialized third-party services for specific functions. Key providers related to security and infrastructure include:
+
+- **Stripe:** Secure processing of credit card payments. ([Stripe Privacy Policy](link-to-stripe-policy))
+- **CoinPayments:** Secure processing of cryptocurrency payments. ([CoinPayments Privacy Policy](link-to-coinpayments-policy))
+- **Neon.tech:** Secure database hosting and storage.
+- **Vercel:** Application hosting and infrastructure.
+- **PostHog:** Product analytics (data handled according to their security practices).
+
+These providers are responsible for the security of the services they provide.
 
 ## Reporting Security Concerns
 
-If you discover a potential security issue, please contact us immediately:
+If you believe you have discovered a security vulnerability in the Keymint platform, please contact us immediately so we can investigate and take appropriate action.
 
-**Email**: [security@keymint.dev](mailto:security@keymint.dev)
+**Security Contact Email:** [security@keymint.dev](mailto:security@keymint.dev)
 
-**PGP Key Fingerprint:**
+## Updates and Transparency
 
-```
-E2A3 C809 9721 7FB6 A578  D08A E3C6 4A7B FE47 7AAA
-```
-
-## Transparency
-
-We believe in open communication about our security practices. This document will be regularly updated to reflect our ongoing commitment to protecting our users.
+We are committed to maintaining transparency about our security practices. We may update this document as our platform and security measures evolve. Please refer to the "Last Updated" date below.
 
 _Last Updated: May 2025_
