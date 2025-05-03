@@ -71,6 +71,7 @@ const categoryTitles = {
         {/* Licensing Questions */}
         <div
           class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden"
+          data-faq-category="licensing"
         >
           <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700">
             <h2 class="text-xl font-bold text-slate-900 dark:text-white">
@@ -117,7 +118,8 @@ const categoryTitles = {
 
         {/* Technical Questions */}
         <div
-          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden"
+          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden mt-8"
+          data-faq-category="technical"
         >
           <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700">
             <h2 class="text-xl font-bold text-slate-900 dark:text-white">
@@ -164,7 +166,8 @@ const categoryTitles = {
 
         {/* Support Questions */}
         <div
-          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden"
+          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden mt-8"
+          data-faq-category="support"
         >
           <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700">
             <h2 class="text-xl font-bold text-slate-900 dark:text-white">
@@ -211,7 +214,8 @@ const categoryTitles = {
 
         {/* Billing Questions */}
         <div
-          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden"
+          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden mt-8"
+          data-faq-category="billing"
         >
           <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700">
             <h2 class="text-xl font-bold text-slate-900 dark:text-white">
@@ -284,6 +288,24 @@ const categoryTitles = {
       button.addEventListener("click", () => {
         const panel = button.nextElementSibling;
         const svg = button.querySelector("svg");
+
+        // Close all other open panels in the same category
+        const currentCategory = button.closest('[data-faq-category]');
+        const otherPanels = currentCategory.querySelectorAll('[data-faq-panel]');
+        const otherSvgs = currentCategory.querySelectorAll('[data-faq-toggle] svg');
+        
+        otherPanels.forEach(otherPanel => {
+          if (otherPanel !== panel) {
+            otherPanel.classList.add('max-h-0');
+            otherPanel.classList.remove('max-h-full');
+          }
+        });
+
+        otherSvgs.forEach(otherSvg => {
+          if (otherSvg !== svg) {
+            otherSvg.classList.remove('-rotate-180');
+          }
+        });
 
         // Toggle current panel
         panel.classList.toggle("max-h-0");
