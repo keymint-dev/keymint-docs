@@ -1,0 +1,295 @@
+---
+import LandingLayout from "../../layouts/LandingLayout.astro";
+import FAQSection from "../../components/FAQ";
+
+const faqs = {
+  licensing: [
+    {
+      question: "What is software licensing?",
+      answer:
+        "Software licensing is a legal mechanism that governs the use and distribution of software. It defines the terms under which users can install, use, and sometimes modify software. Keymint provides the technical tools to implement and enforce these license agreements in your software products.",
+    },
+    {
+      question: "What licensing models does Keymint support?",
+      answer:
+        "Keymint supports four key licensing models: node-locked licenses, perpetual licenses, subscription-based licenses, and trial licenses. Each model offers flexibility for different software distribution strategies.",
+    },
+  ],
+  technical: [
+    {
+      question: "What programming languages does Keymint support?",
+      answer:
+        "Keymint provides a REST API that can be used with any programming language capable of making HTTP requests. We offer comprehensive API documentation and examples for Python, JavaScript, Java, C#, and more.",
+    },
+    {
+      question: "How secure is the Keymint API?",
+      answer:
+        "Our API uses industry-standard security protocols including HTTPS, JWT authentication, and rate limiting. We implement robust encryption and provide detailed access logs to ensure maximum security.",
+    },
+  ],
+  support: [
+    {
+      question: "How can I contact Keymint support?",
+      answer:
+        "You can reach our support team via email at support@keymint.dev or through the live chat on our dashboard. Our standard support hours are 9 AM - 6 PM UTC, Monday through Friday.",
+    },
+  ],
+  billing: [
+    {
+      question: "How much does Keymint cost?",
+      answer:
+        "Keymint offers flexible pricing plans starting with a free tier for startups and small projects. Our pricing is based on the number of active licenses you manage and the features you need. Visit our pricing page for detailed information on our plans and pricing structure.",
+    },
+  ],
+};
+
+// Define category titles for better organization
+const categoryTitles = {
+  licensing: "Licensing Questions",
+  technical: "Technical Questions",
+  support: "Support Questions",
+  billing: "Billing Questions",
+};
+---
+
+<LandingLayout title="Frequently Asked Questions">
+  <div class="py-12 sm:py-16 lg:py-20 bg-white dark:bg-slate-900">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">
+        <h1
+          class="text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl"
+        >
+          Frequently Asked Questions
+        </h1>
+        <p class="mt-4 text-lg text-slate-600 dark:text-slate-300">
+          Find answers to the most common questions about Keymint and software
+          licensing.
+        </p>
+      </div>
+
+      <div class="mt-16 max-w-4xl mx-auto space-y-12">
+        {/* Licensing Questions */}
+        <div
+          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden"
+        >
+          <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+              {categoryTitles.licensing}
+            </h2>
+          </div>
+          <div class="p-6">
+            {
+              faqs.licensing.map((faq, index) => (
+                <div
+                  class={`${index !== 0 ? "border-t border-slate-200 dark:border-slate-700 pt-4" : ""} ${index !== faqs.licensing.length - 1 ? "pb-4" : ""}`}
+                >
+                  <button
+                    data-faq-toggle
+                    class="flex w-full items-center justify-between text-left text-slate-900 dark:text-white focus:outline-none"
+                  >
+                    <span class="text-lg font-semibold">{faq.question}</span>
+                    <svg
+                      class="h-6 w-6 transform transition-transform duration-200 text-slate-500 dark:text-slate-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    data-faq-panel
+                    class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out text-slate-600 dark:text-slate-300"
+                  >
+                    <p class="pt-2 pr-8">{faq.answer}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        {/* Technical Questions */}
+        <div
+          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden"
+        >
+          <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+              {categoryTitles.technical}
+            </h2>
+          </div>
+          <div class="p-6">
+            {
+              faqs.technical.map((faq, index) => (
+                <div
+                  class={`${index !== 0 ? "border-t border-slate-200 dark:border-slate-700 pt-4" : ""} ${index !== faqs.technical.length - 1 ? "pb-4" : ""}`}
+                >
+                  <button
+                    data-faq-toggle
+                    class="flex w-full items-center justify-between text-left text-slate-900 dark:text-white focus:outline-none"
+                  >
+                    <span class="text-lg font-semibold">{faq.question}</span>
+                    <svg
+                      class="h-6 w-6 transform transition-transform duration-200 text-slate-500 dark:text-slate-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    data-faq-panel
+                    class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out text-slate-600 dark:text-slate-300"
+                  >
+                    <p class="pt-2 pr-8">{faq.answer}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        {/* Support Questions */}
+        <div
+          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden"
+        >
+          <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+              {categoryTitles.support}
+            </h2>
+          </div>
+          <div class="p-6">
+            {
+              faqs.support.map((faq, index) => (
+                <div
+                  class={`${index !== 0 ? "border-t border-slate-200 dark:border-slate-700 pt-4" : ""} ${index !== faqs.support.length - 1 ? "pb-4" : ""}`}
+                >
+                  <button
+                    data-faq-toggle
+                    class="flex w-full items-center justify-between text-left text-slate-900 dark:text-white focus:outline-none"
+                  >
+                    <span class="text-lg font-semibold">{faq.question}</span>
+                    <svg
+                      class="h-6 w-6 transform transition-transform duration-200 text-slate-500 dark:text-slate-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    data-faq-panel
+                    class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out text-slate-600 dark:text-slate-300"
+                  >
+                    <p class="pt-2 pr-8">{faq.answer}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        {/* Billing Questions */}
+        <div
+          class="bg-white dark:bg-slate-800 rounded-xl shadow-soft overflow-hidden"
+        >
+          <div class="px-6 py-4 bg-slate-50 dark:bg-slate-700">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+              {categoryTitles.billing}
+            </h2>
+          </div>
+          <div class="p-6">
+            {
+              faqs.billing.map((faq, index) => (
+                <div
+                  class={`${index !== 0 ? "border-t border-slate-200 dark:border-slate-700 pt-4" : ""} ${index !== faqs.billing.length - 1 ? "pb-4" : ""}`}
+                >
+                  <button
+                    data-faq-toggle
+                    class="flex w-full items-center justify-between text-left text-slate-900 dark:text-white focus:outline-none"
+                  >
+                    <span class="text-lg font-semibold">{faq.question}</span>
+                    <svg
+                      class="h-6 w-6 transform transition-transform duration-200 text-slate-500 dark:text-slate-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    data-faq-panel
+                    class="max-h-0 overflow-hidden transition-all duration-300 ease-in-out text-slate-600 dark:text-slate-300"
+                  >
+                    <p class="pt-2 pr-8">{faq.answer}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <div class="mt-16 text-center">
+          <h3 class="text-xl font-semibold text-slate-900 dark:text-white mb-4">
+            Still have questions?
+          </h3>
+          <p class="text-slate-600 dark:text-slate-300 mb-8">
+            Can't find the answer you're looking for? Please contact our support
+            team.
+          </p>
+          <a
+            href="/help/support"
+            class="inline-flex items-center rounded-md bg-brand-600 px-5 py-3 text-sm font-medium text-white shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors"
+          >
+            Contact Support
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</LandingLayout>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const faqButtons = document.querySelectorAll("[data-faq-toggle]");
+
+    faqButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const panel = button.nextElementSibling;
+        const svg = button.querySelector("svg");
+
+        // Toggle current panel
+        panel.classList.toggle("max-h-0");
+        panel.classList.toggle("max-h-full");
+        svg.classList.toggle("-rotate-180");
+      });
+    });
+  });
+</script>
