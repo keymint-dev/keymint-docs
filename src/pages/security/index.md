@@ -59,8 +59,8 @@ Security is a shared responsibility. You can help keep your account secure by:
 
 We leverage specialized third-party services for specific functions. Key providers related to security and infrastructure include:
 
-- **Stripe:** Secure processing of credit card payments. ([Stripe Privacy Policy](link-to-stripe-policy))
-- **CoinPayments:** Secure processing of cryptocurrency payments. ([CoinPayments Privacy Policy](link-to-coinpayments-policy))
+- **Stripe:** Secure processing of credit card payments. ([Stripe Privacy Policy](https://stripe.com/privacy))
+- **CoinPayments:** Secure processing of cryptocurrency payments. ([CoinPayments Privacy Policy](https://media.coinpayments.net/privacy-policy/))
 - **Neon.tech:** Secure database hosting and storage.
 - **Vercel:** Application hosting and infrastructure.
 - **PostHog:** Product analytics (data handled according to their security practices).
