@@ -198,9 +198,15 @@ function isSubSectionActive(link: any, currentPage: string) {
 
     // Highlight active page
     const currentPath = window.location.pathname;
-    const activeLinks = document.querySelectorAll('a');
+    const activeLinks = document.querySelectorAll('.section-links a');
     activeLinks.forEach(link => {
-      if (link.getAttribute('href') === currentPath) {
+      // Reset any previous active states
+      link.classList.remove('bg-blue-100', 'dark:bg-blue-900/50', 'text-blue-700', 'dark:text-blue-300', 'font-medium');
+      
+      // Only highlight non-root, non-logo links that match the current path
+      if (link.getAttribute('href') === currentPath && 
+          link.getAttribute('href') !== '/' && 
+          !link.closest('header')) {
         link.classList.add('bg-blue-100', 'dark:bg-blue-900/50', 'text-blue-700', 'dark:text-blue-300', 'font-medium');
         
         // Expand parent subsection if it's a sublink
