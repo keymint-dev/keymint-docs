@@ -40,8 +40,8 @@ const {
   <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white antialiased min-h-screen flex flex-col">
     <Header />
     
-    <div class="flex flex-1 mx-auto w-full max-w-8xl pl-64">
-      <aside class="hidden lg:block w-64 shrink-0 border-r border-slate-200 dark:border-slate-800 fixed top-16 left-0 h-[calc(100vh-4rem)]">
+    <div class="flex flex-1 mx-auto w-full max-w-8xl lg:pl-64 relative">
+      <aside id="mobile-sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0">
         <Sidebar currentPage={Astro.url.pathname} />
       </aside>
       
@@ -50,15 +50,37 @@ const {
       </main>
     </div>
     
-    <!-- Mobile Menu JS -->
+    <!-- Mobile Sidebar Toggle -->
+    <button 
+      id="mobile-sidebar-toggle" 
+      class="fixed top-4 left-4 z-50 lg:hidden p-2 bg-brand-600 text-white rounded-md"
+    >
+      ☰
+    </button>
+    
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const menuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        if (menuButton && mobileMenu) {
-          menuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        const sidebarToggle = document.getElementById('mobile-sidebar-toggle');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const mainContent = document.querySelector('main');
+
+        if (sidebarToggle && mobileSidebar) {
+          sidebarToggle.addEventListener('click', () => {
+            mobileSidebar.classList.toggle('-translate-x-full');
+            
+            // Optional: Add backdrop effect
+            if (mobileSidebar.classList.contains('-translate-x-full')) {
+              document.getElementById('mobile-sidebar-backdrop')?.remove();
+            } else {
+              const backdrop = document.createElement('div');
+              backdrop.id = 'mobile-sidebar-backdrop';
+              backdrop.classList.add('fixed', 'inset-0', 'bg-black', 'bg-opacity-50', 'z-30', 'lg:hidden');
+              backdrop.addEventListener('click', () => {
+                mobileSidebar.classList.add('-translate-x-full');
+                backdrop.remove();
+              });
+              document.body.appendChild(backdrop);
+            }
           });
         }
       });
