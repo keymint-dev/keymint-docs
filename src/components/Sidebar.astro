@@ -1,0 +1,227 @@
+---
+const { currentPage } = Astro.props;
+
+const navigation = [
+  {
+    title: "Introduction",
+    links: [{ title: "Getting Started", href: "/docs/introduction" }],
+  },
+  {
+    title: "API Reference",
+    links: [
+      { title: "Overview", href: "/api/overview" },
+      { title: "Authentication", href: "/api/authentication" },
+      { title: "Error Codes", href: "/api/error-codes" },
+      { title: "Rate Limits", href: "/api/rate-limits" },
+      {
+        title: "License Management",
+        href: "/api/licenses",
+        links: [
+          { title: "Overview", href: "/api/licenses" },
+          { title: "Create License", href: "/api/licenses/create" },
+          { title: "Activate License", href: "/api/licenses/activate" },
+          { title: "Deactivate License", href: "/api/licenses/deactivate" },
+          { title: "Get License Details", href: "/api/licenses/get" },
+          { title: "Block License", href: "/api/licenses/block" },
+          { title: "Unblock License", href: "/api/licenses/unblock" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Security",
+    links: [{ title: "Overview", href: "/security/security" }],
+  },
+  {
+    title: "Help",
+    links: [
+      { title: "FAQs", href: "/faqs" },
+      { title: "Contact Support", href: "/help/support" },
+    ],
+  },
+];
+
+function isCurrentPage(href: string) {
+  return currentPage === href;
+}
+
+function isActiveSection(section: any) {
+  return section.links.some(
+    (link: any) =>
+      link.href === currentPage ||
+      (link.links &&
+        link.links.some((sublink: any) => sublink.href === currentPage))
+  );
+}
+
+function isSubSectionActive(link: any, currentPage: string) {
+  return (
+    link.links &&
+    link.links.some((sublink: any) => sublink.href === currentPage)
+  );
+}
+---
+
+<nav class="h-full overflow-y-auto py-6 px-4">
+  <ul class="space-y-4">
+    {
+      navigation.map((section, index) => {
+        const sectionId = `sidebar-section-${index}`;
+        const linksId = `sidebar-links-${index}`;
+        const initiallyExpanded = isActiveSection(section);
+        return (
+          <li class="sidebar-section">
+            {/* Section Header Button */}
+            <button
+              type="button"
+              class="flex justify-between items-center w-full text-left uppercase tracking-wide font-semibold text-xs text-slate-500 dark:text-slate-400 mb-2 p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 dark:focus-visible:ring-offset-slate-900 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
+              aria-expanded={initiallyExpanded.toString()}
+              aria-controls={linksId}
+              data-section-button
+            >
+              <span>{section.title}</span>
+              {/* Chevron Icon */}
+              <svg
+                class={`w-3 h-3 transform transition-transform duration-150 chevron-icon ${initiallyExpanded ? "rotate-90" : ""}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="3"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* Links List */}
+            <ul
+              id={linksId}
+              class={`space-y-1 section-links ${!initiallyExpanded ? "hidden" : ""}`}
+            >
+              {section.links.map((link, linkIndex) => {
+                const hasSubLinks = link.links && link.links.length > 0;
+                const subLinksId = `${linksId}-sub-${linkIndex}`;
+                const subSectionInitiallyExpanded = isSubSectionActive(
+                  link,
+                  currentPage
+                );
+
+                return (
+                  <li class="sub-section-container">
+                    {hasSubLinks ? (
+                      <div class="flex items-center justify-between">
+                        <a
+                          href={link.href}
+                          class={`flex-grow block px-3 py-1.5 rounded-md text-sm transition-colors duration-150 ${
+                            isCurrentPage(link.href)
+                              ? "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium"
+                              : "text-slate-600 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-slate-900 dark:hover:text-slate-100"
+                          }`}
+                        >
+                          {link.title}
+                        </a>
+                        <button
+                          type="button"
+                          class="ml-1 p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-blue-500 dark:focus-visible:ring-offset-slate-900 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+                          aria-expanded={subSectionInitiallyExpanded.toString()}
+                          aria-controls={subLinksId}
+                          data-subsection-toggle
+                        >
+                          <svg
+                            class={`w-3 h-3 transform transition-transform duration-150 chevron-icon ${subSectionInitiallyExpanded ? "rotate-90" : ""}`}
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="3"
+                              d="M9 5l7 7-7 7"
+                            />
+                          </svg>
+                          <span class="sr-only">
+                            Toggle {link.title} sub-menu
+                          </span>
+                        </button>
+                      </div>
+                    ) : (
+                      <a
+                        href={link.href}
+                        class={`block px-3 py-1.5 rounded-md text-sm transition-colors duration-150 ${
+                          isCurrentPage(link.href)
+                            ? "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium"
+                            : "text-slate-600 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-slate-900 dark:hover:text-slate-100"
+                        }`}
+                      >
+                        {link.title}
+                      </a>
+                    )}
+
+                    {/* Sub-links (if any) - now conditionally hidden */}
+                    {hasSubLinks && (
+                      <ul
+                        id={subLinksId}
+                        class={`ml-4 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-800 pl-3 sub-section-links ${!subSectionInitiallyExpanded ? "hidden" : ""}`}
+                      >
+                        {link.links.map((sublink: any) => (
+                          <li>
+                            <a
+                              href={sublink.href}
+                              class={`block py-1 text-sm transition-colors duration-150 ${
+                                isCurrentPage(sublink.href)
+                                  ? "text-blue-600 dark:text-blue-400 font-medium"
+                                  : "text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
+                              }`}
+                            >
+                              {sublink.title}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<script>
+  function initializeSidebarCollapsibles() {
+    const buttons = document.querySelectorAll<HTMLButtonElement>(
+      "[data-section-button], [data-subsection-toggle]"
+    );
+
+    buttons.forEach((button) => {
+      const controlledLinksId = button.getAttribute("aria-controls");
+      if (!controlledLinksId) return;
+
+      const links = document.getElementById(controlledLinksId);
+      const icon = button.querySelector<HTMLElement>(".chevron-icon");
+
+      if (!links || !icon) return;
+
+      if (button.dataset.listenerAttached === "true") return;
+
+      button.addEventListener("click", () => {
+        const isHidden = links.classList.toggle("hidden");
+        button.setAttribute("aria-expanded", (!isHidden).toString());
+        icon.classList.toggle("rotate-90", !isHidden);
+      });
+
+      button.dataset.listenerAttached = "true";
+    });
+  }
+
+  initializeSidebarCollapsibles();
+
+  document.addEventListener("astro:page-load", initializeSidebarCollapsibles);
+</script>

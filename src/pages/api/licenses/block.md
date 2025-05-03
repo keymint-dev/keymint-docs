@@ -1,0 +1,70 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: Block License Key
+currentPage: /api/licenses/block
+---
+
+# Block License Key
+
+Deactivate a specific license key (`licenseKey`) by marking it as inactive (blocked). Blocked keys cannot be activated, making this feature ideal for addressing payment issues, policy violations, or other concerns.
+
+## Endpoint
+
+```http
+POST /block-key
+```
+
+Base URL: `https://api.keymint.dev`
+
+## Request Overview
+
+To block a license key, send a `POST` request with a JSON body and `Content-Type: application/json`. Include the access token as a Bearer token in the `Authorization` header.
+
+### Headers
+
+| **Header**      | **Value**              | **Required** | **Description**                      |
+| --------------- | ---------------------- | ------------ | ------------------------------------ |
+| `Authorization` | `Bearer <accessToken>` | **Yes**      | API access token for authentication. |
+
+### Body Parameters
+
+| **Parameter** | **Type** | **Required** | **Description**                                        |
+| ------------- | -------- | ------------ | ------------------------------------------------------ |
+| `productId`   | `string` | Yes          | Unique product identifier (e.g., `product_id_123...`). |
+| `licenseKey`  | `string` | Yes          | License key string to block (e.g., `lk_...`).          |
+
+### Example Request
+
+```http
+POST /block-key HTTP/1.1
+Host: api.keymint.dev
+Content-Type: application/json
+Authorization: Bearer at_verylongaccesstokenstringgeneratedforyourapplication12345678
+
+{
+  "productId": "your_product_id_123",
+  "licenseKey": "xxxxx-xxxxx-xxxxx-xxxxx"
+}
+```
+
+## Response Details
+
+The API will return a JSON object confirming the key has been successfully blocked.
+
+### Success Response (200 OK)
+
+```json
+{
+  "message": "Key blocked",
+  "code": 0
+}
+```
+
+### Error Responses
+
+| **Status Code** | **Code** | **Description**                                                | **Example Response Body**                           |
+| --------------- | -------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| 400             | 1        | Missing required parameters (`productId`, `licenseKey`).       | `{"message": "Missing required params", "code": 1}` |
+| 401             | 1        | Invalid or missing `Authorization` header.                     | `{"message": "Invalid access token", "code": 1}`    |
+| 404             | 1        | `productId` or `licenseKey` not found, or product is inactive. | `{"message": "Invalid license key", "code": 1}`     |
+| 500             | 1        | Internal server error during the blocking process.             | `{"message": "Server error", "code": 1}`            |

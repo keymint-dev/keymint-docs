@@ -1,0 +1,32 @@
+<button type="button" id="search-button" class="group flex h-6 w-6 items-center justify-center sm:justify-start sm:h-auto sm:w-auto sm:flex-none sm:rounded-md sm:py-1.5 sm:px-3 sm:text-sm sm:font-medium sm:bg-slate-100 sm:hover:bg-slate-200 sm:dark:bg-slate-800/75 sm:dark:hover:bg-slate-700/50 sm:transition-colors">
+  <svg class="h-5 w-5 flex-none stroke-slate-500 group-hover:stroke-slate-700 dark:group-hover:stroke-slate-400 sm:mr-2" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 19l-3.5-3.5"></path>
+    <circle cx="11" cy="11" r="6"></circle>
+  </svg>
+  <span class="hidden sm:inline text-slate-600 dark:text-slate-400">Search docs...</span>
+  <span class="hidden sm:ml-2 sm:inline text-slate-400 dark:text-slate-500">
+    <span class="sr-only sm:not-sr-only">Press</span>
+    <kbd class="font-sans font-medium">/</kbd>
+  </span>
+</button>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchButton = document.getElementById('search-button');
+    
+    if (searchButton) {
+      searchButton.addEventListener('click', () => {
+        // This would normally open a search modal
+        alert('Search functionality would open here. In a real implementation, this would show a search dialog.');
+      });
+      
+      // Add keyboard shortcut for search
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          searchButton.click();
+        }
+      });
+    }
+  });
+</script>

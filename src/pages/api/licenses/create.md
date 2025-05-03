@@ -1,0 +1,109 @@
+---
+layout: ../../../layouts/DocsLayout.astro
+title: Create License Key
+currentPage: /api/licenses/create
+---
+
+# Create License Key
+
+Generate a new license key for a specific product (`productId`). You can optionally define activation limits (`maxActivations`), set an expiration date (`expiryDate`), assign it to an existing customer (`customerId`), or create and assign it to a new customer (`newCustomer`).
+
+## Endpoint
+
+```http
+POST /create-key
+```
+
+Base URL: `https://api.keymint.dev`
+
+## Request
+
+Send a `POST` request with a JSON body and `Content-Type: application/json`. Include the `accessToken` as a Bearer token in the `Authorization` header.
+
+### Headers
+
+| **Header**      | **Value**              | **Required** | **Description**                      |
+| --------------- | ---------------------- | ------------ | ------------------------------------ |
+| `Authorization` | `Bearer <accessToken>` | **Yes**      | API access token for authentication. |
+
+### Body Parameters
+
+| **Parameter**    | **Type** | **Required** | **Description**                                                                                                                        |
+| ---------------- | -------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `productId`      | `string` | **Yes**      | Unique product identifier (e.g., `prod_...`).                                                                                          |
+| `maxActivations` | `string` | No           | Maximum number of activations allowed (e.g., `"5"`). Omit or set to `null` for unlimited.                                              |
+| `expiryDate`     | `string` | No           | Expiration date in ISO 8601 format (e.g., `"2024-12-31T23:59:59Z"`). Defaults to 1 month from creation if omitted.                     |
+| `customerId`     | `string` | No           | ID of an existing customer to assign the key to (e.g., `cust_...`). Cannot be used with `newCustomer`.                                 |
+| `newCustomer`    | `object` | No           | Object containing `name` (string, required) and `email` (string, optional) to create a new customer. Cannot be used with `customerId`. |
+
+### Example Requests
+
+#### Simple Key
+
+```http
+POST /create-key HTTP/1.1
+Host: api.keymint.dev
+Authorization: Bearer at_verylongaccesstokenstringgeneratedforyourapplication12345678
+Content-Type: application/json
+
+{
+  "productId": "your_product_id_123",
+  "maxActivations": "3",
+  "expiryDate": "2025-06-30T23:59:59Z"
+}
+```
+
+#### Assign to New Customer
+
+```http
+POST /create-key HTTP/1.1
+Host: api.keymint.dev
+Authorization: Bearer at_verylongaccesstokenstringgeneratedforyourapplication12345678
+Content-Type: application/json
+
+{
+  "productId": "your_product_id_123",
+  "newCustomer": {
+    "name": "John Doe",
+    "email": "john.doe.new@example.com"
+  }
+}
+```
+
+#### Assign to Existing Customer
+
+```http
+POST /create-key HTTP/1.1
+Host: api.keymint.dev
+Authorization: Bearer at_verylongaccesstokenstringgeneratedforyourapplication12345678
+Content-Type: application/json
+
+{
+  "productId": "your_product_id_123",
+  "customerId": "cust_abc123"
+}
+```
+
+## Responses
+
+The API returns the newly generated license key.
+
+### Success Response (200 OK)
+
+```json
+{
+  "code": 0,
+  "key": "xxxxx-xxxxx-xxxxx-xxxxx"
+}
+```
+
+### Error Responses
+
+| **Status Code** | **Code** | **Description**                                                                   | **Example Response Body**                                                |
+| --------------- | -------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| 400             | 1        | Missing required parameters (`productId`) or invalid format (e.g., `expiryDate`). | `{"message": "Missing required params", "code": 1}`                      |
+| 401             | 1        | Invalid or missing `Authorization` header.                                        | `{"message": "Invalid access token", "code": 1}`                         |
+| 404             | 1        | `productId` not found or inactive.                                                | `{"message": "Product not found or inactive", "code": 1}`                |
+| 404             | 2        | `customerId` provided, but the customer was not found.                            | `{"message": "Customer with ID cust_... not found", "code": 2}`          |
+| 409             | 2        | `newCustomer` provided with an email that already exists.                         | `{"message": "CONFLICT: Customer email ... already exists.", "code": 2}` |
+| 500             | 1        | Internal server error (e.g., database insertion failure, unexpected issue).       | `{"message": "Server error", "code": 1}`                                 |

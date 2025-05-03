@@ -1,0 +1,57 @@
+---
+title: Rate Limiting
+description: Learn about the API rate limiting policies for the Keymint API.
+currentPage: /api/rate-limits
+layout: ../../layouts/DocsLayout.astro
+---
+
+# Rate Limiting
+
+To ensure API stability and fair usage for all users, the Keymint API enforces rate limits on incoming requests.
+
+---
+
+## How It Works
+
+Rate limits are applied based on several factors, including:
+
+- **Source IP Address**: The originating IP of the request.
+- **API Access Token**: The token used to authenticate the request.
+- **Specific Resources**: Certain endpoints, such as License Key validation, may have additional limits.
+
+> **Note**: The exact limits are not published and may change over time. They are designed to support legitimate application use while preventing abuse, such as brute-force attacks or excessive polling.
+
+---
+
+## Exceeding the Limit
+
+If you exceed the rate limit, the API will respond with:
+
+- **HTTP Status Code**: `429 Too Many Requests`
+- **Response Body**: A JSON object, for example:
+  ```json
+  {
+    "message": "Too many activation attempts. Please try again later.",
+    "code": 3
+  }
+  ```
+  > The message may vary depending on the endpoint.
+
+---
+
+## Handling `429 Too Many Requests`
+
+Your application should be prepared to handle `429` responses gracefully:
+
+1. **Do Not Retry Immediately**: Avoid sending repeated requests immediately after receiving a `429`.
+2. **Implement Exponential Backoff**:
+   - Wait for a short period (e.g., 1 second) before retrying.
+   - If the request fails again, double the wait time (e.g., 2 seconds, then 4 seconds, etc.).
+   - Continue this pattern up to a reasonable maximum delay.
+3. **Review Your Request Patterns**: Persistent `429` errors may indicate overly frequent calls. Optimize your integration to reduce unnecessary requests.
+
+> **Tip**: If you consistently encounter rate limits during normal operation, contact support to discuss your use case.
+
+---
+
+By following these guidelines, you can ensure a smoother experience while using the Keymint API.
