@@ -1,3 +1,4 @@
+// astro.config.mjs
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
@@ -11,5 +12,6 @@ export default defineConfig({
     mdx(),
     react()
   ],
-  site: 'https://docs.keymint.dev',  // Your site URL for absolute links
+  site: 'https://docs.keymint.dev',  // Base URL for sitemap/absolute links if needed
+  base: '/docs/',                    // <--- ADD THIS LINE BACK
 });
