@@ -11,7 +11,7 @@ export default defineConfig({
     react()
   ],
   site: 'https://docs.keymint.dev',
-  base: '/',
+  base: '/docs',
   
   // Build configuration
   build: {
@@ -31,10 +31,10 @@ export default defineConfig({
   // Trailing slash configuration
   trailingSlash: 'always',
   
-  // Fix redirects to handle paths properly
-  redirects: {
-    '/docs/:path': '/:path',
-    '/api/:path': '/api/:path',
-    '/help/:path': '/help/:path'
+  // Pages configuration
+  pages: {
+    // Ensure all routes are properly handled
+    '/api/*': '/api/index',
+    '/api/licenses/*': '/api/licenses/index'
   }
 });
