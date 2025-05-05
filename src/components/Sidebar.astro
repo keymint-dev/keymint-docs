@@ -4,7 +4,7 @@ const { currentPage } = Astro.props;
 const navigation = [
   {
     title: "Introduction",
-    links: [{ title: "Getting Started", href: "/docs/introduction" }],
+    links: [{ title: "Getting Started", href: "/introduction" }],
   },
   {
     title: "API Reference",
@@ -198,25 +198,44 @@ function isSubSectionActive(link: any, currentPage: string) {
 
     // Highlight active page
     const currentPath = window.location.pathname;
-    const activeLinks = document.querySelectorAll('.section-links a');
-    activeLinks.forEach(link => {
+    const activeLinks = document.querySelectorAll(".section-links a");
+    activeLinks.forEach((link) => {
       // Reset any previous active states
-      link.classList.remove('bg-blue-100', 'dark:bg-blue-900/50', 'text-blue-700', 'dark:text-blue-300', 'font-medium');
-      
+      link.classList.remove(
+        "bg-blue-100",
+        "dark:bg-blue-900/50",
+        "text-blue-700",
+        "dark:text-blue-300",
+        "font-medium"
+      );
+
       // Only highlight non-root, non-logo links that match the current path
-      if (link.getAttribute('href') === currentPath && 
-          link.getAttribute('href') !== '/' && 
-          !link.closest('header')) {
-        link.classList.add('bg-blue-100', 'dark:bg-blue-900/50', 'text-blue-700', 'dark:text-blue-300', 'font-medium');
-        
+      if (
+        link.getAttribute("href") === currentPath &&
+        link.getAttribute("href") !== "/" &&
+        !link.closest("header")
+      ) {
+        link.classList.add(
+          "bg-blue-100",
+          "dark:bg-blue-900/50",
+          "text-blue-700",
+          "dark:text-blue-300",
+          "font-medium"
+        );
+
         // Expand parent subsection if it's a sublink
-        const parentSubSection = link.closest('.sub-section-links');
+        const parentSubSection = link.closest(".sub-section-links");
         if (parentSubSection) {
-          parentSubSection.classList.remove('hidden');
-          const toggleButton = parentSubSection.previousElementSibling?.querySelector('[data-subsection-toggle]');
+          parentSubSection.classList.remove("hidden");
+          const toggleButton =
+            parentSubSection.previousElementSibling?.querySelector(
+              "[data-subsection-toggle]"
+            );
           if (toggleButton) {
-            toggleButton.setAttribute('aria-expanded', 'true');
-            toggleButton.querySelector('.chevron-icon')?.classList.add('rotate-90');
+            toggleButton.setAttribute("aria-expanded", "true");
+            toggleButton
+              .querySelector(".chevron-icon")
+              ?.classList.add("rotate-90");
           }
         }
       }
@@ -226,30 +245,37 @@ function isSubSectionActive(link: any, currentPage: string) {
   initializeSidebarCollapsibles();
 
   // Use view transitions to prevent full page reloads
-  if ('startViewTransition' in document) {
-    document.addEventListener('click', (e: MouseEvent) => {
-      const target = e.target as Element | null;
-      const link = target?.closest('a') as HTMLAnchorElement | null;
-      
-      // Check if it's an internal link and not the current page
-      if (link && link.href) {
-        const currentUrl = new URL(window.location.href);
-        const linkUrl = new URL(link.href);
-        
-        // Prevent default only for same-origin links that would cause a page reload
-        if (linkUrl.origin === currentUrl.origin && linkUrl.pathname !== currentUrl.pathname) {
-          e.preventDefault();
-          
-          // Use view transition for smooth navigation
-          document.startViewTransition(async () => {
-            await new Promise(resolve => setTimeout(resolve, 50)); // Small delay for smoother transition
-            window.location.href = link.href;
-          });
+  if ("startViewTransition" in document) {
+    document.addEventListener(
+      "click",
+      (e: MouseEvent) => {
+        const target = e.target as Element | null;
+        const link = target?.closest("a") as HTMLAnchorElement | null;
+
+        // Check if it's an internal link and not the current page
+        if (link && link.href) {
+          const currentUrl = new URL(window.location.href);
+          const linkUrl = new URL(link.href);
+
+          // Prevent default only for same-origin links that would cause a page reload
+          if (
+            linkUrl.origin === currentUrl.origin &&
+            linkUrl.pathname !== currentUrl.pathname
+          ) {
+            e.preventDefault();
+
+            // Use view transition for smooth navigation
+            document.startViewTransition(async () => {
+              await new Promise((resolve) => setTimeout(resolve, 50)); // Small delay for smoother transition
+              window.location.href = link.href;
+            });
+          }
         }
-      }
-    }, { passive: false });
+      },
+      { passive: false }
+    );
   }
 
   // Ensure initialization on page load and after view transitions
-  document.addEventListener('astro:page-load', initializeSidebarCollapsibles);
+  document.addEventListener("astro:page-load", initializeSidebarCollapsibles);
 </script>
