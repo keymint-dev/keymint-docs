@@ -1,6 +1,5 @@
 ---
 import LandingLayout from "../../layouts/LandingLayout.astro";
-import FAQSection from "../../components/FAQ";
 
 const faqs = {
   licensing: [
@@ -290,20 +289,23 @@ const categoryTitles = {
         const svg = button.querySelector("svg");
 
         // Close all other open panels in the same category
-        const currentCategory = button.closest('[data-faq-category]');
-        const otherPanels = currentCategory.querySelectorAll('[data-faq-panel]');
-        const otherSvgs = currentCategory.querySelectorAll('[data-faq-toggle] svg');
-        
-        otherPanels.forEach(otherPanel => {
+        const currentCategory = button.closest("[data-faq-category]");
+        const otherPanels =
+          currentCategory.querySelectorAll("[data-faq-panel]");
+        const otherSvgs = currentCategory.querySelectorAll(
+          "[data-faq-toggle] svg"
+        );
+
+        otherPanels.forEach((otherPanel) => {
           if (otherPanel !== panel) {
-            otherPanel.classList.add('max-h-0');
-            otherPanel.classList.remove('max-h-full');
+            otherPanel.classList.add("max-h-0");
+            otherPanel.classList.remove("max-h-full");
           }
         });
 
-        otherSvgs.forEach(otherSvg => {
+        otherSvgs.forEach((otherSvg) => {
           if (otherSvg !== svg) {
-            otherSvg.classList.remove('-rotate-180');
+            otherSvg.classList.remove("-rotate-180");
           }
         });
 

@@ -1,4 +1,3 @@
-// astro.config.mjs
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
@@ -12,7 +11,7 @@ export default defineConfig({
     react()
   ],
   site: 'https://docs.keymint.dev',
-  base: '/docs',
+  base: '/',
   
   // Build configuration
   build: {
@@ -32,10 +31,10 @@ export default defineConfig({
   // Trailing slash configuration
   trailingSlash: 'always',
   
-  // Add redirects for doubled paths
+  // Fix redirects to handle paths properly
   redirects: {
-    '/docs/docs/:path': '/docs/:path',
-    '/docs/api/:path': '/api/:path',
-    '/docs/help/:path': '/help/:path'
+    '/docs/:path': '/:path',
+    '/api/:path': '/api/:path',
+    '/help/:path': '/help/:path'
   }
 });
