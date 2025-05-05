@@ -12,5 +12,4 @@ export default defineConfig({
     react()
   ],
   site: 'https://docs.keymint.dev',  // Your site URL for absolute links
-  base: '/docs/',                    // Serve everything under /docs/
 });
