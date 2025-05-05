@@ -12,7 +12,7 @@ export default defineConfig({
     react()
   ],
   site: 'https://docs.keymint.dev',
-  base: '/',
+  base: '/docs',
   
   // Build configuration
   build: {
