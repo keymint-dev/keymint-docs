@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Block License Key
-currentPage: /api/licenses/block
+currentPage: /docs/api/licenses/block
 ---
 
 # Block License Key
@@ -14,7 +14,7 @@ Deactivate a specific license key (`licenseKey`) by marking it as inactive (bloc
 POST /block-key
 ```
 
-Base URL: `https://api.keymint.dev`
+Base URL: `https://docs/api.keymint.dev`
 
 ## Request Overview
 

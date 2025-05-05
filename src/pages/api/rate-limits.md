@@ -1,7 +1,7 @@
 ---
 title: Rate Limiting
 description: Learn about the API rate limiting policies for the Keymint API.
-currentPage: /api/rate-limits
+currentPage: /docs/api/rate-limits
 layout: ../../layouts/DocsLayout.astro
 ---
 

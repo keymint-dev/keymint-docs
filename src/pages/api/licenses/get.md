@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Get License Details
-currentPage: /api/licenses/get
+currentPage: /docs/api/licenses/get
 ---
 
 # Get License Details
@@ -14,7 +14,7 @@ Retrieve detailed information about a specific license key (`licenseKey`), inclu
 POST /get-key
 ```
 
-Base URL: `https://api.keymint.dev`
+Base URL: `https://docs/api.keymint.dev`
 
 ## Request
 

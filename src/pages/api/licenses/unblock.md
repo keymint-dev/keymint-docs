@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Unblock License Key
-currentPage: /api/licenses/unblock
+currentPage: /docs/api/licenses/unblock
 ---
 
 # Unblock License Key
@@ -14,7 +14,7 @@ Reactivates a previously blocked license key (`licenseKey`), allowing it to be v
 POST /unblock-key
 ```
 
-Base URL: `https://api.keymint.dev`
+Base URL: `https://docs/api.keymint.dev`
 
 ## Request
 

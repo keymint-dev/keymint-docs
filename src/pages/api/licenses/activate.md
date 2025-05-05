@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Activate License Key
-currentPage: /api/licenses/activate
+currentPage: /docs/api/licenses/activate
 ---
 
 # Activate License Key
@@ -14,7 +14,7 @@ Registers a specific device (`hostId`) to a license key (`licenseKey`), consumin
 POST /activate-key
 ```
 
-Base URL: `https://api.keymint.dev`
+Base URL: `https://docs/api.keymint.dev`
 
 ## Request
 

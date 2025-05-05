@@ -41,12 +41,12 @@ Support for various licensing models, including:
 To start using Keymint, follow these steps:
 
 1. [Create a Keymint account](https://app.keymint.dev/)
-2. [Generate your API keys](/api/authentication)
-3. Integrate with the [Keymint API](/api/overview)
-4. [Create your first license](/api/licenses/create)
+2. [Generate your API keys](/docs/api/authentication)
+3. Integrate with the [Keymint API](/docs/api/overview)
+4. [Create your first license](/docs/api/licenses/create)
 
 ## 📍 Next Steps
 
 Explore the documentation further:
 
-- [API Reference](/api/overview)
+- [API Reference](/docs/api/overview)

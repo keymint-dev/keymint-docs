@@ -1,6 +1,6 @@
 ---
 title: Error Codes
-currentPage: /api/error-codes
+currentPage: /docs/api/error-codes
 layout: ../../layouts/DocsLayout.astro
 ---
 
@@ -12,16 +12,16 @@ The Keymint API employs a structured error-handling approach, combining standard
 
 ## Error Code Reference
 
-| **HTTP Status Code**            | **Error Code (`code`)** | **Description**                                                      | **Possible Causes / Notes**                                                                                                |
-| ------------------------------- | ----------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **`200 OK`**                    | `0`                     | **Success**: Request completed.                                      | Operation successful. Check `message` for details.                                                                         |
-| **`400 Bad Request`**           | `1`                     | **Malformed Request**: Missing/invalid params.                       | Check required fields (`productId`, `licenseKey`, etc.) and formatting (`expiryDate`).                                     |
-| **`401 Unauthorized`**          | `1`                     | **Invalid Token**: `accessToken` missing, invalid, expired, or lacks scope. | Verify token validity, expiry, and `productId` permissions.                                                                |
-| **`403 Forbidden`**             | `2`                     | **Operation Restricted**: License state prevents action.             | Examples: Expired, activation limit, inactive, blocked.                                                                    |
-| **`404 Not Found`**             | `1` or `2`              | **Resource Not Found**: Product, license, customer, or device.       | Verify IDs (`productId`, `licenseKey`, `hostId`, `customerId`). `code: 2` specific to 'Customer not found' in `create`.      |
-| **`409 Conflict`**              | `2`                     | **Resource Conflict**: State prevents request.                       | Example: Creating customer (`/create-key`) with existing email.                                                            |
-| **`429 Too Many Requests`**     | `3`                     | **Rate Limit Exceeded**.                                             | Use exponential backoff. Applies mainly to activation/validation.                                                          |
-| **`500 Internal Server Error`** | `1`                     | **Server Error**: Unexpected issue.                                  | Server-side problem (DB, code). Check specific message. Contact support if persistent.                                     |
+| **HTTP Status Code**            | **Error Code (`code`)** | **Description**                                                             | **Possible Causes / Notes**                                                                                             |
+| ------------------------------- | ----------------------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **`200 OK`**                    | `0`                     | **Success**: Request completed.                                             | Operation successful. Check `message` for details.                                                                      |
+| **`400 Bad Request`**           | `1`                     | **Malformed Request**: Missing/invalid params.                              | Check required fields (`productId`, `licenseKey`, etc.) and formatting (`expiryDate`).                                  |
+| **`401 Unauthorized`**          | `1`                     | **Invalid Token**: `accessToken` missing, invalid, expired, or lacks scope. | Verify token validity, expiry, and `productId` permissions.                                                             |
+| **`403 Forbidden`**             | `2`                     | **Operation Restricted**: License state prevents action.                    | Examples: Expired, activation limit, inactive, blocked.                                                                 |
+| **`404 Not Found`**             | `1` or `2`              | **Resource Not Found**: Product, license, customer, or device.              | Verify IDs (`productId`, `licenseKey`, `hostId`, `customerId`). `code: 2` specific to 'Customer not found' in `create`. |
+| **`409 Conflict`**              | `2`                     | **Resource Conflict**: State prevents request.                              | Example: Creating customer (`/create-key`) with existing email.                                                         |
+| **`429 Too Many Requests`**     | `3`                     | **Rate Limit Exceeded**.                                                    | Use exponential backoff. Applies mainly to activation/validation.                                                       |
+| **`500 Internal Server Error`** | `1`                     | **Server Error**: Unexpected issue.                                         | Server-side problem (DB, code). Check specific message. Contact support if persistent.                                  |
 
 ---
 

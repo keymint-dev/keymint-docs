@@ -4,26 +4,29 @@ const { currentPage } = Astro.props;
 const navigation = [
   {
     title: "Introduction",
-    links: [{ title: "Getting Started", href: "/" }],
+    links: [{ title: "Getting Started", href: "/docs" }],
   },
   {
     title: "API Reference",
     links: [
-      { title: "Overview", href: "/api/overview" },
-      { title: "Authentication", href: "/api/authentication" },
-      { title: "Error Codes", href: "/api/error-codes" },
-      { title: "Rate Limits", href: "/api/rate-limits" },
+      { title: "Overview", href: "/docs/api/overview" },
+      { title: "Authentication", href: "/docs/api/authentication" },
+      { title: "Error Codes", href: "/docs/api/error-codes" },
+      { title: "Rate Limits", href: "/docs/api/rate-limits" },
       {
         title: "License Management",
-        href: "/api/licenses",
+        href: "/docs/api/licenses",
         links: [
-          { title: "Overview", href: "/api/licenses" },
-          { title: "Create License", href: "/api/licenses/create" },
-          { title: "Activate License", href: "/api/licenses/activate" },
-          { title: "Deactivate License", href: "/api/licenses/deactivate" },
-          { title: "Get License Details", href: "/api/licenses/get" },
-          { title: "Block License", href: "/api/licenses/block" },
-          { title: "Unblock License", href: "/api/licenses/unblock" },
+          { title: "Overview", href: "/docs/api/licenses" },
+          { title: "Create License", href: "/docs/api/licenses/create" },
+          { title: "Activate License", href: "/docs/api/licenses/activate" },
+          {
+            title: "Deactivate License",
+            href: "/docs/api/licenses/deactivate",
+          },
+          { title: "Get License Details", href: "/docs/api/licenses/get" },
+          { title: "Block License", href: "/docs/api/licenses/block" },
+          { title: "Unblock License", href: "/docs/api/licenses/unblock" },
         ],
       },
     ],

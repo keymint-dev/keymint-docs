@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: API Reference
-currentPage: /api
+currentPage: /docs/api
 ---
 
 # API Reference
@@ -25,6 +25,6 @@ Welcome to the Keymint API documentation. Our API enables you to manage software
 ## Getting Started
 
 1. [Create a Keymint account](https://app.keymint.dev/)
-2. [Get your API keys](/api/authentication)
+2. [Get your API keys](/docs/api/authentication)
 
 If you have questions, contact support.

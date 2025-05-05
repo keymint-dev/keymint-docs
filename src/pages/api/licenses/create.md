@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Create License Key
-currentPage: /api/licenses/create
+currentPage: /docs/api/licenses/create
 ---
 
 # Create License Key
@@ -14,7 +14,7 @@ Generate a new license key for a specific product (`productId`). You can optiona
 POST /create-key
 ```
 
-Base URL: `https://api.keymint.dev`
+Base URL: `https://docs/api.keymint.dev`
 
 ## Request
 

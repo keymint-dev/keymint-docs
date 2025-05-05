@@ -1,6 +1,6 @@
 ---
 title: API Authentication
-currentPage: /api/authentication
+currentPage: /docs/api/authentication
 layout: ../../layouts/DocsLayout.astro
 ---
 

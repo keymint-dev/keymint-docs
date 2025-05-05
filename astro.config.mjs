@@ -34,7 +34,7 @@ export default defineConfig({
   // Pages configuration
   pages: {
     // Ensure all routes are properly handled
-    '/api/*': '/api/index',
-    '/api/licenses/*': '/api/licenses/index'
+    '/docs/api/*': '/docs/api/index',
+    '/docs/api/licenses/*': '/docs/api/licenses/index'
   }
 });

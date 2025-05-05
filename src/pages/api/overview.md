@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: API Overview
-currentPage: /api/overview
+currentPage: /docs/api/overview
 ---
 
 # Overview
@@ -21,20 +21,20 @@ Include your `accessToken` as a Bearer token in the `Authorization` header of yo
 Authorization: Bearer YOUR_ACCESS_TOKEN
 ```
 
-See the [Authentication Guide](/api/authentication) for details.
+See the [Authentication Guide](/docs/api/authentication) for details.
 :::
 
 ## Base URL
 
 All API requests use the following base URL:
 
-`https://api.keymint.dev`
+`https://docs/api.keymint.dev`
 
 ## Authentication
 
 Authenticate requests with your `accessToken`. Keep it secure and avoid exposing it in public repositories.
 
-➡️ **Learn more:** [Authentication Guide](/api/authentication)
+➡️ **Learn more:** [Authentication Guide](/docs/api/authentication)
 
 ## Request & Response Format
 
@@ -60,7 +60,7 @@ Failed requests return an HTTP status code and a JSON error response:
 }
 ```
 
-➡️ **Learn more:** [Error Codes Reference](/api/error-codes)
+➡️ **Learn more:** [Error Codes Reference](/docs/api/error-codes)
 
 ## Rate Limiting
 
@@ -68,6 +68,6 @@ The API enforces rate limits. Exceeding the limit returns a `429 Too Many Reques
 
 ## Next Steps
 
-- Learn about authentication: [Authentication Guide](/api/authentication)
-- Explore license management: [Licenses API](/api/licenses)
-- Understand errors: [Error Codes Reference](/api/error-codes)
+- Learn about authentication: [Authentication Guide](/docs/api/authentication)
+- Explore license management: [Licenses API](/docs/api/licenses)
+- Understand errors: [Error Codes Reference](/docs/api/error-codes)

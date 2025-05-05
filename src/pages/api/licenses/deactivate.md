@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: Deactivate Device
-currentPage: /api/licenses/deactivate
+currentPage: /docs/api/licenses/deactivate
 ---
 
 # Deactivate Device
@@ -14,7 +14,7 @@ Remove a device registration (`hostId`) from a license key (`licenseKey`), freei
 POST /deactivate-key
 ```
 
-Base URL: `https://api.keymint.dev`
+Base URL: `https://docs/api.keymint.dev`
 
 ## Request Details
 

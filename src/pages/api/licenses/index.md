@@ -1,7 +1,7 @@
 ---
 layout: ../../../layouts/DocsLayout.astro
 title: License Management API
-currentPage: /api/licenses
+currentPage: /docs/api/licenses
 ---
 
 # License Management API
@@ -32,6 +32,6 @@ Most endpoints require the following parameters:
 
 For detailed information about authentication and error handling, see:
 
-- [Authentication Guide](/api/authentication)
-- [Error Codes Reference](/api/error-codes)
-- [Rate Limits](/api/rate-limits)
+- [Authentication Guide](/docs/api/authentication)
+- [Error Codes Reference](/docs/api/error-codes)
+- [Rate Limits](/docs/api/rate-limits)
