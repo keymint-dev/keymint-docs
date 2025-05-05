@@ -1,0 +1,10 @@
+# Redirect doubled up paths
+/docs/docs/*  /docs/:splat  301
+/docs/api/*   /api/:splat   301
+/docs/help/*  /help/:splat  301
+
+# Handle other potential doubled paths
+/docs/*       /:splat       301
+
+# Maintain trailing slashes if needed
+/*  /:splat/  301!

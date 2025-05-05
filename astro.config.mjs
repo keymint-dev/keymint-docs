@@ -1,5 +1,4 @@
 // astro.config.mjs
-// @ts-check
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import mdx from '@astrojs/mdx';
@@ -15,21 +14,28 @@ export default defineConfig({
   site: 'https://docs.keymint.dev',
   base: '/',
   
-  // Ensure assets are properly built
+  // Build configuration
   build: {
     assets: '_astro'
   },
   
-  // Adjust output to make links work through rewrite
+  // Output configuration
   output: 'static',
   
-  // Configure dev server for CORS
+  // Server configuration
   server: {
     headers: {
       'Access-Control-Allow-Origin': '*'
     }
   },
   
-  // Add this to make it work with both keymint.dev/docs and docs.keymint.dev
-  trailingSlash: 'always'
+  // Trailing slash configuration
+  trailingSlash: 'always',
+  
+  // Add redirects for doubled paths
+  redirects: {
+    '/docs/docs/:path': '/docs/:path',
+    '/docs/api/:path': '/api/:path',
+    '/docs/help/:path': '/help/:path'
+  }
 });
