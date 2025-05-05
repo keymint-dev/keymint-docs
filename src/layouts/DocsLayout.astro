@@ -1,7 +1,7 @@
 ---
-import Header from '../components/Header.astro';
-import Sidebar from '../components/Sidebar.astro';
-import '../styles/global.css';
+import Header from "../components/Header.astro";
+import Sidebar from "../components/Sidebar.astro";
+import "../styles/global.css";
 
 export interface Props {
   title: string;
@@ -9,74 +9,92 @@ export interface Props {
   currentPage?: string;
 }
 
-const { 
-  title, 
-  description = "Official documentation for Keymint - The modern licensing solution for software businesses", 
-  currentPage 
+const {
+  title,
+  description = "Official documentation for Keymint - The modern licensing solution for software businesses",
+  currentPage,
 } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | Keymint Docs</title>
-    <meta name="description" content={description} />
-    
-    <!-- Preload fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Theme script to avoid FOUC (Flash of Unstyled Content) -->
-    <script is:inline>
-      const theme = localStorage.getItem('theme') || 'light';
-      document.documentElement.classList.toggle('dark', theme === 'dark');
-    </script>
-  </head>
-  <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white antialiased min-h-screen flex flex-col">
+    <title>{title}</title></head
+  >Welcome to Keymint - Developer Resources
+  <meta name="description" content={description} />
+
+  <!-- Preload fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Theme script to avoid FOUC (Flash of Unstyled Content) -->
+  <script is:inline>
+    const theme = localStorage.getItem("theme") || "light";
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  </script>
+
+  <body
+    class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white antialiased min-h-screen flex flex-col"
+  >
     <Header />
-    
+
     <div class="flex flex-1 mx-auto w-full max-w-8xl lg:pl-64 relative">
-      <aside id="mobile-sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0">
+      <aside
+        id="mobile-sidebar"
+        class="fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0"
+      >
         <Sidebar currentPage={Astro.url.pathname} />
       </aside>
-      
-      <main class="flex-1 px-4 py-8 md:px-8 lg:px-12 max-w-full overflow-x-hidden prose dark:prose-invert prose-slate prose-headings:font-semibold prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:border-slate-200 dark:prose-h2:border-slate-800 prose-a:text-brand-600 dark:prose-a:text-brand-400 prose-a:font-medium prose-a:no-underline hover:prose-a:underline">
+
+      <main
+        class="flex-1 px-4 py-8 md:px-8 lg:px-12 max-w-full overflow-x-hidden prose dark:prose-invert prose-slate prose-headings:font-semibold prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:border-slate-200 dark:prose-h2:border-slate-800 prose-a:text-brand-600 dark:prose-a:text-brand-400 prose-a:font-medium prose-a:no-underline hover:prose-a:underline"
+      >
         <slot />
       </main>
     </div>
-    
+
     <!-- Mobile Sidebar Toggle -->
-    <button 
-      id="mobile-sidebar-toggle" 
+    <button
+      id="mobile-sidebar-toggle"
       class="fixed top-4 left-4 z-50 lg:hidden p-2 bg-brand-600 text-white rounded-md"
     >
       ☰
     </button>
-    
+
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const sidebarToggle = document.getElementById('mobile-sidebar-toggle');
-        const mobileSidebar = document.getElementById('mobile-sidebar');
-        const mainContent = document.querySelector('main');
+      document.addEventListener("DOMContentLoaded", () => {
+        const sidebarToggle = document.getElementById("mobile-sidebar-toggle");
+        const mobileSidebar = document.getElementById("mobile-sidebar");
+        const mainContent = document.querySelector("main");
 
         if (sidebarToggle && mobileSidebar) {
-          sidebarToggle.addEventListener('click', () => {
-            mobileSidebar.classList.toggle('-translate-x-full');
-            
+          sidebarToggle.addEventListener("click", () => {
+            mobileSidebar.classList.toggle("-translate-x-full");
+
             // Optional: Add backdrop effect
-            if (mobileSidebar.classList.contains('-translate-x-full')) {
-              document.getElementById('mobile-sidebar-backdrop')?.remove();
+            if (mobileSidebar.classList.contains("-translate-x-full")) {
+              document.getElementById("mobile-sidebar-backdrop")?.remove();
             } else {
-              const backdrop = document.createElement('div');
-              backdrop.id = 'mobile-sidebar-backdrop';
-              backdrop.classList.add('fixed', 'inset-0', 'bg-black', 'bg-opacity-50', 'z-30', 'lg:hidden');
-              backdrop.addEventListener('click', () => {
-                mobileSidebar.classList.add('-translate-x-full');
+              const backdrop = document.createElement("div");
+              backdrop.id = "mobile-sidebar-backdrop";
+              backdrop.classList.add(
+                "fixed",
+                "inset-0",
+                "bg-black",
+                "bg-opacity-50",
+                "z-30",
+                "lg:hidden"
+              );
+              backdrop.addEventListener("click", () => {
+                mobileSidebar.classList.add("-translate-x-full");
                 backdrop.remove();
               });
               document.body.appendChild(backdrop);
@@ -86,4 +104,5 @@ const {
       });
     </script>
   </body>
+
 </html>
