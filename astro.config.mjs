@@ -11,5 +11,6 @@ export default defineConfig({
     mdx(),
     react()
   ],
-  site: 'https://docs.keymint.dev',
+  site: 'https://docs.keymint.dev',  // Your site URL for absolute links
+  base: '/docs/',                    // Serve everything under /docs/
 });
