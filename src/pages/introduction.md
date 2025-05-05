@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: Introduction to Keymint
-currentPage: /docs/introduction
+currentPage: /introduction
 ---
 
 # Introduction to Keymint
