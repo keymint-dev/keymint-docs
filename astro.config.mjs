@@ -13,6 +13,23 @@ export default defineConfig({
     react()
   ],
   site: 'https://docs.keymint.dev',
-
   base: '/',
+  
+  // Ensure assets are properly built
+  build: {
+    assets: '_astro'
+  },
+  
+  // Adjust output to make links work through rewrite
+  output: 'static',
+  
+  // Configure dev server for CORS
+  server: {
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
+  },
+  
+  // Add this to make it work with both keymint.dev/docs and docs.keymint.dev
+  trailingSlash: 'always'
 });
