@@ -1,5 +1,6 @@
 ---
 import LandingLayout from "../../layouts/LandingLayout.astro";
+import Header from "../../components/Header.astro";
 
 const faqs = {
   licensing: [
@@ -52,6 +53,7 @@ const categoryTitles = {
 ---
 
 <LandingLayout title="Frequently Asked Questions" showSidebar={true}>
+  <Header />
   <div class="py-12 sm:py-16 lg:py-20 bg-white dark:bg-slate-900">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-4xl text-center">
