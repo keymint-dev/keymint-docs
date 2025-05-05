@@ -13,7 +13,7 @@ export default defineConfig({
     react()
   ],
   site: 'https://docs.keymint.dev',
-  base: '/',
+  base: '/docs/',
   
   // Ensure assets are properly built
   build: {
