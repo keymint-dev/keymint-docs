@@ -23,23 +23,25 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title></head
-  >Welcome to Keymint - Developer Resources
-  <meta name="description" content={description} />
+    <title>Welcome to Keymint - Developer Resources</title><meta
+      name="description"
+      content={description}
+    /><link rel="preconnect" href="https://fonts.googleapis.com" /><link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    /><link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    /><script is:inline>
+      const theme = localStorage.getItem("theme") || "light";
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    </script></head
+  >
 
   <!-- Preload fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
 
   <!-- Theme script to avoid FOUC (Flash of Unstyled Content) -->
-  <script is:inline>
-    const theme = localStorage.getItem("theme") || "light";
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  </script>
 
   <body
     class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white antialiased min-h-screen flex flex-col"
@@ -104,5 +106,4 @@ const {
       });
     </script>
   </body>
-
 </html>
