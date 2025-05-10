@@ -1,6 +1,6 @@
 ---
 title: "Customer Login"
-currentPage: /docs/api/customer-portal/login
+currentPage: /docs/customer-portal/login
 layout: ../../layouts/DocsLayout.astro
 ---
 
