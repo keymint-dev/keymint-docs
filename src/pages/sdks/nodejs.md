@@ -1,7 +1,7 @@
 ---
 title: Node.js SDK
 description: Learn how to use the KeyMint Node.js SDK to integrate KeyMint into your Node.js applications.
-layout: ../layouts/DocsLayout.astro
+layout: ../../layouts/DocsLayout.astro
 ---
 
 # KeyMint Node.js SDK
