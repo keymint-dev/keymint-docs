@@ -6,6 +6,7 @@ const navigation = [
     title: "Introduction",
     links: [{ title: "Getting Started", href: "/docs" }],
   },
+
   {
     title: "API Reference",
     links: [
@@ -27,16 +28,18 @@ const navigation = [
           { title: "Get License Details", href: "/docs/api/licenses/get" },
           { title: "Block License", href: "/docs/api/licenses/block" },
           { title: "Unblock License", href: "/docs/api/licenses/unblock" },
-          // ← Insert here:
-          { title: "Offline Licenses", href: "/docs/api/licenses/offline" },
         ],
       },
     ],
   },
   {
+    title: "Topics",
+    links: [{ title: "Offline Licenses", href: "/docs/api/licenses/offline" }],
+  },
+  {
     title: "Customer Portal",
     href: "/docs/customer-portal",
-    links: [{ title: "Login", href: "/docs/customer-portal/login" }],
+    links: [{ title: "Login", href: "/docs/customer-portal/login" }, ,],
   },
   {
     title: "SDKs",
@@ -75,21 +78,116 @@ function isSubSectionActive(link: any, currentPage: string) {
 ---
 
 <nav
-  class="fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 overflow-y-auto py-6 px-4 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 z-40"
+  class="fixed top-16 left-0 h-[calc(100vh-4rem)] w-72 overflow-y-auto py-8 px-6 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 border-r border-slate-200/80 dark:border-slate-800/80 z-40 backdrop-blur-sm"
 >
-  <ul class="space-y-4">
+  <ul class="space-y-6">
     {
       navigation.map((section, index) => {
         const sectionId = `sidebar-section-${index}`;
         const linksId = `sidebar-links-${index}`;
+        const isActive = isActiveSection(section);
+
         return (
           <li class="sidebar-section">
-            {/* Section Header - Now just a label, not a collapsible button */}
-            <div class="uppercase tracking-wide font-semibold text-xs text-slate-500 dark:text-slate-400 mb-2 p-1 rounded">
-              <span>{section.title}</span>
+            {/* Section Header */}
+            <div
+              class={`relative mb-3 ${isActive ? "border-l-2 border-blue-500 pl-3" : ""}`}
+            >
+              <div class="uppercase tracking-wider font-bold text-[10px] text-slate-500 dark:text-slate-400 mb-3 px-2">
+                <span class="flex items-center gap-2">
+                  {section.title === "Introduction" && (
+                    <svg
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  )}
+                  {section.title === "API Reference" && (
+                    <svg
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  )}
+                  {section.title === "Topics" && (
+                    <svg
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm0 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  )}
+                  {section.title === "Customer Portal" && (
+                    <svg
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  )}
+                  {section.title === "SDKs" && (
+                    <svg
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm0 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V8zm0 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  )}
+                  {section.title === "Security" && (
+                    <svg
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  )}
+                  {section.title === "Help" && (
+                    <svg
+                      class="w-3 h-3"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  )}
+                  {section.title}
+                </span>
+              </div>
             </div>
 
-            {/* Links List - Always visible */}
+            {/* Links List */}
             <ul id={linksId} class="space-y-1 section-links">
               {section.links.map((link, linkIndex) => {
                 const hasSubLinks = link.links && link.links.length > 0;
@@ -102,72 +200,84 @@ function isSubSectionActive(link: any, currentPage: string) {
                 return (
                   <li class="sub-section-container">
                     {hasSubLinks ? (
-                      <div class="flex items-center justify-between">
-                        <a
-                          href={link.href}
-                          class={`flex-grow block px-3 py-1.5 rounded-md text-sm transition-colors duration-150 ${
-                            isCurrentPage(link.href)
-                              ? "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium"
-                              : "text-slate-600 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-slate-900 dark:hover:text-slate-100"
-                          }`}
-                        >
-                          {link.title}
-                        </a>
-                        <button
-                          type="button"
-                          class="ml-1 p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-blue-500 dark:focus-visible:ring-offset-slate-900 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
-                          aria-expanded={subSectionInitiallyExpanded.toString()}
-                          aria-controls={subLinksId}
-                          data-subsection-toggle
-                        >
-                          <svg
-                            class={`w-3 h-3 transform transition-transform duration-150 chevron-icon ${subSectionInitiallyExpanded ? "rotate-90" : ""}`}
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                      <div class="group">
+                        <div class="flex items-center justify-between rounded-lg hover:bg-slate-100/70 dark:hover:bg-slate-800/50 transition-all duration-200">
+                          <a
+                            href={link.href}
+                            class={`flex-grow block px-4 py-2.5 text-sm font-medium transition-all duration-200 rounded-l-lg ${
+                              isCurrentPage(link.href)
+                                ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25"
+                                : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
+                            }`}
                           >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="3"
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                          <span class="sr-only">
-                            Toggle {link.title} sub-menu
-                          </span>
-                        </button>
+                            <span class="flex items-center gap-2">
+                              {link.title}
+                              {hasSubLinks && (
+                                <span class="text-xs bg-slate-200 dark:bg-slate-700 px-1.5 py-0.5 rounded-full">
+                                  {link.links.length}
+                                </span>
+                              )}
+                            </span>
+                          </a>
+                          <button
+                            type="button"
+                            class="p-2.5 rounded-r-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-blue-500 dark:focus-visible:ring-offset-slate-900 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200"
+                            aria-expanded={subSectionInitiallyExpanded.toString()}
+                            aria-controls={subLinksId}
+                            data-subsection-toggle
+                          >
+                            <svg
+                              class={`w-4 h-4 transform transition-transform duration-200 chevron-icon ${subSectionInitiallyExpanded ? "rotate-90" : ""}`}
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                              />
+                            </svg>
+                            <span class="sr-only">
+                              Toggle {link.title} sub-menu
+                            </span>
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <a
                         href={link.href}
-                        class={`block px-3 py-1.5 rounded-md text-sm transition-colors duration-150 ${
+                        class={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-[1.02] ${
                           isCurrentPage(link.href)
-                            ? "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium"
-                            : "text-slate-600 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-slate-900 dark:hover:text-slate-100"
+                            ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25 transform"
+                            : "text-slate-700 dark:text-slate-300 hover:bg-slate-100/70 dark:hover:bg-slate-800/50 hover:text-blue-600 dark:hover:text-blue-400"
                         }`}
                       >
                         {link.title}
                       </a>
                     )}
 
-                    {/* Sub-links (if any) - still collapsible */}
+                    {/* Sub-links */}
                     {hasSubLinks && (
                       <ul
                         id={subLinksId}
-                        class={`ml-4 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-800 pl-3 sub-section-links ${!subSectionInitiallyExpanded ? "hidden" : ""}`}
+                        class={`ml-6 mt-2 space-y-1 border-l-2 border-slate-200 dark:border-slate-700 pl-4 sub-section-links transition-all duration-300 ${!subSectionInitiallyExpanded ? "hidden opacity-0" : "opacity-100"}`}
                       >
                         {link.links.map((sublink: any) => (
                           <li>
                             <a
                               href={sublink.href}
-                              class={`block py-1 text-sm transition-colors duration-150 ${
+                              class={`block py-2 px-3 text-sm rounded-md transition-all duration-200 hover:translate-x-1 ${
                                 isCurrentPage(sublink.href)
-                                  ? "text-blue-600 dark:text-blue-400 font-medium"
-                                  : "text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
+                                  ? "text-blue-600 dark:text-blue-400 font-semibold bg-blue-50 dark:bg-blue-950/50 border-l-2 border-blue-500 pl-2"
+                                  : "text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/30"
                               }`}
                             >
-                              {sublink.title}
+                              <span class="flex items-center gap-2">
+                                <span class="w-1.5 h-1.5 rounded-full bg-current opacity-50" />
+                                {sublink.title}
+                              </span>
                             </a>
                           </li>
                         ))}
@@ -186,7 +296,6 @@ function isSubSectionActive(link: any, currentPage: string) {
 
 <script>
   function initializeSidebarCollapsibles() {
-    // Only target subsection toggle buttons now, not main section buttons
     const buttons = document.querySelectorAll<HTMLButtonElement>(
       "[data-subsection-toggle]"
     );
@@ -203,45 +312,87 @@ function isSubSectionActive(link: any, currentPage: string) {
       if (button.dataset.listenerAttached === "true") return;
 
       button.addEventListener("click", () => {
-        const isHidden = links.classList.toggle("hidden");
-        button.setAttribute("aria-expanded", (!isHidden).toString());
-        icon.classList.toggle("rotate-90", !isHidden);
+        const isHidden = links.classList.contains("hidden");
+
+        if (isHidden) {
+          links.classList.remove("hidden", "opacity-0");
+          links.classList.add("opacity-100");
+          button.setAttribute("aria-expanded", "true");
+          icon.classList.add("rotate-90");
+        } else {
+          links.classList.add("opacity-0");
+          links.classList.remove("opacity-100");
+          setTimeout(() => {
+            if (links.classList.contains("opacity-0")) {
+              links.classList.add("hidden");
+            }
+          }, 200);
+          button.setAttribute("aria-expanded", "false");
+          icon.classList.remove("rotate-90");
+        }
       });
 
       button.dataset.listenerAttached = "true";
     });
 
-    // Highlight active page
+    // Enhanced active page highlighting
     const currentPath = window.location.pathname;
     const activeLinks = document.querySelectorAll(".section-links a");
+
     activeLinks.forEach((link) => {
       // Reset any previous active states
       link.classList.remove(
-        "bg-blue-100",
-        "dark:bg-blue-900/50",
-        "text-blue-700",
-        "dark:text-blue-300",
-        "font-medium"
+        "bg-gradient-to-r",
+        "from-blue-500",
+        "to-blue-600",
+        "text-white",
+        "shadow-lg",
+        "shadow-blue-500/25",
+        "transform",
+        "bg-blue-50",
+        "dark:bg-blue-950/50",
+        "border-l-2",
+        "border-blue-500",
+        "pl-2",
+        "font-semibold"
       );
 
-      // Only highlight non-root, non-logo links that match the current path
       if (
         link.getAttribute("href") === currentPath &&
         link.getAttribute("href") !== "/" &&
         !link.closest("header")
       ) {
-        link.classList.add(
-          "bg-blue-100",
-          "dark:bg-blue-900/50",
-          "text-blue-700",
-          "dark:text-blue-300",
-          "font-medium"
-        );
+        // Different styling for main links vs sub-links
+        if (link.closest(".sub-section-links")) {
+          // Sub-link styling
+          link.classList.add(
+            "text-blue-600",
+            "dark:text-blue-400",
+            "font-semibold",
+            "bg-blue-50",
+            "dark:bg-blue-950/50",
+            "border-l-2",
+            "border-blue-500",
+            "pl-2"
+          );
+        } else {
+          // Main link styling
+          link.classList.add(
+            "bg-gradient-to-r",
+            "from-blue-500",
+            "to-blue-600",
+            "text-white",
+            "shadow-lg",
+            "shadow-blue-500/25",
+            "transform"
+          );
+        }
 
         // Expand parent subsection if it's a sublink
         const parentSubSection = link.closest(".sub-section-links");
         if (parentSubSection) {
-          parentSubSection.classList.remove("hidden");
+          parentSubSection.classList.remove("hidden", "opacity-0");
+          parentSubSection.classList.add("opacity-100");
           const toggleButton =
             parentSubSection.previousElementSibling?.querySelector(
               "[data-subsection-toggle]"
@@ -259,7 +410,7 @@ function isSubSectionActive(link: any, currentPage: string) {
 
   initializeSidebarCollapsibles();
 
-  // Use view transitions to prevent full page reloads
+  // Enhanced view transitions with loading states
   if ("startViewTransition" in document) {
     document.addEventListener(
       "click",
@@ -267,21 +418,22 @@ function isSubSectionActive(link: any, currentPage: string) {
         const target = e.target as Element | null;
         const link = target?.closest("a") as HTMLAnchorElement | null;
 
-        // Check if it's an internal link and not the current page
         if (link && link.href) {
           const currentUrl = new URL(window.location.href);
           const linkUrl = new URL(link.href);
 
-          // Prevent default only for same-origin links that would cause a page reload
           if (
             linkUrl.origin === currentUrl.origin &&
             linkUrl.pathname !== currentUrl.pathname
           ) {
             e.preventDefault();
 
-            // Use view transition for smooth navigation
+            // Add loading state to clicked link
+            link.style.opacity = "0.7";
+            link.style.transform = "scale(0.98)";
+
             document.startViewTransition(async () => {
-              await new Promise((resolve) => setTimeout(resolve, 50)); // Small delay for smoother transition
+              await new Promise((resolve) => setTimeout(resolve, 100));
               window.location.href = link.href;
             });
           }
@@ -291,6 +443,5 @@ function isSubSectionActive(link: any, currentPage: string) {
     );
   }
 
-  // Ensure initialization on page load and after view transitions
   document.addEventListener("astro:page-load", initializeSidebarCollapsibles);
 </script>
