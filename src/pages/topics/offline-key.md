@@ -4,7 +4,7 @@ description: Comprehensive security overview for Keymint's software licensing pl
 layout: ../../layouts/DocsLayout.astro
 ---
 
-# Offline License Distribution & Verification
+# Offline License
 
 Enable your customers to run Keymint-protected software completely offline—ideal for air-gapped or internally isolated environments. This guide covers:
 
