@@ -21,67 +21,415 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="https://keymint.dev/favicon.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="https://keymint.dev/favicon.svg"
+    />
     <meta name="generator" content={Astro.generator} />
-    <title>Welcome to Keymint - Developer Resources</title><meta
-      name="description"
-      content={description}
-    /><link rel="preconnect" href="https://fonts.googleapis.com" /><link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    /><link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
-    /><script is:inline>
+    />
+
+    <!-- Theme script to avoid FOUC -->
+    <script is:inline>
       const theme = localStorage.getItem("theme") || "light";
       document.documentElement.classList.toggle("dark", theme === "dark");
-    </script></head
-  >
+    </script>
 
-  <!-- Preload fonts -->
+    <!-- Custom styles for enhanced markdown -->
+    <style>
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
 
-  <!-- Theme script to avoid FOUC (Flash of Unstyled Content) -->
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.3);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(148, 163, 184, 0.5);
+      }
+
+      .dark ::-webkit-scrollbar-thumb {
+        background: rgba(71, 85, 105, 0.3);
+      }
+
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: rgba(71, 85, 105, 0.5);
+      }
+
+      /* Enhanced prose styles */
+      .prose-enhanced {
+        line-height: 1.75;
+        letter-spacing: -0.01em;
+      }
+
+      .prose-enhanced h1 {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+      }
+
+      .prose-enhanced h2 {
+        position: relative;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .prose-enhanced h2::before {
+        content: "";
+        position: absolute;
+        left: -1.5rem;
+        top: 0.5rem;
+        width: 4px;
+        height: 1.5rem;
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        border-radius: 2px;
+      }
+
+      .prose-enhanced blockquote {
+        border-left: 4px solid #3b82f6;
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.05),
+          rgba(29, 78, 216, 0.05)
+        );
+        border-radius: 0 8px 8px 0;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .prose-enhanced blockquote::before {
+        content: '"';
+        position: absolute;
+        top: -0.5rem;
+        left: 1rem;
+        font-size: 3rem;
+        color: #3b82f6;
+        opacity: 0.2;
+        font-family: serif;
+      }
+
+      .prose-enhanced pre {
+        background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+        border: 1px solid rgba(71, 85, 105, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        overflow-x: auto;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .prose-enhanced pre::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+      }
+
+      .prose-enhanced code:not(pre code) {
+        background: rgba(59, 130, 246, 0.1);
+        color: #1d4ed8;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 0.9em;
+      }
+
+      .dark .prose-enhanced code:not(pre code) {
+        background: rgba(59, 130, 246, 0.2);
+        color: #60a5fa;
+      }
+
+      .prose-enhanced table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
+      .prose-enhanced table th {
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        font-weight: 600;
+        text-align: left;
+        padding: 1rem;
+        border-bottom: 2px solid #e2e8f0;
+      }
+
+      .dark .prose-enhanced table th {
+        background: linear-gradient(135deg, #1e293b, #334155);
+        border-bottom-color: #475569;
+      }
+
+      .prose-enhanced table td {
+        padding: 1rem;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
+      .prose-enhanced table tr:hover {
+        background: rgba(59, 130, 246, 0.05);
+      }
+
+      .dark .prose-enhanced table tr:hover {
+        background: rgba(59, 130, 246, 0.1);
+      }
+
+      /* Enhanced links */
+      .prose-enhanced a {
+        position: relative;
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .prose-enhanced a::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        transition: width 0.3s ease;
+      }
+
+      .prose-enhanced a:hover::after {
+        width: 100%;
+      }
+
+      /* Lists */
+      .prose-enhanced ul {
+        padding-left: 0;
+        list-style: none;
+      }
+
+      .prose-enhanced ul li {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .prose-enhanced ul li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: #3b82f6;
+        font-weight: 600;
+      }
+
+      .prose-enhanced ol {
+        padding-left: 0;
+        counter-reset: item;
+      }
+
+      .prose-enhanced ol li {
+        position: relative;
+        padding-left: 2.5rem;
+        margin-bottom: 0.5rem;
+        counter-increment: item;
+      }
+
+      .prose-enhanced ol li::before {
+        content: counter(item);
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        color: white;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      /* Fade-in animation for content */
+      .content-fade-in {
+        animation: fadeIn 0.6s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Reading progress bar */
+      .reading-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        z-index: 100;
+        transition: width 0.1s ease;
+      }
+
+      /* Table of Contents */
+      .toc {
+        background: linear-gradient(
+          135deg,
+          rgba(59, 130, 246, 0.05),
+          rgba(29, 78, 216, 0.05)
+        );
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        position: sticky;
+        top: 2rem;
+      }
+
+      .toc h3 {
+        margin-top: 0;
+        color: #3b82f6;
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .toc ul {
+        margin: 0;
+        padding-left: 1rem;
+      }
+
+      .toc li {
+        margin-bottom: 0.25rem;
+      }
+
+      .toc a {
+        color: #64748b;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s ease;
+      }
+
+      .toc a:hover {
+        color: #3b82f6;
+      }
+
+      .dark .toc a {
+        color: #94a3b8;
+      }
+
+      .dark .toc a:hover {
+        color: #60a5fa;
+      }
+    </style>
+  </head>
 
   <body
-    class="bg-white dark:bg-slate-900 text-slate-900 dark:text-white antialiased min-h-screen flex flex-col"
+    class="bg-gradient-to-br from-white via-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-slate-900 dark:text-white antialiased min-h-screen flex flex-col font-inter"
   >
+    <!-- Reading progress bar -->
+    <div class="reading-progress"></div>
+
     <Header />
 
-    <div class="flex flex-1 mx-auto w-full max-w-8xl lg:pl-64 relative">
+    <div class="flex flex-1 mx-auto w-full max-w-8xl lg:pl-72 relative">
       <aside
         id="mobile-sidebar"
-        class="fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0"
+        class="fixed inset-y-0 left-0 z-40 w-72 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 border-r border-slate-200/80 dark:border-slate-800/80 transform transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 backdrop-blur-sm"
       >
         <Sidebar currentPage={Astro.url.pathname} />
       </aside>
 
       <main
-        class="flex-1 px-4 py-8 md:px-8 lg:px-12 max-w-full overflow-x-hidden prose dark:prose-invert prose-slate prose-headings:font-semibold prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:pb-2 prose-h2:border-slate-200 dark:prose-h2:border-slate-800 prose-a:text-brand-600 dark:prose-a:text-brand-400 prose-a:font-medium prose-a:no-underline hover:prose-a:underline"
+        class="flex-1 px-6 py-8 md:px-12 lg:px-16 max-w-none overflow-x-hidden"
       >
-        <slot />
+        <article
+          class="prose prose-lg prose-slate dark:prose-invert prose-enhanced max-w-4xl mx-auto content-fade-in"
+        >
+          <div
+            class="mb-8 pb-6 border-b border-slate-200 dark:border-slate-800"
+          >
+            <div
+              class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-2"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                  clip-rule="evenodd"></path>
+              </svg>
+              <span
+                >Last updated: <time datetime="2024-01-15"
+                  >January 15, 2024</time
+                ></span
+              >
+            </div>
+          </div>
+
+          <slot />
+
+          <!-- Next/Previous navigation -->
+        </article>
       </main>
     </div>
 
-    <!-- Mobile Sidebar Toggle -->
+    <!-- Enhanced Mobile Sidebar Toggle -->
     <button
       id="mobile-sidebar-toggle"
-      class="fixed top-4 left-4 z-50 lg:hidden p-2 bg-brand-600 text-white rounded-md"
+      class="fixed top-4 left-4 z-50 lg:hidden p-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
     >
-      ☰
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
     </button>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // Mobile sidebar functionality
         const sidebarToggle = document.getElementById("mobile-sidebar-toggle");
         const mobileSidebar = document.getElementById("mobile-sidebar");
-        const mainContent = document.querySelector("main");
 
         if (sidebarToggle && mobileSidebar) {
           sidebarToggle.addEventListener("click", () => {
             mobileSidebar.classList.toggle("-translate-x-full");
 
-            // Optional: Add backdrop effect
             if (mobileSidebar.classList.contains("-translate-x-full")) {
               document.getElementById("mobile-sidebar-backdrop")?.remove();
             } else {
@@ -93,7 +441,8 @@ const {
                 "bg-black",
                 "bg-opacity-50",
                 "z-30",
-                "lg:hidden"
+                "lg:hidden",
+                "backdrop-blur-sm"
               );
               backdrop.addEventListener("click", () => {
                 mobileSidebar.classList.add("-translate-x-full");
@@ -102,6 +451,58 @@ const {
               document.body.appendChild(backdrop);
             }
           });
+        }
+
+        // Reading progress bar
+        const progressBar = document.querySelector(".reading-progress");
+        if (progressBar) {
+          const updateProgress = () => {
+            const totalHeight =
+              document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            progressBar.style.width = `${Math.min(progress, 100)}%`;
+          };
+
+          window.addEventListener("scroll", updateProgress);
+          updateProgress();
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute("href"));
+            if (target) {
+              target.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          });
+        });
+
+        // Auto-generate table of contents
+        const headings = document.querySelectorAll("h2, h3, h4");
+        if (headings.length > 3) {
+          const toc = document.createElement("div");
+          toc.className = "toc";
+          toc.innerHTML = "<h3>Table of Contents</h3><ul></ul>";
+
+          const tocList = toc.querySelector("ul");
+          headings.forEach((heading, index) => {
+            const id = `heading-${index}`;
+            heading.id = id;
+
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="#${id}">${heading.textContent}</a>`;
+            li.style.paddingLeft = `${(parseInt(heading.tagName.charAt(1)) - 2) * 1}rem`;
+            tocList.appendChild(li);
+          });
+
+          const firstHeading = document.querySelector("h1");
+          if (firstHeading) {
+            firstHeading.insertAdjacentElement("afterend", toc);
+          }
         }
       });
     </script>
