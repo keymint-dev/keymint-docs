@@ -22,7 +22,6 @@ Enable your customers to run Keymint-protected software completely offline—ide
 1. **Log in** to Keymint and go to **Products → [Your Product] → Licenses**.
 2. Locate the license row you wish to issue offline.
 3. In the **Activations** column, click the **Eye icon** ( 👁️ ):  
-   ![Eye Icon](https://lucide.dev/assets/icons/eye.svg)  
    This opens the **Offline License** modal.
 
 ---

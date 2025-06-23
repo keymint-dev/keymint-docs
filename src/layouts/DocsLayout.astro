@@ -480,30 +480,6 @@ const {
             }
           });
         });
-
-        // Auto-generate table of contents
-        const headings = document.querySelectorAll("h2, h3, h4");
-        if (headings.length > 3) {
-          const toc = document.createElement("div");
-          toc.className = "toc";
-          toc.innerHTML = "<h3>Table of Contents</h3><ul></ul>";
-
-          const tocList = toc.querySelector("ul");
-          headings.forEach((heading, index) => {
-            const id = `heading-${index}`;
-            heading.id = id;
-
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="#${id}">${heading.textContent}</a>`;
-            li.style.paddingLeft = `${(parseInt(heading.tagName.charAt(1)) - 2) * 1}rem`;
-            tocList.appendChild(li);
-          });
-
-          const firstHeading = document.querySelector("h1");
-          if (firstHeading) {
-            firstHeading.insertAdjacentElement("afterend", toc);
-          }
-        }
       });
     </script>
   </body>
