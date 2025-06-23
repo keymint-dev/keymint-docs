@@ -136,7 +136,6 @@ console.log("Licensed to:", payload.sub);
 - **Filename convention:**  
   `license-<KEY>-<machineCode?>-YYYYMMDD.lic`
 - **Short TTLs:** Use shorter TTLs (e.g. 7 days) for revocable offline licenses.
-- **Key rotation:** Support multiple public keys in your client to handle rotations.
 - **Secure storage:** Instruct customers to store `.lic` files with appropriate permissions.
 - **Caching strategy:** Apps can cache the `.lic` file and only re-fetch when nearing expiry.
 
