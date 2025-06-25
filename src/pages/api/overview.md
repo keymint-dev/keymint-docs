@@ -28,7 +28,7 @@ See the [Authentication Guide](/docs/api/authentication) for details.
 
 All API requests use the following base URL:
 
-`https://docs/api.keymint.dev`
+`https://api.keymint.dev`
 
 ## Authentication
 

@@ -14,7 +14,7 @@ Deactivate a specific license key (`licenseKey`) by marking it as inactive (bloc
 POST /block-key
 ```
 
-Base URL: `https://docs/api.keymint.dev`
+Base URL: `https://api.keymint.dev`
 
 ## Request Overview
 

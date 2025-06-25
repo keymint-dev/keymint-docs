@@ -14,7 +14,7 @@ Registers a specific device (`hostId`) to a license key (`licenseKey`), consumin
 POST /activate-key
 ```
 
-Base URL: `https://docs/api.keymint.dev`
+Base URL: `https://api.keymint.dev`
 
 ## Request
 

@@ -14,7 +14,7 @@ Retrieve detailed information about a specific license key (`licenseKey`), inclu
 POST /get-key
 ```
 
-Base URL: `https://docs/api.keymint.dev`
+Base URL: `https://api.keymint.dev`
 
 ## Request
 

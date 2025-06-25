@@ -14,7 +14,7 @@ Reactivates a previously blocked license key (`licenseKey`), allowing it to be v
 POST /unblock-key
 ```
 
-Base URL: `https://docs/api.keymint.dev`
+Base URL: `https://api.keymint.dev`
 
 ## Request
 

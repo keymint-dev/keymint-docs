@@ -14,7 +14,7 @@ Generate a new license key for a specific product (`productId`). You can optiona
 POST /create-key
 ```
 
-Base URL: `https://docs/api.keymint.dev`
+Base URL: `https://api.keymint.dev`
 
 ## Request
 

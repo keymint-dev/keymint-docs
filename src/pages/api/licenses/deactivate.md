@@ -14,7 +14,7 @@ Remove a device registration (`hostId`) from a license key (`licenseKey`), freei
 POST /deactivate-key
 ```
 
-Base URL: `https://docs/api.keymint.dev`
+Base URL: `https://api.keymint.dev`
 
 ## Request Details
 
