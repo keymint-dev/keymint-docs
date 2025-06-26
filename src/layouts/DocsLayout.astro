@@ -57,7 +57,7 @@ const {
         <Sidebar currentPage={Astro.url.pathname} />
       </aside>
 
-      <!-- Main Content + ToC Wrapper -->
+      <!-- Main Content + ToC -->
       <div class="flex w-full">
         <!-- Main Content -->
         <main class="flex-1 px-6 py-8 md:px-12 lg:px-16 max-w-none overflow-x-hidden">
@@ -73,9 +73,15 @@ const {
         <!-- Table of Contents (Right) -->
         <aside
           id="toc-wrapper"
-          class="hidden xl:block w-64 shrink-0 px-4 py-8 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto border-l border-slate-200/70 dark:border-slate-800/60"
+          class="hidden xl:block w-64 shrink-0 px-4 py-6 sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto border-l border-slate-200/70 dark:border-slate-800/60"
         >
-          <nav id="toc" class="text-sm font-medium text-slate-700 dark:text-slate-300 space-y-2">
+          <div class="text-xs uppercase font-semibold tracking-wide text-slate-400 dark:text-slate-500 mb-4">
+            On this page
+          </div>
+          <nav
+            id="toc"
+            class="space-y-2 text-sm font-medium text-slate-700 dark:text-slate-300"
+          >
             <!-- Populated via JS -->
           </nav>
         </aside>
@@ -90,6 +96,16 @@ const {
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
     </button>
+
+    <style>
+      /* Optional ScrollSpy styling */
+      .toc-active {
+        background-color: rgba(59, 130, 246, 0.1);
+        color: rgb(37 99 235);
+        font-weight: 600;
+        border-radius: 0.375rem;
+      }
+    </style>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -165,8 +181,11 @@ const {
               text.toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]/g, "");
             heading.id = slug;
 
-            const indent = heading.tagName === "H3" ? "ml-4" : "";
-            return `<a href="#${slug}" class="block ${indent} hover:text-blue-600 dark:hover:text-blue-400 transition-colors">${text}</a>`;
+            const indent =
+              heading.tagName === "H3"
+                ? "pl-4 border-l-2 border-slate-200 dark:border-slate-700 ml-2"
+                : "";
+            return `<a href="#${slug}" class="block py-1.5 px-2 rounded hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all ${indent}">${text}</a>`;
           });
 
           tocContainer.innerHTML = tocItems.join("");
