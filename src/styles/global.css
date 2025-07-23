@@ -47,7 +47,11 @@
 
   /* Custom selection color */
   ::selection {
-    @apply bg-brand-100 dark:bg-brand-900;
+    background-color: theme('colors.brand.100');
+  }
+
+  .dark ::selection {
+    background-color: theme('colors.brand.900');
   }
   
   /* Page transitions */

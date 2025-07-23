@@ -1,0 +1,42 @@
+---
+import { navigation } from "./NavLinks.astro";
+import type { Link } from "../types";
+
+const { currentPage } = Astro.props;
+
+function isCurrentPage(href: string): boolean {
+  return currentPage === href;
+}
+---
+
+<nav class="mt-4">
+  <ul class="space-y-2">
+    {navigation.map((section) => (
+      <li>
+        <h2 class="font-semibold text-slate-800 dark:text-slate-200 mb-2">
+          {section.title}
+        </h2>
+        <ul class="space-y-1">
+          {section.links.map((link?: Link) => {
+            if (!link) return null;
+            return (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={[
+                    "block px-3 py-2 rounded-md text-base font-medium",
+                    isCurrentPage(link.href)
+                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300"
+                      : "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800",
+                  ]}
+                >
+                  {link.title}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </li>
+    ))}
+  </ul>
+</nav>

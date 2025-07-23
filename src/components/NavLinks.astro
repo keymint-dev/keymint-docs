@@ -1,0 +1,62 @@
+---
+import type { NavigationItem } from "../types";
+
+export const navigation: NavigationItem[] = [
+  {
+    title: "Introduction",
+    links: [{ title: "Getting Started", href: "/docs" }],
+  },
+
+  {
+    title: "API Reference",
+    links: [
+      { title: "Overview", href: "/docs/api/overview" },
+      { title: "Authentication", href: "/docs/api/authentication" },
+      { title: "Error Codes", href: "/docs/api/error-codes" },
+      { title: "Rate Limits", href: "/docs/api/rate-limits" },
+      {
+        title: "License Management",
+        href: "/docs/api/licenses",
+        links: [
+          { title: "Overview", href: "/docs/api/licenses" },
+          { title: "Create License", href: "/docs/api/licenses/create" },
+          { title: "Activate License", href: "/docs/api/licenses/activate" },
+          {
+            title: "Deactivate License",
+            href: "/docs/api/licenses/deactivate",
+          },
+          { title: "Get License Details", href: "/docs/api/licenses/get" },
+          { title: "Block License", href: "/docs/api/licenses/block" },
+          { title: "Unblock License", href: "/docs/api/licenses/unblock" },
+        ],
+      },
+    ],
+  },
+  {
+    title: "Topics",
+    href: "/docs/topics",
+    links: [{ title: "Offline Licenses", href: "/docs/topics/offline-key" }],
+  },
+  {
+    title: "Customer Portal",
+    href: "/docs/customer-portal",
+    links: [{ title: "Login", href: "/docs/customer-portal/login" }],
+  },
+  {
+    title: "SDKs",
+    href: "/docs/sdks",
+    links: [
+      { title: "Node.js", href: "/docs/sdks/nodejs" },
+      { title: "Python", href: "/docs/sdks/python" },
+    ],
+  },
+  {
+    title: "Security",
+    links: [{ title: "Overview", href: "/docs/security/" }],
+  },
+  {
+    title: "Help",
+    links: [{ title: "FAQs", href: "/docs/help/faqs" }],
+  },
+];
+---
