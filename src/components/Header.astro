@@ -100,41 +100,6 @@ import MobileNav from "./MobileNav.astro";
 
 </header>
 
-<script>
-  // Enhanced mobile menu toggle with icon animation
-  document.addEventListener("DOMContentLoaded", function () {
-    const mobileMenuButton = document.getElementById("mobile-menu-button");
-    const mobileSidebar = document.getElementById("mobile-sidebar");
-
-    if (mobileMenuButton && mobileSidebar) {
-      mobileMenuButton.addEventListener("click", () => {
-        mobileSidebar.classList.toggle("-translate-x-full");
-
-        if (mobileSidebar.classList.contains("-translate-x-full")) {
-          document.getElementById("mobile-sidebar-backdrop")?.remove();
-        } else {
-          const backdrop = document.createElement("div");
-          backdrop.id = "mobile-sidebar-backdrop";
-          backdrop.classList.add(
-            "fixed",
-            "inset-0",
-            "bg-black",
-            "bg-opacity-50",
-            "z-30",
-            "lg:hidden",
-            "backdrop-blur-sm"
-          );
-          backdrop.addEventListener("click", () => {
-            mobileSidebar.classList.add("-translate-x-full");
-            backdrop.remove();
-          });
-          document.body.appendChild(backdrop);
-        }
-      });
-    }
-  });
-</script>
-
 <style>
   /* Custom brand colors - adjust these to match your brand */
   :root {

@@ -99,35 +99,39 @@ const {
     </style>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
+      function initializeLayoutScripts() {
         const sidebarToggle = document.getElementById("mobile-sidebar-toggle");
         const mobileSidebar = document.getElementById("mobile-sidebar");
 
         if (sidebarToggle && mobileSidebar) {
-          sidebarToggle.addEventListener("click", () => {
-            mobileSidebar.classList.toggle("-translate-x-full");
+          // Avoid adding multiple listeners
+          if (sidebarToggle.dataset.listenerAttached !== "true") {
+            sidebarToggle.addEventListener("click", () => {
+              mobileSidebar.classList.toggle("-translate-x-full");
 
-            if (mobileSidebar.classList.contains("-translate-x-full")) {
-              document.getElementById("mobile-sidebar-backdrop")?.remove();
-            } else {
-              const backdrop = document.createElement("div");
-              backdrop.id = "mobile-sidebar-backdrop";
-              backdrop.classList.add(
-                "fixed",
-                "inset-0",
-                "bg-black",
-                "bg-opacity-50",
-                "z-30",
-                "lg:hidden",
-                "backdrop-blur-sm"
-              );
-              backdrop.addEventListener("click", () => {
-                mobileSidebar.classList.add("-translate-x-full");
-                backdrop.remove();
-              });
-              document.body.appendChild(backdrop);
-            }
-          });
+              if (mobileSidebar.classList.contains("-translate-x-full")) {
+                document.getElementById("mobile-sidebar-backdrop")?.remove();
+              } else {
+                const backdrop = document.createElement("div");
+                backdrop.id = "mobile-sidebar-backdrop";
+                backdrop.classList.add(
+                  "fixed",
+                  "inset-0",
+                  "bg-black",
+                  "bg-opacity-50",
+                  "z-30",
+                  "lg:hidden",
+                  "backdrop-blur-sm"
+                );
+                backdrop.addEventListener("click", () => {
+                  mobileSidebar.classList.add("-translate-x-full");
+                  backdrop.remove();
+                });
+                document.body.appendChild(backdrop);
+              }
+            });
+            sidebarToggle.dataset.listenerAttached = "true";
+          }
         }
 
         // Progress bar
@@ -139,12 +143,15 @@ const {
             const progress = (window.scrollY / totalHeight) * 100;
             progressBar.style.width = `${Math.min(progress, 100)}%`;
           };
-          window.addEventListener("scroll", updateProgress);
+          // We can keep this on scroll, but let's ensure it's only attached once if needed,
+          // though scroll listeners on window are generally safe to re-add.
+          window.addEventListener("scroll", updateProgress, { passive: true });
           updateProgress();
         }
 
         // Smooth anchor scroll
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          // This can be simplified as it doesn't need re-attaching in the same way
           anchor.addEventListener("click", function (this: HTMLAnchorElement, e) {
             e.preventDefault();
             const href = this.getAttribute("href");
@@ -166,6 +173,9 @@ const {
 
           if (!tocContainer || !content) return;
 
+          // Clear previous TOC
+          tocContainer.innerHTML = "";
+
           const headings = content.querySelectorAll("h2, h3");
           const tocItems = Array.from(headings).map((heading) => {
             const text = heading.textContent || "";
@@ -185,7 +195,10 @@ const {
         };
 
         generateTOC();
-      });
+      }
+
+      document.addEventListener("astro:page-load", initializeLayoutScripts);
+      initializeLayoutScripts(); // Also run on initial load
     </script>
   </body>
 </html>
