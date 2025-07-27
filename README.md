@@ -17,7 +17,7 @@ To get a local copy up and running, follow these simple steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/catsika/keymint-docs-v2.git
+   git clone https://github.com/keymint-dev/keymint-docs.git
    ```
 2. Install NPM packages
    ```sh
