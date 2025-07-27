@@ -261,28 +261,27 @@ const categoryTitles = {
           </div>
         </div>
 
-        <div class="mt-16 text-center bg-slate-50 dark:bg-slate-700 rounded-xl shadow-soft py-10 px-6">
+        <div class="mt-16 text-center">
           <h3 class="text-xl font-semibold text-slate-900 dark:text-white mb-4">
             Still have questions?
           </h3>
-          <p class="text-slate-700 dark:text-slate-300 mb-8">
+          <p class="text-slate-600 dark:text-slate-300 mb-8">
             Can't find the answer you're looking for? Please contact our support
             team.
           </p>
           <a
             href="mailto:support@keymint.dev"
-            class="inline-flex items-center rounded-md bg-brand-600 px-5 py-3 text-sm font-medium text-white shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors"
+            class="inline-flex items-center rounded-md bg-brand-600 px-5 py-3 text-sm font-medium  text-slate-900 shadow-sm hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors"
           >
             Contact Support
           </a>
-        </div>
         </div>
       </div>
     </div>
   </div>
 </LandingLayout>
 
-<script>
+<script is:inline>
   document.addEventListener("DOMContentLoaded", () => {
     const faqButtons = document.querySelectorAll("[data-faq-toggle]");
 
@@ -290,13 +289,9 @@ const categoryTitles = {
       button.addEventListener("click", () => {
         const panel = button.nextElementSibling;
         const svg = button.querySelector("svg");
-        const currentCategory = button.closest("[data-faq-category]");
-
-        if (!panel || !svg || !currentCategory) {
-          return;
-        }
 
         // Close all other open panels in the same category
+        const currentCategory = button.closest("[data-faq-category]");
         const otherPanels =
           currentCategory.querySelectorAll("[data-faq-panel]");
         const otherSvgs = currentCategory.querySelectorAll(
@@ -305,8 +300,8 @@ const categoryTitles = {
 
         otherPanels.forEach((otherPanel) => {
           if (otherPanel !== panel) {
-            otherPanel.classList.remove("max-h-full");
             otherPanel.classList.add("max-h-0");
+            otherPanel.classList.remove("max-h-full");
           }
         });
 
