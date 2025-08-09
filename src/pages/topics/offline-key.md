@@ -326,20 +326,85 @@ async function checkLicense() {
 }
 ```
 
-### Error Handling
+### Quick Implementation
 
-The verification system provides granular error codes for better UX:
+**Short version:** Ship a trust store in your app mapping `kid` → vendor public key (PEM) from Keymint "Manage public keys". Read `.lic` JSON, verify JWT with Ed25519 only.
 
-| Error Code         | Description                                    | Recommended Action           |
-|--------------------|------------------------------------------------|------------------------------|
-| `ok`              | License is valid                               | Enable features              |
-| `unknown_kid`     | Key ID not found in trust store               | Update application           |
-| `token_malformed` | Invalid JWT structure or .lic format          | Contact support              |
-| `signature_invalid` | Cryptographic signature verification failed   | Contact support              |
-| `token_expired`   | License has expired                            | Show renewal dialog          |
-| `not_yet_valid`   | License not yet active                         | Check system clock           |
-| `machine_mismatch` | Hardware fingerprint doesn't match            | Re-activate on this machine  |
-| `product_mismatch` | License not valid for this product            | Contact support              |
+```typescript
+import { importSPKI, jwtVerify, decodeProtectedHeader } from 'jose';
+import fs from 'fs';
+
+// Trust store helper - ship with your app
+async function buildTrustStore() {
+  const trustedKeys = [
+    // Copy from Keymint "Manage Public Keys"
+    { kid: 'AbC123XyZ', pem: `-----BEGIN PUBLIC KEY-----\nMCowBQ...\n-----END PUBLIC KEY-----` },
+    { kid: 'DeF456UvW', pem: `-----BEGIN PUBLIC KEY-----\nMCowBQ...\n-----END PUBLIC KEY-----` }, // Next key for rotation
+  ];
+  
+  const store = new Map();
+  for (const { kid, pem } of trustedKeys) {
+    store.set(kid, await importSPKI(pem, 'EdDSA'));
+  }
+  return store;
+}
+
+// Verify license
+async function verifyOfflineLicense(licFilePath: string, options: { productId?: string, machineCode?: string } = {}) {
+  const trustStore = await buildTrustStore();
+  
+  // 1. Read .lic file
+  const { licenseToken } = JSON.parse(fs.readFileSync(licFilePath, 'utf8'));
+  
+  // 2. Decode header, get kid
+  const header = decodeProtectedHeader(licenseToken);
+  
+  // 3. Resolve key from trust store
+  let key = header.kid ? trustStore.get(header.kid) : null;
+  if (!key) {
+    // Fallback: try all trusted keys
+    for (const k of trustStore.values()) {
+      try {
+        await jwtVerify(licenseToken, k, { algorithms: ['EdDSA'] });
+        key = k;
+        break;
+      } catch { /* continue */ }
+    }
+  }
+  
+  if (!key) throw new Error('Unknown key ID or invalid signature');
+  
+  // 4. Verify JWT with Ed25519 only
+  const { payload } = await jwtVerify(licenseToken, key, { algorithms: ['EdDSA'] });
+  
+  // 5. Validate claims
+  const now = Math.floor(Date.now() / 1000);
+  if (payload.exp && now > payload.exp) throw new Error('License expired');
+  if (payload.nbf && now < payload.nbf) throw new Error('License not yet valid');
+  if (payload.type && payload.type !== 'offline') throw new Error('Invalid license type');
+  if (options.productId && payload.productId !== options.productId) throw new Error('Product mismatch');
+  if (options.machineCode && payload.machineCode && payload.machineCode !== options.machineCode) throw new Error('Machine mismatch');
+  
+  return payload; // License valid!
+}
+
+// Usage
+try {
+  const license = await verifyOfflineLicense('./license.lic', { 
+    productId: 'my-app',
+    machineCode: getLocalMachineCode() 
+  });
+  console.log('Licensed to:', license.sub);
+} catch (err) {
+  console.error('License invalid:', err.message);
+}
+```
+
+**Key points:**
+- **No embedded public keys**: Trust store only, never from `.lic` file
+- **Algorithm pinning**: Always use `algorithms: ['EdDSA']`
+- **Multiple keys**: Ship current + next key for smooth rotation
+- **Kid fallback**: Try all keys if `kid` missing (legacy support)
 
 ---
 
