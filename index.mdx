@@ -1,97 +1,82 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Keymint Documentation"
+description: "Secure, scalable licensing for your software. Learn how to integrate Keymint, manage licenses, and use our SDKs."
 ---
 
-## Setting up
+## Welcome to Keymint
 
-Get your documentation site up and running in minutes.
-
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
+Build, ship, and manage software licenses with confidence. Use our REST API and SDKs to create, activate, and manage licenses, plus give your customers self-service access via the Customer Portal.
 
 <Columns cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
+    title="API Overview"
+    icon="book"
+    href="/api-reference/overview"
   >
-    Edit your docs locally and preview them in real time.
+    Base URL, auth, request/response format, and key concepts.
   </Card>
   <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
+    title="Authentication"
+    icon="shield-keyhole"
+    href="/api-reference/authentication"
   >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+    How to authenticate with an access token.
   </Card>
   <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
+    title="Node.js SDK"
+    icon="node"
+    href="/sdks/nodejs"
   >
-    Auto-generate API documentation from OpenAPI specifications.
+    Install and use the official Node.js helper.
+  </Card>
+  <Card
+    title="Python SDK"
+    icon="python"
+    href="/sdks/python"
+  >
+    Work with licenses from Python.
+  </Card>
+  <Card
+    title="Offline License"
+    icon="plug-circle-xmark"
+    href="/topics/offline-key"
+  >
+    Support for air‑gapped and offline environments.
+  </Card>
+  <Card
+    title="Customer Portal"
+    icon="user"
+    href="/help/customer-portal/login"
+  >
+    End-user portal for viewing licenses and managing activations.
   </Card>
 </Columns>
 
-## Create beautiful pages
+## Licenses API
 
-Everything you need to create world-class documentation.
+Core endpoints you’ll use to issue and manage licenses.
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
+<CardGroup cols={3}>
+  <Card title="Create" icon="square-plus" href="/api-reference/licenses/create">
+    Create a new license for a product and customer.
   </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
+  <Card title="Get" icon="magnifying-glass" href="/api-reference/licenses/get">
+    Retrieve license details.
   </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
+  <Card title="Activate" icon="circle-check" href="/api-reference/licenses/activate">
+    Bind a license to a device (hostId).
   </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
+  <Card title="Deactivate" icon="circle-xmark" href="/api-reference/licenses/deactivate">
+    Remove a device activation.
   </Card>
-</Columns>
+  <Card title="Block" icon="ban" href="/api-reference/licenses/block">
+    Immediately block a compromised or refunded key.
+  </Card>
+  <Card title="Unblock" icon="arrow-rotate-left" href="/api-reference/licenses/unblock">
+    Restore a previously blocked license.
+  </Card>
+</CardGroup>
 
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<Callout>
+Have questions? Email support@keymint.dev or visit the Dashboard.
+</Callout>
