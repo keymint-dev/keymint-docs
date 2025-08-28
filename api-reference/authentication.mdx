@@ -1,0 +1,49 @@
+---
+title: API Authentication
+description: Authenticate requests to the Keymint API using Access Tokens and scopes.
+---
+
+
+<Callout type="info">
+Access Tokens must be sent as a Bearer token in the Authorization header for every API request.
+</Callout>
+
+## Access Tokens
+
+Access Tokens are unique strings required for authentication. Include them as a Bearer token in the `Authorization` header of every API request.
+
+### Obtaining an Access Token
+
+1. Log in to your Keymint Dashboard.
+2. Navigate to Developer.
+3. Generate a token and set its scopes.
+
+### Using the Access Token
+
+Include the token in the `Authorization` header of your API requests.
+
+```http
+GET /activate-key HTTP/1.1
+Host: api.keymint.dev
+Authorization: Bearer at_your_token_here
+```
+
+### Scopes
+
+Scopes help restrict token permissions for better security and organization:
+
+- Product scopes: Limit tokens to specific products.
+
+## Security Best Practices
+
+- Keep tokens secret and store them securely.
+- Use HTTPS for all API requests.
+- Generate tokens with the minimal required scopes.
+- Revoke compromised tokens immediately.
+
+## Token Management
+
+Manage your tokens directly in the Keymint Dashboard:
+
+- Generate new tokens as needed.
+- Revoke existing tokens to maintain security.

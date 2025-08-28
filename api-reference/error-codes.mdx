@@ -1,0 +1,35 @@
+---
+title: Error Codes
+description: Understand Keymint API error handling and custom error codes.
+---
+
+## Error Code Reference
+
+| HTTP Status | Code | Description | Notes |
+| --- | --- | --- | --- |
+| 200 OK | 0 | Success: Request completed. | Operation successful. Check message for details. |
+| 400 Bad Request | 1 | Malformed Request: Missing/invalid params. | Check required fields (productId, licenseKey, etc.) and formatting (expiryDate). |
+| 401 Unauthorized | 1 | Invalid Token: accessToken missing, invalid, expired, or lacks scope. | Verify token validity, expiry, and productId permissions. |
+| 403 Forbidden | 2 | Operation Restricted: License state prevents action. | Examples: Expired, activation limit, inactive, blocked. |
+| 404 Not Found | 1 or 2 | Resource Not Found: Product, license, customer, or device. | Verify IDs (productId, licenseKey, hostId, customerId). code: 2 specific to 'Customer not found' in create. |
+| 409 Conflict | 2 | Resource Conflict: State prevents request. | Example: Creating customer (/create-key) with existing email. |
+| 429 Too Many Requests | 3 | Rate Limit Exceeded. | Use exponential backoff. Applies mainly to activation/validation. |
+| 500 Internal Server Error | 1 | Server Error: Unexpected issue. | Server-side problem (DB, code). Check specific message. Contact support if persistent. |
+
+## Additional Notes
+
+- Some error codes (like 1 and 2) are reused across different HTTP statuses.
+- The HTTP status code provides the primary classification (e.g., Bad Request, Unauthorized).
+- The message field offers specific details about the error.
+
+### Rate Limiting (429)
+
+Implement robust retry logic, preferably with exponential backoff, when encountering this status.
+
+### Server Errors (500)
+
+These usually indicate a problem beyond the client's control. Log the error and notify support if the issue persists.
+
+### code Field
+
+This custom code provides a secondary level of detail, differentiating between types of errors within the same HTTP status (e.g., 404 with code: 1 vs code: 2).

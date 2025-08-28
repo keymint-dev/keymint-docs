@@ -1,0 +1,64 @@
+---
+title: Unblock License Key
+---
+
+Reactivates a previously blocked license key (licenseKey), allowing it to be validated and used for activations again.
+
+## Endpoint
+
+```http
+POST /unblock-key
+```
+
+Base URL: https://api.keymint.dev
+
+## Request
+
+Send a POST request with a JSON body and Content-Type: application/json. Include the accessToken as a Bearer token in the Authorization header.
+
+### Headers
+
+| Header | Value | Required | Description |
+| --- | --- | --- | --- |
+| Authorization | `Bearer <accessToken>` | Yes | API access token for authentication. |
+
+### Body Parameters
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| productId | string | Yes | Unique product identifier (e.g., prod_...). |
+| licenseKey | string | Yes | License key string to unblock (e.g., lk_...). |
+
+### Example Request
+
+```http
+POST /unblock-key HTTP/1.1
+Host: api.keymint.dev
+Authorization: Bearer at_verylongaccesstokenstringgeneratedforyourapplication12345678
+Content-Type: application/json
+
+{
+  "productId": "your_product_id_123",
+  "licenseKey": "xxxxx-xxxxx-xxxxx-xxxxx"
+}
+```
+
+## Responses
+
+### 200 OK
+
+```json
+{
+  "message": "Key unblocked",
+  "code": 0
+}
+```
+
+### Errors
+
+| Status | Code | Description | Example |
+| --- | --- | --- | --- |
+| 400 | 1 | Missing required parameters (productId, licenseKey). | `{"message": "Missing required params", "code": 1}` |
+| 401 | 1 | Invalid or missing accessToken. | `{"message": "Invalid access token", "code": 1}` |
+| 404 | 1 | productId or licenseKey not found, or product is inactive. | `{"message": "Invalid license key", "code": 1}` |
+| 500 | 1 | Internal server error during the unblocking process. | `{"message": "Server error", "code": 1}` |

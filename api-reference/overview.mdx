@@ -1,0 +1,56 @@
+---
+title: API Overview
+description: Keymint API overview, base URL, request/response format, and key concepts.
+---
+
+## Base URL
+
+All API requests use the following base URL:
+
+```
+https://api.keymint.dev
+```
+
+## Authentication
+
+Authenticate requests with your accessToken as a Bearer token in the Authorization header. Keep it secure and avoid exposing it in public repositories.
+
+<CodeGroup>
+  ```http Request example
+  GET /activate-key HTTP/1.1
+  Host: api.keymint.dev
+  Authorization: Bearer YOUR_ACCESS_TOKEN
+  ```
+</CodeGroup>
+
+<Callout type="tip">
+See the Authentication guide for more details.
+</Callout>
+
+## Request & Response Format
+
+- Use JSON for request bodies and responses.
+- Include the Content-Type: application/json header for POST requests.
+- Expect 2xx status codes for success and 4xx/5xx for errors.
+
+## Key Concepts
+
+- Product (productId): The software or service being licensed.
+- License (licenseKey): A unique key granting usage rights.
+- Activation (hostId): Tracks where a license is activated.
+- Access Token (accessToken): Your secret credential for API requests.
+
+## Error Handling
+
+Failed requests return an HTTP status code and a JSON error response:
+
+```json
+{
+  "code": 2,
+  "message": "Activation limit reached"
+}
+```
+
+<Callout>
+Learn more in the Error Codes reference and Rate Limits pages.
+</Callout>

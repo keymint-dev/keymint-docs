@@ -1,0 +1,94 @@
+---
+title: Get License Details
+---
+
+Retrieve detailed information about a specific license key (licenseKey), including its properties, activation status, associated devices, and linked customer data (if any).
+
+## Endpoint
+
+```http
+POST /get-key
+```
+
+Base URL: https://api.keymint.dev
+
+## Request
+
+Send a POST request with a JSON body and Content-Type: application/json. Include the accessToken as a Bearer token in the Authorization header.
+
+### Headers
+
+| Header | Value | Required | Description |
+| --- | --- | --- | --- |
+| Authorization | `Bearer <accessToken>` | Yes | API access token for authentication. |
+
+### Body Parameters
+
+| Parameter | Type | Required | Description | Constraints |
+| --- | --- | --- | --- | --- |
+| productId | string | Yes | Unique product identifier (e.g., prod_...). | min: 22, max: 256 |
+| licenseKey | string | Yes | License key string (e.g., lk_...). | min: 23, max: 256 |
+
+### Example Request
+
+```http title="HTTP"
+POST /get-key HTTP/1.1
+Host: api.keymint.dev
+Authorization: Bearer at_verylongaccesstokenstringgeneratedforyourapplication12345678
+Content-Type: application/json
+
+{
+  "productId": "your_product_id_123",
+  "licenseKey": "xxxxx-xxxxx-xxxxx-xxxxx"
+}
+```
+
+## Responses
+
+### 200 OK
+
+```json
+{
+  "code": 0,
+  "data": {
+    "license": {
+      "id": "lki_...",
+      "key": "xxxxx-xxxxx-xxxxx-xxxxx",
+      "product_id": "your_product_id_123",
+      "max_activations": 5,
+      "activations": 2,
+      "devices": [
+        {
+          "host_id": "a1:b2:c3:d4:e5:f6-hashed-uuid-or-other-id",
+          "device_tag": "Dev Workstation",
+          "ip_address": "192.168.1.100",
+          "activation_time": "2023-10-27T10:00:00Z"
+        },
+        {
+          "host_id": "another-unique-device-identifier",
+          "device_tag": "John's Laptop",
+          "ip_address": "10.0.0.5",
+          "activation_time": "2023-11-15T14:30:00Z"
+        }
+      ],
+      "activated": true,
+      "expiration_date": "2024-12-31T23:59:59Z"
+    },
+    "customer": {
+      "id": "cust_...",
+      "name": "Jane Doe",
+      "email": "jane.doe@example.com",
+      "active": true
+    }
+  }
+}
+```
+
+### Errors
+
+| Status | Code | Description | Example |
+| --- | --- | --- | --- |
+| 400 | 1 | Missing required parameters (productId, licenseKey). | `{"message": "Missing required params", "code": 1}` |
+| 401 | 1 | Invalid or missing Authorization header. | `{"message": "Invalid access token", "code": 1}` |
+| 404 | 1 | productId or licenseKey not found. | `{"message": "Invalid license key", "code": 1}` |
+| 500 | 1 | Internal server error retrieving key details. | `{"message": "Server error", "code": 1}` |
