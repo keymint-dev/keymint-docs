@@ -1,8 +1,8 @@
-# Mintlify Starter Kit
+# Keymint Documentation
 
-Use the starter kit to get your docs deployed and ready to customize.
+Complete documentation for the Keymint license management platform.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+This repository contains:
 
 - Guide pages
 - Navigation
@@ -10,7 +10,7 @@ Click the green **Use this template** button at the top of this repo to copy the
 - API reference pages
 - Use of popular components
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+**[View the live documentation](https://docs.keymint.dev)**
 
 ## Development
 
@@ -30,7 +30,7 @@ View your local preview at `http://localhost:3000`.
 
 ## Publishing changes
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+Changes are deployed to production automatically after pushing to the default branch.
 
 ## Need help?
 
@@ -40,5 +40,6 @@ Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/sett
 - If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
 
 ### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
-- [Mintlify community](https://mintlify.com/community)
+- [Mintlify Documentation](https://mintlify.com/docs) - For technical documentation platform help
+- [Keymint Documentation](https://docs.keymint.dev) - For Keymint-specific content
+- [Support](mailto:support@keymint.dev) - For Keymint product support
