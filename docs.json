@@ -1,48 +1,42 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Keymint Docs",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#3B82F6",
+    "light": "#93C5FD",
+    "dark": "#1D4ED8"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "https://keymint.dev/favicon.svg",
   "navigation": {
     "tabs": [
       {
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "SDKs",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "sdks/nodejs",
+              "sdks/python"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Topics",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "topics/offline-key"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Security",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "security/index"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Help",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "help/customer-portal/login",
+              "help/faqs"
             ]
           }
         ]
@@ -51,18 +45,24 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Basics",
             "pages": [
-              "api-reference/introduction"
+              "api-reference/introduction",
+              "api-reference/overview",
+              "api-reference/authentication",
+              "api-reference/rate-limits",
+              "api-reference/error-codes"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Licenses API",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/licenses/create",
+              "api-reference/licenses/get",
+              "api-reference/licenses/activate",
+              "api-reference/licenses/deactivate",
+              "api-reference/licenses/block",
+              "api-reference/licenses/unblock"
             ]
           }
         ]
@@ -71,57 +71,40 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Dashboard",
+          "href": "https://app.keymint.dev",
+          "icon": "arrow-up-right-from-square"
         }
       ]
     }
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "https://keymint.dev/logo.png",
+    "dark": "https://keymint.dev/dmlogo.png",
+    "href": "https://keymint.dev/"
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:support@keymint.dev"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "href": "https://app.keymint.dev"
     }
   },
   "contextual": {
     "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
+      "copy",
+      "view"
+    ]
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "github": "https://github.com/keymint-dev"
     }
   }
 }
