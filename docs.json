@@ -69,13 +69,7 @@
       }
     ],
     "global": {
-      "anchors": [
-        {
-          "anchor": "Dashboard",
-          "href": "https://app.keymint.dev",
-          "icon": "arrow-up-right-from-square"
-        }
-      ]
+      "anchors": []
     }
   },
   "logo": {
@@ -97,10 +91,7 @@
     }
   },
   "contextual": {
-    "options": [
-      "copy",
-      "view"
-    ]
+    "options": []
   },
   "footer": {
     "socials": {
