@@ -31,6 +31,21 @@ Send a POST request with a JSON body and Content-Type: application/json. Include
 | expiryDate | string | No | Expiration date in ISO 8601 format (e.g., "2024-12-31T23:59:59Z"). Defaults to 1 month from creation if omitted. |
 | customerId | string | No | ID of an existing customer to assign the key to (e.g., cust_...). Cannot be used with newCustomer. |
 | newCustomer | object | No | Object containing name (string, required) and email (string, optional) to create a new customer. Cannot be used with customerId. |
+| format | object | No | Object to customize the license key format. See format parameters below. |
+
+#### Format Parameters
+
+When using the `format` parameter, you can customize how the license key is generated:
+
+| Parameter | Type | Required | Description |
+| --- | --- | --- | --- |
+| sections | number | No | Number of sections in the key (1-10). Default: 4. |
+| sectionLength | number | No | Number of characters per section (1-32). Default: 5. |
+| separator | string | No | Character(s) used to separate sections (max 3 chars). Default: "-". |
+| charset | string | No | Characters to use for key generation (2-100 chars, no whitespace). Default: "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789". |
+| prefix | string | No | String to prepend to the key (max 16 chars). |
+| suffix | string | No | String to append to the key (max 16 chars). |
+| case | string | No | Case formatting: "upper", "lower", or "mixed". Default: "upper". |
 
 ### Example Requests
 
@@ -74,6 +89,50 @@ Content-Type: application/json
 }
 ```
 
+```http title="Custom key format"
+POST /create-key HTTP/1.1
+Host: api.keymint.dev
+Authorization: Bearer at_verylongaccesstokenstringgeneratedforyourapplication12345678
+Content-Type: application/json
+
+{
+  "productId": "your_product_id_123",
+  "format": {
+    "sections": 4,
+    "sectionLength": 5,
+    "separator": "-",
+    "charset": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+    "prefix": "DEMO",
+    "case": "upper"
+  }
+}
+```
+
+```http title="Advanced custom format"
+POST /create-key HTTP/1.1
+Host: api.keymint.dev
+Authorization: Bearer at_verylongaccesstokenstringgeneratedforyourapplication12345678
+Content-Type: application/json
+
+{
+  "productId": "your_product_id_123",
+  "maxActivations": "10",
+  "format": {
+    "sections": 3,
+    "sectionLength": 8,
+    "separator": ".",
+    "charset": "0123456789ABCDEF",
+    "prefix": "HEX",
+    "suffix": "END",
+    "case": "upper"
+  },
+  "newCustomer": {
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com"
+  }
+}
+```
+
 ## Responses
 
 ### 200 OK
@@ -81,9 +140,16 @@ Content-Type: application/json
 ```json
 {
   "code": 0,
-  "key": "xxxxx-xxxxx-xxxxx-xxxxx"
+  "key": "YQ4PX-YK5PF-M77RU-H6JT0"
 }
 ```
+
+**Example responses for different formats:**
+
+- Default format: `"YQ4PX-YK5PF-M77RU-H6JT0"`
+- Custom format (hex): `"0B4ADFD8-8C47ECD0"`
+- With prefix: `"DEMO-ABCDE-FGHIJ-KLMNO-PQRST"`
+- Advanced format: `"HEX12345678.ABCDEF12.34567890END"`
 
 ### Errors
 
