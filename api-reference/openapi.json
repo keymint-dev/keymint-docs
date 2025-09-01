@@ -158,7 +158,7 @@
         }
       }
     },
-    "/customer/{customerId}": {
+    "/customer/by-id": {
       "get": {
         "summary": "Get customer by ID",
         "description": "Retrieves detailed information about a specific customer by their unique ID",
@@ -168,7 +168,7 @@
         "parameters": [
           {
             "name": "customerId",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string"
@@ -214,7 +214,7 @@
         "parameters": [
           {
             "name": "customerId",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string"
@@ -259,7 +259,7 @@
         "parameters": [
           {
             "name": "customerId",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string"
@@ -328,7 +328,7 @@
         }
       }
     },
-    "/customer/{customerId}/keys": {
+    "/customer/keys": {
       "get": {
         "summary": "Get customer license keys",
         "description": "Retrieves all license keys associated with a specific customer",
@@ -339,7 +339,7 @@
         "parameters": [
           {
             "name": "customerId",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string"
@@ -367,7 +367,7 @@
         }
       }
     },
-    "/customer/{customerId}/disable": {
+    "/customer/disable": {
       "post": {
         "summary": "Disable/enable customer",
         "description": "Toggles the active status of a customer account (disable or enable)",
@@ -377,7 +377,7 @@
         "parameters": [
           {
             "name": "customerId",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "string"
