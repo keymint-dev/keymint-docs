@@ -3,7 +3,25 @@ title: "Welcome to Keymint"
 ---
 
 
-Build, ship, and manage software licenses with confidence. Use our REST API and SDKs to create, activate, and manage licenses, plus give your customers self-service access via the Customer Portal.
+Build, ship, andCore endpoints you'll use to manage customers and licenses.
+
+### Customer Management
+<CardGroup cols={2}>
+  <Card title="Get All Customers" icon="users" href="/api-reference/customers/get-all">
+    Retrieve all customers for your account.
+  </Card>
+  <Card title="Create Customer" icon="user-plus" href="/api-reference/customers/create">
+    Create a new customer account.
+  </Card>
+  <Card title="Get Customer by ID" icon="user" href="/api-reference/customers/get-by-id">
+    Retrieve a specific customer's details.
+  </Card>
+  <Card title="Update Customer" icon="user-pen" href="/api-reference/customers/update">
+    Update customer information.
+  </Card>
+</CardGroup>
+
+### License Key Managementmanage software licenses with confidence. Use our REST API and SDKs to create, activate, and manage licenses, plus give your customers self-service access via the Customer Portal.
 
 <Columns cols={2}>
   <Card
@@ -50,27 +68,27 @@ Build, ship, and manage software licenses with confidence. Use our REST API and 
   </Card>
 </Columns>
 
-## Licenses API
+## API Reference
 
 Core endpoints you’ll use to issue and manage licenses.
 
 <CardGroup cols={3}>
-  <Card title="Create" icon="square-plus" href="/api-reference/licenses/create">
-    Create a new license for a product and customer.
+  <Card title="Create License" icon="square-plus" href="/api-reference/license-keys/create">
+    Create a new license key for a product and customer.
   </Card>
-  <Card title="Get" icon="magnifying-glass" href="/api-reference/licenses/get">
-    Retrieve license details.
+  <Card title="Get License Info" icon="magnifying-glass" href="/api-reference/license-keys/get-info">
+    Retrieve license key details and status.
   </Card>
-  <Card title="Activate" icon="circle-check" href="/api-reference/licenses/activate">
+  <Card title="Activate" icon="circle-check" href="/api-reference/license-keys/activate">
     Bind a license to a device (hostId).
   </Card>
-  <Card title="Deactivate" icon="circle-xmark" href="/api-reference/licenses/deactivate">
+  <Card title="Deactivate" icon="circle-xmark" href="/api-reference/license-keys/deactivate">
     Remove a device activation.
   </Card>
-  <Card title="Block" icon="ban" href="/api-reference/licenses/block">
+  <Card title="Block" icon="ban" href="/api-reference/license-keys/block">
     Immediately block a compromised or refunded key.
   </Card>
-  <Card title="Unblock" icon="arrow-rotate-left" href="/api-reference/licenses/unblock">
+  <Card title="Unblock" icon="arrow-rotate-left" href="/api-reference/license-keys/unblock">
     Restore a previously blocked license.
   </Card>
 </CardGroup>
