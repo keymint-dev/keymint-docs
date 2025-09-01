@@ -137,15 +137,11 @@ commit_group "docs: update API reference documentation with accurate Keymint end
 # 8. License API endpoints
 commit_group "docs: verify license API documentation accuracy
 
-- Ensure create, activate, get, deactivate endpoints match implementation
-- Verify block/unblock functionality documentation
-- Confirm all parameters, responses, and error codes are accurate" \
-    "api-reference/licenses/create.mdx" \
-    "api-reference/licenses/activate.mdx" \
-    "api-reference/licenses/get.mdx" \
-    "api-reference/licenses/deactivate.mdx" \
-    "api-reference/licenses/block.mdx" \
-    "api-reference/licenses/unblock.mdx"
+- Ensure customer and license endpoints match OpenAPI specification
+- Verify all parameters, responses, and error codes are accurate
+- Update folder structure for better organization" \
+    "api-reference/customers/"*.mdx \
+    "api-reference/license-keys/"*.mdx
 
 echo ""
 echo "📋 Phase 4: Supporting documentation..."
@@ -197,15 +193,16 @@ if git ls-files --error-unmatch favicon.svg > /dev/null 2>&1; then
     echo "✅ Removed local favicon"
 fi
 
-# 14. Remove legacy endpoint directory if it was removed
-if git status --porcelain | grep -q "api-reference/endpoint/"; then
-    git add api-reference/endpoint/
-    git commit -m "refactor: remove legacy generic API endpoint files
+# 14. Update API reference structure with new organized folders
+if git status --porcelain | grep -q "api-reference/customers/\|api-reference/license-keys/"; then
+    git add api-reference/customers/ api-reference/license-keys/
+    git commit -m "feat: reorganize API documentation into logical folders
 
-- Remove generic endpoint templates that don't match actual API
-- Clean up navigation to focus on specific license management endpoints
-- Consolidate API documentation under proper license-specific endpoints"
-    echo "✅ Removed legacy endpoint directory"
+- Create dedicated folders for Customer Management and License Key Management
+- Organize endpoints based on OpenAPI specification structure
+- Improve navigation and discoverability of API endpoints
+- Update docs.json to reflect new folder organization"
+    echo "✅ Updated API reference structure"
 fi
 
 echo ""
