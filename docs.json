@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/docs.json",
   "name": "Keymint API Documentation",
   "logo": {
-    "light": "/logo-light.svg",
-    "dark": "/logo-dark.svg",
+    "light": "https://app.keymint.dev/logo.png",
+    "dark": "https://app.keymint.dev/dmlogo.png",
     "href": "https://keymint.dev"
   },
   "favicon": "/favicon.svg",
