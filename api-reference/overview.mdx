@@ -1,11 +1,13 @@
 ---
-title: API Overview
-description: Keymint API overview, base URL, request/response format, and key concepts.
+title: "API Overview"
+description: "Keymint REST API overview, base URL, authentication, request/response format, and core concepts for license management."
 ---
+
+The Keymint API provides a comprehensive RESTful interface for managing software licenses, customers, and activations. This guide covers the essential concepts and patterns you'll need to integrate Keymint into your software.
 
 ## Base URL
 
-All API requests use the following base URL:
+All API requests use this base URL:
 
 ```
 https://api.keymint.dev
@@ -13,41 +15,158 @@ https://api.keymint.dev
 
 ## Authentication
 
-Authenticate requests with your accessToken as a Bearer token in the Authorization header. Keep it secure and avoid exposing it in public repositories.
+All API requests require authentication using your access token as a Bearer token in the Authorization header.
 
 <CodeGroup>
-  ```http Request example
-  GET /activate-key HTTP/1.1
-  Host: api.keymint.dev
-  Authorization: Bearer YOUR_ACCESS_TOKEN
+  ```bash cURL
+  curl -X GET https://api.keymint.dev/customer \
+    -H "Authorization: Bearer YOUR_ACCESS_TOKEN" \
+    -H "Content-Type: application/json"
+  ```
+  
+  ```javascript Node.js
+  const response = await fetch('https://api.keymint.dev/customer', {
+    headers: {
+      'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+      'Content-Type': 'application/json'
+    }
+  });
+  ```
+  
+  ```python Python
+  import requests
+  
+  headers = {
+      'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+      'Content-Type': 'application/json'
+  }
+  
+  response = requests.get('https://api.keymint.dev/customer', headers=headers)
   ```
 </CodeGroup>
 
-<Callout type="tip">
-See the Authentication guide for more details.
-</Callout>
+<Warning>
+Keep your access token secure. Never expose it in client-side code, public repositories, or logs.
+</Warning>
 
 ## Request & Response Format
 
-- Use JSON for request bodies and responses.
-- Include the Content-Type: application/json header for POST requests.
-- Expect 2xx status codes for success and 4xx/5xx for errors.
+### Request Format
+- All requests use JSON format for request bodies
+- Include `Content-Type: application/json` header for POST/PUT requests
+- Use proper HTTP methods: GET (retrieve), POST (create), PUT (update), DELETE (remove)
 
-## Key Concepts
-
-- Product (productId): The software or service being licensed.
-- License (licenseKey): A unique key granting usage rights.
-- Activation (hostId): Tracks where a license is activated.
-- Access Token (accessToken): Your secret credential for API requests.
-
-## Error Handling
-
-Failed requests return an HTTP status code and a JSON error response:
+### Response Format
+All API responses follow a consistent structure:
 
 ```json
 {
-  "code": 2,
-  "message": "Activation limit reached"
+  "action": "getCustomers",
+  "status": true,
+  "data": [...],
+  "code": 0
+}
+```
+
+### HTTP Status Codes
+- `200 OK` - Request succeeded
+- `400 Bad Request` - Invalid request parameters
+- `401 Unauthorized` - Invalid or missing access token
+- `403 Forbidden` - Insufficient permissions
+- `404 Not Found` - Resource not found
+- `429 Too Many Requests` - Rate limit exceeded
+- `500 Internal Server Error` - Server error
+
+## Core Concepts
+
+Understanding these key concepts will help you work effectively with the Keymint API:
+
+<CardGroup cols={2}>
+  <Card title="Products" icon="box">
+    **Product ID**: Unique identifier for your software or service being licensed. Each product can have multiple license keys.
+  </Card>
+  <Card title="Customers" icon="users">
+    **Customer**: End users or organizations who purchase and use your licenses. Customers can have multiple license keys.
+  </Card>
+  <Card title="License Keys" icon="key">
+    **License Key**: Unique alphanumeric string that grants usage rights to your software. Can be activated on devices.
+  </Card>
+  <Card title="Activations" icon="circle-check">
+    **Activation**: Links a license key to a specific device using a Host ID. Tracks where licenses are being used.
+  </Card>
+</CardGroup>
+
+### Key Relationships
+- One **Product** can have many **License Keys**
+- One **Customer** can own multiple **License Keys**
+- One **License Key** can have multiple **Activations** (up to the limit)
+- Each **Activation** is tied to a unique device **Host ID**
+
+## Common Workflows
+
+### Creating a Complete License Setup
+
+1. **Create Customer** → Get `customerId`
+2. **Create License Key** using `productId` and `customerId` → Get `licenseKey`
+3. **Activate License** using `licenseKey` and `hostId`
+4. **Verify License** as needed in your application
+
+### Managing License Lifecycle
+
+1. **Check License Status** - Verify if license is valid and active
+2. **Block/Unblock Licenses** - Control access for refunds or violations
+3. **Deactivate Devices** - Free up activation slots when devices change
+4. **Monitor Usage** - Track activations and customer activity
+
+## Error Handling
+
+The API returns detailed error information to help you handle different scenarios:
+
+```json
+{
+  "message": "Activation limit reached",
+  "code": 2
+}
+```
+
+### Common Error Codes
+- `0` - Success
+- `1` - Validation error (invalid parameters)
+- `2` - Activation limit reached
+- `3` - License key not found or invalid
+- `4` - Product not found
+- `5` - Customer not found
+
+<Tip>
+Always implement proper error handling in your application to gracefully handle API errors and provide meaningful feedback to users.
+</Tip>
+
+## Rate Limits
+
+The Keymint API implements rate limiting to ensure fair usage:
+
+- **Standard Plan**: 1,000 requests per minute
+- **Pro Plan**: 5,000 requests per minute  
+- **Enterprise**: Custom limits available
+
+When you hit the rate limit, you'll receive a `429 Too Many Requests` response. Implement exponential backoff to handle rate limiting gracefully.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Authentication Guide" icon="shield-keyhole" href="/api-reference/authentication">
+    Learn how to obtain and use access tokens securely.
+  </Card>
+  <Card title="Customer Management" icon="users" href="/api-reference/customers/get-all">
+    Start managing customers and their license assignments.
+  </Card>
+  <Card title="License Keys" icon="key" href="/api-reference/license-keys/create">
+    Create and manage license keys for your products.
+  </Card>
+  <Card title="SDKs" icon="code" href="/sdks/nodejs">
+    Use our official SDKs for faster integration.
+  </Card>
+</CardGroup>
 }
 ```
 

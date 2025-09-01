@@ -1,16 +1,53 @@
 ---
 title: "Python SDK"
-description: "Use the Keymint Python SDK to integrate licensing into Python apps."
+description: "Official Python SDK for Keymint license management with full API coverage and easy integration."
 ---
 
+The official Keymint Python SDK provides a simple interface for integrating license management into your Python applications.
 
-Install:
+## Installation
+
+Install the SDK using pip:
 
 ```bash
 pip install keymint
 ```
 
-Links:
+## Quick Start
 
-- PyPI: https://pypi.org/project/keymint/
-- GitHub: https://github.com/keymint-dev/keymint-python
+```python
+from keymint import KeymintClient
+
+# Initialize the client
+client = KeymintClient(access_token='YOUR_ACCESS_TOKEN')
+
+# Create a customer
+customer = client.customers.create({
+    'name': 'John Doe',
+    'email': 'john@example.com'
+})
+
+# Create a license key
+license_key = client.keys.create({
+    'productId': 'your-product-id',
+    'maxActivations': '5',
+    'newCustomer': {
+        'name': 'License Customer',
+        'email': 'customer@example.com'
+    }
+})
+
+# Activate a license
+activation = client.keys.activate({
+    'productId': 'your-product-id',
+    'licenseKey': 'LICENSE-KEY-HERE',
+    'hostId': 'unique-machine-id',
+    'deviceTag': 'user-device-name'
+})
+```
+
+## Links
+
+- [PyPI Package](https://pypi.org/project/keymint/)
+- [GitHub Repository](https://github.com/keymint-dev/keymint-python)
+- [Documentation](https://github.com/keymint-dev/keymint-python#readme)

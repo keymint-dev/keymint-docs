@@ -1,20 +1,29 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Keymint Docs",
+  "name": "Keymint API Documentation",
   "colors": {
-    "primary": "#3B82F6",
-    "light": "#93C5FD",
-    "dark": "#1D4ED8"
+    "primary": "#2563EB",
+    "light": "#60A5FA", 
+    "dark": "#1E40AF"
+  },
+  "search": {
+    "prompt": "Search Keymint documentation..."
   },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "SDKs",
+            "group": "Overview",
+            "pages": [
+              "index"
+            ]
+          },
+          {
+            "group": "SDKs & Integration",
             "pages": [
               "sdks/nodejs",
               "sdks/python"
@@ -25,27 +34,14 @@
             "pages": [
               "topics/offline-key"
             ]
-          },
-          {
-            "group": "Security",
-            "pages": [
-              "security/index"
-            ]
-          },
-          {
-            "group": "Help",
-            "pages": [
-              "help/customer-portal/login",
-              "help/faqs"
-            ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "API Reference",
         "groups": [
           {
-            "group": "Basics",
+            "group": "Authentication & Basics",
             "pages": [
               "api-reference/introduction",
               "api-reference/overview",
@@ -78,10 +74,49 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Features & Help",
+        "groups": [
+          {
+            "group": "Advanced Features",
+            "pages": [
+              "security/index"
+            ]
+          },
+          {
+            "group": "Customer Portal",
+            "pages": [
+              "help/customer-portal/login"
+            ]
+          },
+          {
+            "group": "Support",
+            "pages": [
+              "help/faqs"
+            ]
+          }
+        ]
       }
     ],
     "global": {
-      "anchors": []
+      "anchors": [
+        {
+          "anchor": "dashboard",
+          "icon": "chart-line",
+          "href": "https://app.keymint.dev"
+        },
+        {
+          "anchor": "community",
+          "icon": "discord", 
+          "href": "https://github.com/keymint-dev/discussions"
+        },
+        {
+          "anchor": "status",
+          "icon": "signal",
+          "href": "https://status.keymint.dev"
+        }
+      ]
     }
   },
   "logo": {
@@ -92,14 +127,22 @@
   "navbar": {
     "links": [
       {
+        "label": "Community",
+        "href": "https://github.com/keymint-dev/discussions"
+      },
+      {
         "label": "Support",
         "href": "mailto:support@keymint.dev"
+      },
+      {
+        "label": "Status",
+        "href": "https://status.keymint.dev"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://app.keymint.dev"
+      "label": "Get Started",
+      "href": "https://app.keymint.dev/signup"
     }
   },
   "contextual": {
@@ -107,7 +150,9 @@
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/keymint-dev"
+      "github": "https://github.com/keymint-dev",
+      "twitter": "https://twitter.com/keymint_dev",
+      "linkedin": "https://linkedin.com/company/keymint"
     }
   }
 }

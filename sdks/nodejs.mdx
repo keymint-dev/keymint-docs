@@ -1,16 +1,54 @@
 ---
 title: "Node.js SDK"
-description: "Use the Keymint Node.js SDK to integrate licensing into Node.js apps."
+description: "Official Node.js SDK for Keymint license management with TypeScript support and comprehensive examples."
 ---
 
+The official Keymint Node.js SDK provides a simple interface for integrating license management into your Node.js applications.
 
-Install:
+## Installation
+
+Install the SDK using npm:
 
 ```bash
 npm install keymint-nodejs
 ```
 
-Links:
+## Quick Start
 
-- npm: https://www.npmjs.com/package/keymint-nodejs
-- GitHub: https://github.com/keymint-dev/KeymintSDK-nodejs
+```javascript
+const Keymint = require('keymint-nodejs');
+
+const keymint = new Keymint({
+  accessToken: 'YOUR_ACCESS_TOKEN'
+});
+
+// Create a customer
+const customer = await keymint.customer.create({
+  name: 'John Doe',
+  email: 'john@example.com'
+});
+
+// Create a license key
+const license = await keymint.key.create({
+  productId: 'your-product-id',
+  maxActivations: '5',
+  newCustomer: {
+    name: 'License Customer',
+    email: 'customer@example.com'
+  }
+});
+
+// Activate a license
+const activation = await keymint.key.activate({
+  productId: 'your-product-id',
+  licenseKey: 'LICENSE-KEY-HERE',
+  hostId: 'unique-machine-id',
+  deviceTag: 'user-device-name'
+});
+```
+
+## Links
+
+- [npm Package](https://www.npmjs.com/package/keymint-nodejs)
+- [GitHub Repository](https://github.com/keymint-dev/KeymintSDK-nodejs)
+- [TypeScript Definitions](https://www.npmjs.com/package/@types/keymint-nodejs)

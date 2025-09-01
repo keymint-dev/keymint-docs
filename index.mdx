@@ -1,98 +1,113 @@
 ---
 title: "Welcome to Keymint"
+description: "Complete API documentation, guides, and SDK references for Keymint license management platform."
 ---
 
+Modern license key management for software developers. Create, manage, and distribute software licenses with confidence using our REST API and SDKs.
 
-Build, ship, andCore endpoints you'll use to manage customers and licenses.
+<Note>
+New to Keymint? Start with our [API Overview](/api-reference/overview) to understand core concepts, or jump straight to our [Node.js](/sdks/nodejs) or [Python](/sdks/python) SDKs for quick integration.
+</Note>
 
-### Customer Management
+## Getting Started
+
+Choose your integration approach and start building with Keymint.
+
+<CardGroup cols={2}>
+  <Card title="Licensing Models" icon="lightbulb" href="/topics/offline-key">
+    Find the best licensing model for your use case. Node-locked, floating, usage-based, and more.
+  </Card>
+  <Card title="Platform Overview" icon="code" href="/sdks/nodejs">
+    Review all supported platforms and specifics for Node.js, Python, and other integrations.
+  </Card>
+  <Card title="Examples" icon="book-open" href="/api-reference/overview">
+    Review examples of the most common integration use cases and API patterns.
+  </Card>
+</CardGroup>
+
+When setting things up, we recommend reviewing our [troubleshooting guide](/help/faqs). Once you're ready to publish your integration to production, please review our [security checklist](/security/index).
+
+## Customer Management
+
+Manage your customers and their license assignments.
+
 <CardGroup cols={2}>
   <Card title="Get All Customers" icon="users" href="/api-reference/customers/get-all">
-    Retrieve all customers for your account.
+    Retrieve and manage all customers in your account.
   </Card>
   <Card title="Create Customer" icon="user-plus" href="/api-reference/customers/create">
-    Create a new customer account.
+    Add new customers to your licensing system.
   </Card>
-  <Card title="Get Customer by ID" icon="user" href="/api-reference/customers/get-by-id">
-    Retrieve a specific customer's details.
+  <Card title="Customer with Keys" icon="key" href="/api-reference/customers/get-with-keys">
+    View customers along with their associated license keys.
   </Card>
-  <Card title="Update Customer" icon="user-pen" href="/api-reference/customers/update">
-    Update customer information.
+  <Card title="Manage Customers" icon="user-pen" href="/api-reference/customers/update">
+    Update customer information and toggle account status.
   </Card>
 </CardGroup>
 
-### License Key Managementmanage software licenses with confidence. Use our REST API and SDKs to create, activate, and manage licenses, plus give your customers self-service access via the Customer Portal.
+## License Key Operations
 
-<Columns cols={2}>
-  <Card
-    title="API Overview"
-    icon="book"
-    href="/api-reference/overview"
-  >
-    Base URL, auth, request/response format, and key concepts.
-  </Card>
-  <Card
-    title="Authentication"
-    icon="shield-keyhole"
-    href="/api-reference/authentication"
-  >
-    How to authenticate with an access token.
-  </Card>
-  <Card
-    title="Node.js SDK"
-    icon="node"
-    href="/sdks/nodejs"
-  >
-    Install and use the official Node.js helper.
-  </Card>
-  <Card
-    title="Python SDK"
-    icon="python"
-    href="/sdks/python"
-  >
-    Work with licenses from Python.
-  </Card>
-  <Card
-    title="Offline License"
-    icon="plug-circle-xmark"
-    href="/topics/offline-key"
-  >
-    Support for air‑gapped and offline environments.
-  </Card>
-  <Card
-    title="Customer Portal"
-    icon="user"
-    href="/help/customer-portal/login"
-  >
-    End-user portal for viewing licenses and managing activations.
-  </Card>
-</Columns>
-
-## API Reference
-
-Core endpoints you’ll use to issue and manage licenses.
+Core functionality for creating and managing license keys.
 
 <CardGroup cols={3}>
-  <Card title="Create License" icon="square-plus" href="/api-reference/license-keys/create">
-    Create a new license key for a product and customer.
+  <Card title="Create License" icon="plus" href="/api-reference/license-keys/create">
+    Generate new license keys for products and customers.
   </Card>
   <Card title="Get License Info" icon="magnifying-glass" href="/api-reference/license-keys/get-info">
-    Retrieve license key details and status.
+    Retrieve detailed license information and status.
   </Card>
   <Card title="Activate" icon="circle-check" href="/api-reference/license-keys/activate">
-    Bind a license to a device (hostId).
+    Bind a license to a specific device or installation.
   </Card>
   <Card title="Deactivate" icon="circle-xmark" href="/api-reference/license-keys/deactivate">
-    Remove a device activation.
+    Remove device activations to free up license slots.
   </Card>
-  <Card title="Block" icon="ban" href="/api-reference/license-keys/block">
-    Immediately block a compromised or refunded key.
+  <Card title="Block License" icon="ban" href="/api-reference/license-keys/block">
+    Immediately disable compromised or refunded licenses.
   </Card>
-  <Card title="Unblock" icon="arrow-rotate-left" href="/api-reference/license-keys/unblock">
-    Restore a previously blocked license.
+  <Card title="Unblock License" icon="arrow-rotate-left" href="/api-reference/license-keys/unblock">
+    Restore previously blocked licenses.
   </Card>
 </CardGroup>
 
-<Callout>
-Have questions? Email support@keymint.dev or visit the Dashboard.
-</Callout>
+## Enterprise Features
+
+Advanced capabilities for complex licensing scenarios and enterprise deployments.
+
+<CardGroup cols={2}>
+  <Card title="Customer Portal" icon="user-circle" href="/help/customer-portal/login">
+    Self-service portal allowing customers to manage their licenses and view usage.
+  </Card>
+  <Card title="Offline Licensing" icon="wifi-slash" href="/topics/offline-key">
+    Support air-gapped environments and offline license verification.
+  </Card>
+  <Card title="Security & Compliance" icon="shield-check" href="/security/index">
+    Learn about Keymint's security practices, encryption, and compliance features.
+  </Card>
+  <Card title="Rate Limits & Best Practices" icon="gauge-high" href="/api-reference/rate-limits">
+    Understand API limits and implementation best practices.
+  </Card>
+</CardGroup>
+
+## SDKs & Integration
+
+Official SDKs and integration helpers for popular programming languages.
+
+<CardGroup cols={2}>
+  <Card title="Node.js SDK" icon="node-js" href="/sdks/nodejs">
+    Official Node.js library with TypeScript support and comprehensive examples.
+  </Card>
+  <Card title="Python SDK" icon="python" href="/sdks/python">
+    Python package for easy integration with your Python applications.
+  </Card>
+</CardGroup>
+
+<Card title="Need Help?" icon="life-ring" href="mailto:support@keymint.dev">
+  **Get Support**: Have questions or need assistance? Our team is here to help.
+  
+  - 📧 Email us at [support@keymint.dev](mailto:support@keymint.dev)
+  - 💬 Join our [Community Discussions](https://github.com/keymint-dev/discussions)
+  - 🚀 Access your [Dashboard](https://app.keymint.dev)
+  - 📊 Check our [System Status](https://status.keymint.dev)
+</Card>
