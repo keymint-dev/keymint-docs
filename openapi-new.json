@@ -1,0 +1,1126 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Keymint API",
+    "description": "Generated from real API responses - License key management system",
+    "version": "2.0.0",
+    "contact": {
+      "name": "Keymint Support",
+      "url": "https://keymint.dev"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.keymint.dev",
+      "description": "Production server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/customer": {
+      "post": {
+        "summary": "Create a new customer",
+        "description": "Creates a new customer with the provided name and email address. Returns 409 if a customer with the same email already exists.",
+        "tags": [
+          "Customers"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostcustomerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Customer created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostcustomerSuccessResponse"
+                },
+                "example": {
+                  "action": "createCustomer",
+                  "status": true,
+                  "message": "Customer created successfully",
+                  "data": {
+                    "id": "078116d0069c32407b4f63",
+                    "name": "Test Customer",
+                    "email": "test@example.com"
+                  },
+                  "code": 0
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Customer with this email already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostcustomerResponse"
+                },
+                "example": {
+                  "message": "Customer with this email already exists",
+                  "code": 1
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Missing required params",
+                  "code": 1
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Invalid access token",
+                  "code": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all customers",
+        "description": "Retrieves a list of all customers associated with the authenticated user's account",
+        "tags": [
+          "Customers"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all customers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetcustomerResponse"
+                },
+                "example": {
+                  "action": "getCustomers",
+                  "status": true,
+                  "data": [
+                    {
+                      "id": "c9cbdf88f01f516815a59f",
+                      "name": "Test Customer",
+                      "email": "test@example.com",
+                      "active": true,
+                      "createdAt": "2025-09-01T14:46:10.932Z",
+                      "updatedAt": "2025-09-01T14:46:10.622Z",
+                      "createdBy": "928b9f01e54dc6a2ed6769"
+                    },
+                    {
+                      "id": "10ba13e31f4dcf12368343",
+                      "name": "License Test Customer",
+                      "email": "license@example.com",
+                      "active": true,
+                      "createdAt": "2025-09-01T18:39:21.857Z",
+                      "updatedAt": "2025-09-01T18:39:21.372Z",
+                      "createdBy": "928b9f01e54dc6a2ed6769"
+                    },
+                    {
+                      "id": "078116d0069c32407b4f63",
+                      "name": "Test Customer",
+                      "email": "test-1756752334256@example.com",
+                      "active": true,
+                      "createdAt": "2025-09-01T18:45:38.060Z",
+                      "updatedAt": "2025-09-01T18:45:38.060Z",
+                      "createdBy": "928b9f01e54dc6a2ed6769"
+                    }
+                  ],
+                  "code": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/by-id": {
+      "get": {
+        "summary": "Get customer by ID",
+        "description": "Retrieves detailed information about a specific customer by their unique ID",
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the customer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved customer information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetcustomercustomerIdResponse"
+                },
+                "example": {
+                  "action": "getCustomerById",
+                  "status": true,
+                  "data": [
+                    {
+                      "id": "078116d0069c32407b4f63",
+                      "name": "Test Customer",
+                      "email": "test-1756752334256@example.com",
+                      "active": true,
+                      "createdAt": "2025-09-01T18:45:38.060Z",
+                      "updatedAt": "2025-09-01T18:45:38.060Z",
+                      "createdBy": "928b9f01e54dc6a2ed6769"
+                    }
+                  ],
+                  "code": 0
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update customer",
+        "description": "Updates an existing customer's information including name and email address",
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the customer to update"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PutcustomercustomerIdResponse"
+                },
+                "example": {
+                  "action": "updateCustomer",
+                  "status": true,
+                  "code": 0
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutcustomercustomerIdRequest"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete customer",
+        "description": "Permanently deletes a customer and all associated license keys. This action cannot be undone.",
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the customer to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletecustomercustomerIdResponse"
+                },
+                "example": {
+                  "action": "removeCustomer",
+                  "status": true,
+                  "code": 0
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing required parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Missing required params",
+                  "code": 1
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Invalid access token",
+                  "code": 1
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "message": "Customer not found",
+                  "code": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/keys": {
+      "get": {
+        "summary": "Get customer license keys",
+        "description": "Retrieves all license keys associated with a specific customer",
+        "tags": [
+          "Customers", 
+          "License Keys"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the customer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved customer license keys",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetcustomercustomerIdkeysResponse"
+                },
+                "example": {
+                  "action": "getCustomerLicenseKeys",
+                  "status": true,
+                  "data": [],
+                  "code": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer/disable": {
+      "post": {
+        "summary": "Disable/enable customer",
+        "description": "Toggles the active status of a customer account (disable or enable)",
+        "tags": [
+          "Customers"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the customer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer status toggled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostcustomercustomerIddisableResponse"
+                },
+                "example": {
+                  "action": "toggleActive",
+                  "status": true,
+                  "message": "Customer disabled",
+                  "code": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/key": {
+      "post": {
+        "summary": "Create a new license key",
+        "description": "Generates a new license key for the specified product with the given activation limits and customer information",
+        "tags": [
+          "License Keys"
+        ],
+        "responses": {
+          "200": {
+            "description": "License key created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostkeyResponse"
+                },
+                "example": {
+                  "code": 0,
+                  "key": "T8XTR-AI21B-2990H-85SB5"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostkeyRequest"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get license key information",
+        "description": "Retrieves detailed information about a specific license key including customer details, activation status, and device information",
+        "tags": [
+          "License Keys"
+        ],
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The product ID associated with the license key"
+          },
+          {
+            "name": "licenseKey",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The license key to retrieve information for"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved license key information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetkeyResponse"
+                },
+                "example": {
+                  "data": {
+                    "license": {
+                      "id": "04ddf5023460ad378e2af5",
+                      "key": "T8XTR-AI21B-2990H-85SB5",
+                      "productId": "4898d6707ffa56ed9b0eea",
+                      "maxActivations": 5,
+                      "activations": 0,
+                      "devices": [],
+                      "activated": true,
+                      "expirationDate": "2025-10-01T18:45:49.305Z"
+                    },
+                    "customer": {
+                      "id": "f1087171e7f2e8d2d61227",
+                      "name": "License Test Customer",
+                      "email": "license-1756752346942@example.com",
+                      "active": true
+                    }
+                  },
+                  "code": 0
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/key/activate": {
+      "post": {
+        "summary": "Activate a license key",
+        "description": "Activates a license key on a specific device, registering the device for the license and consuming one activation slot",
+        "tags": [
+          "License Keys"
+        ],
+        "responses": {
+          "200": {
+            "description": "License key activated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostkeyactivateResponse"
+                },
+                "example": {
+                  "code": 0,
+                  "message": "License valid",
+                  "licenseeName": "License Test Customer",
+                  "licenseeEmail": "license-1756752346942@example.com"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostkeyactivateRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/key/deactivate": {
+      "post": {
+        "summary": "Deactivate a license key",
+        "description": "Deactivates a license key from a specific device, freeing up an activation slot for use on other devices",
+        "tags": [
+          "License Keys"
+        ],
+        "responses": {
+          "200": {
+            "description": "License key deactivated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostkeydeactivateResponse"
+                },
+                "example": {
+                  "message": "Device deactivated",
+                  "code": 0
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostkeydeactivateRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/key/block": {
+      "post": {
+        "summary": "Block a license key",
+        "description": "Blocks a license key, preventing it from being activated on any device. Blocked keys cannot be used until unblocked.",
+        "tags": [
+          "License Keys"
+        ],
+        "responses": {
+          "200": {
+            "description": "License key blocked successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostkeyblockResponse"
+                },
+                "example": {
+                  "message": "Key blocked",
+                  "code": 0
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostkeyblockRequest"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/key/unblock": {
+      "post": {
+        "summary": "Unblock a license key",
+        "description": "Unblocks a previously blocked license key, allowing it to be activated on devices again",
+        "tags": [
+          "License Keys"
+        ],
+        "responses": {
+          "200": {
+            "description": "License key unblocked successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostkeyunblockResponse"
+                },
+                "example": {
+                  "message": "Key unblocked",
+                  "code": 0
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostkeyunblockRequest"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Access token for API authentication"
+      }
+    },
+    "schemas": {
+      "PostcustomerRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "PostcustomerResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "PostcustomerSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              }
+            }
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "GetcustomerResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "active": {
+                  "type": "boolean"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "createdBy": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "GetcustomercustomerIdResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                },
+                "active": {
+                  "type": "boolean"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "createdBy": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "PutcustomercustomerIdRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "PutcustomercustomerIdResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "DeletecustomercustomerIdResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "GetcustomercustomerIdkeysResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "PostcustomercustomerIddisableResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "PostkeyRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "maxActivations": {
+            "type": "string"
+          },
+          "newCustomer": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              }
+            },
+            "required": [
+              "name"
+            ]
+          }
+        },
+        "required": [
+          "productId",
+          "maxActivations",
+          "newCustomer"
+        ]
+      },
+      "PostkeyResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "key": {
+            "type": "string"
+          }
+        }
+      },
+      "GetkeyResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "license": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "key": {
+                    "type": "string"
+                  },
+                  "productId": {
+                    "type": "string"
+                  },
+                  "maxActivations": {
+                    "type": "integer"
+                  },
+                  "activations": {
+                    "type": "integer"
+                  },
+                  "devices": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "activated": {
+                    "type": "boolean"
+                  },
+                  "expirationDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              },
+              "customer": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "active": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "PostkeyactivateRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "licenseKey": {
+            "type": "string"
+          },
+          "hostId": {
+            "type": "string"
+          },
+          "deviceTag": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "productId",
+          "licenseKey"
+        ]
+      },
+      "PostkeyactivateResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          },
+          "licenseeName": {
+            "type": "string"
+          },
+          "licenseeEmail": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "PostkeydeactivateRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "licenseKey": {
+            "type": "string"
+          },
+          "hostId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "productId",
+          "licenseKey"
+        ]
+      },
+      "PostkeydeactivateResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "PostkeyblockRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "licenseKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "productId",
+          "licenseKey"
+        ]
+      },
+      "PostkeyblockResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "PostkeyunblockRequest": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string"
+          },
+          "licenseKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "productId",
+          "licenseKey"
+        ]
+      },
+      "PostkeyunblockResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "responses": {}
+  }
+}
