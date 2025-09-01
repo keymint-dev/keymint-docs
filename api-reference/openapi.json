@@ -1,16 +1,22 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.3",
   "info": {
     "title": "Keymint API",
-    "description": "Complete API reference for Keymint license management platform",
-    "license": {
-      "name": "MIT"
+    "description": "Modern RESTful API specification for Keymint license key management system. Includes customer management and license key operations.",
+    "version": "2.0.0",
+    "contact": {
+      "name": "Keymint Support",
+      "url": "https://keymint.dev"
     },
-    "version": "1.0.0"
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
   },
   "servers": [
     {
-      "url": "https://api.keymint.dev"
+      "url": "https://api.keymint.dev",
+      "description": "Production server"
     }
   ],
   "security": [
@@ -19,321 +25,426 @@
     }
   ],
   "paths": {
-    "/create-key": {
-      "post": {
-        "description": "Generate a new license key for a specific product",
-        "requestBody": {
-          "description": "License creation parameters",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateLicenseRequest"
-              }
-            }
-          },
-          "required": true
-        },
+    "/customer": {
+      "get": {
+        "tags": ["Customer Management"],
+        "summary": "Get all customers",
+        "description": "Retrieve all customers for the authenticated user",
         "responses": {
           "200": {
-            "description": "License created successfully",
+            "description": "List of customers retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CreateLicenseResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Missing required parameters or invalid format",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/CustomersResponse"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid or missing Authorization header",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Product not found or customer not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Customer email already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
-            "description": "Internal server error",
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Customer Management"],
+        "summary": "Create a new customer",
+        "description": "Create a new customer with name and email",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Customer created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/CreateCustomerResponse"
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
     },
-    "/activate-key": {
-      "post": {
-        "description": "Registers a specific device to a license key, consuming an activation slot",
-        "requestBody": {
-          "description": "License activation parameters",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ActivateLicenseRequest"
-              }
-            }
-          },
-          "required": true
-        },
+    "/customer/with-keys": {
+      "get": {
+        "tags": ["Customer Management"],
+        "summary": "Get customers with license keys",
+        "description": "Retrieve customers with their associated license keys",
         "responses": {
           "200": {
-            "description": "License activated successfully",
+            "description": "Customers with license keys retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ActivateLicenseResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Missing required parameters",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/CustomersWithKeysResponse"
                 }
               }
             }
           },
           "401": {
-            "description": "Invalid access token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "License not active, expired, customer inactive, or activation limit reached",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Product or license not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
           },
           "500": {
-            "description": "Internal server error",
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/customer/{customerId}": {
+      "get": {
+        "tags": ["Customer Management"],
+        "summary": "Get customer by ID",
+        "description": "Retrieve a specific customer by their ID",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CustomerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/CustomerResponse"
                 }
               }
             }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/CustomerNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Customer Management"],
+        "summary": "Update customer",
+        "description": "Update an existing customer's information",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CustomerId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Customer updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomerResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/CustomerNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Customer Management"],
+        "summary": "Delete customer",
+        "description": "Delete a customer and all associated license keys",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CustomerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteCustomerResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/CustomerNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/customer/{customerId}/disable": {
+      "post": {
+        "tags": ["Customer Management"],
+        "summary": "Toggle customer status",
+        "description": "Toggle customer active/inactive status. If customer is active, it will be disabled. If customer is inactive, it will be enabled.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/CustomerId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Customer status toggled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToggleCustomerResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/CustomerNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
     },
     "/get-key": {
-      "post": {
-        "description": "Retrieve detailed information about a specific license key",
-        "requestBody": {
-          "description": "License lookup parameters",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetLicenseRequest"
-              }
-            }
+      "get": {
+        "tags": ["License Key Management"],
+        "summary": "Get license key information",
+        "description": "Retrieve information about a specific license key",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 22
+            },
+            "description": "Product ID associated with the license key"
           },
-          "required": true
-        },
+          {
+            "name": "licenseKey",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "The license key to retrieve information for"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "License details retrieved successfully",
+            "description": "License key information retrieved successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetLicenseResponse"
+                  "$ref": "#/components/schemas/LicenseKeyInfoResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Missing required parameters",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/BadRequestError"
           },
           "401": {
-            "description": "Invalid or missing Authorization header",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
           },
           "404": {
-            "description": "Product or license not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/LicenseKeyNotFound"
           },
           "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
     },
-    "/deactivate-key": {
+    "/key": {
       "post": {
-        "description": "Remove a device registration from a license key, freeing up an activation slot",
+        "tags": ["License Key Management"],
+        "summary": "Create license key(s)",
+        "description": "Create one or more license keys for a product",
         "requestBody": {
-          "description": "License deactivation parameters",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DeactivateLicenseRequest"
+                "$ref": "#/components/schemas/CreateLicenseKeyRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
-            "description": "Device deactivated successfully",
+            "description": "License key(s) created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeactivateLicenseResponse"
+                  "$ref": "#/components/schemas/CreateLicenseKeyResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Missing required parameters",
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/key/activate": {
+      "post": {
+        "tags": ["License Key Management"],
+        "summary": "Activate license key",
+        "description": "Activate a license key for a specific device",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivateLicenseKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "License key activated successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ActivateLicenseKeyResponse"
                 }
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
           "401": {
-            "description": "Invalid or missing access token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
           },
           "403": {
-            "description": "License not activated",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ActivationLimitReached"
           },
           "404": {
-            "description": "Product, license, or device not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/LicenseKeyNotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimitExceeded"
           },
           "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
     },
-    "/block-key": {
+    "/key/deactivate": {
       "post": {
-        "description": "Deactivate a specific license key by marking it as inactive (blocked)",
+        "tags": ["License Key Management"],
+        "summary": "Deactivate license key",
+        "description": "Deactivate a license key for a specific device",
         "requestBody": {
-          "description": "License blocking parameters",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/BlockLicenseRequest"
+                "$ref": "#/components/schemas/DeactivateLicenseKeyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "License key deactivated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeactivateLicenseKeyResponse"
+                }
               }
             }
           },
-          "required": true
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/LicenseKeyNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/key/block": {
+      "post": {
+        "tags": ["License Key Management"],
+        "summary": "Block license key",
+        "description": "Block a license key from being used",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlockLicenseKeyRequest"
+              }
+            }
+          }
         },
         "responses": {
           "200": {
@@ -341,67 +452,40 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BlockLicenseResponse"
+                  "$ref": "#/components/schemas/BlockLicenseKeyResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Missing required parameters",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ValidationError"
           },
           "401": {
-            "description": "Invalid or missing Authorization header",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
           },
           "404": {
-            "description": "Product or license not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/LicenseKeyNotFound"
           },
           "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
     },
-    "/unblock-key": {
+    "/key/unblock": {
       "post": {
-        "description": "Reactivate a previously blocked license key",
+        "tags": ["License Key Management"],
+        "summary": "Unblock license key",
+        "description": "Unblock a previously blocked license key",
         "requestBody": {
-          "description": "License unblocking parameters",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UnblockLicenseRequest"
+                "$ref": "#/components/schemas/UnblockLicenseKeyRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -409,473 +493,764 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UnblockLicenseResponse"
+                  "$ref": "#/components/schemas/UnblockLicenseKeyResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Missing required parameters",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/ValidationError"
           },
           "401": {
-            "description": "Invalid or missing access token",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
           },
           "404": {
-            "description": "Product or license not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "$ref": "#/components/responses/LicenseKeyNotFound"
           },
           "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "webhooks": {
-    "/license/webhook": {
-      "post": {
-        "description": "Information about a new license created",
-        "requestBody": {
-          "description": "License information",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewLicense"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
+            "$ref": "#/components/responses/ServerError"
           }
         }
       }
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Access token for API authentication"
+      }
+    },
+    "parameters": {
+      "CustomerId": {
+        "name": "customerId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 22
+        },
+        "description": "Unique identifier for the customer"
+      }
+    },
     "schemas": {
-      "CreateLicenseRequest": {
-        "required": [
-          "productId"
-        ],
+      "Customer": {
         "type": "object",
         "properties": {
-          "productId": {
-            "description": "Unique product identifier",
-            "type": "string"
-          },
-          "maxActivations": {
-            "description": "Maximum number of activations allowed (e.g., \"5\"). Omit or set to null for unlimited.",
-            "type": "string"
-          },
-          "expiryDate": {
-            "description": "Expiration date in ISO 8601 format. Defaults to 1 month from creation if omitted.",
+          "id": {
             "type": "string",
-            "format": "date-time"
+            "description": "Unique customer identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Customer name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Customer email address"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "Whether the customer is active"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          },
+          "createdBy": {
+            "type": "string",
+            "description": "ID of the user who created this customer"
+          }
+        },
+        "required": ["id", "name", "email", "active", "createdAt", "updatedAt", "createdBy"]
+      },
+      "CustomerWithKeys": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Customer"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "licenseKeys": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LicenseKey"
+                },
+                "description": "Associated license keys"
+              }
+            }
+          }
+        ]
+      },
+      "LicenseKey": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique license key identifier"
+          },
+          "key": {
+            "type": "string",
+            "description": "The license key string"
+          },
+          "productId": {
+            "type": "string",
+            "description": "Associated product ID"
           },
           "customerId": {
-            "description": "ID of an existing customer to assign the key to. Cannot be used with newCustomer.",
-            "type": "string"
+            "type": "string",
+            "description": "Associated customer ID"
           },
-          "newCustomer": {
-            "description": "Object to create a new customer. Cannot be used with customerId.",
-            "$ref": "#/components/schemas/NewCustomer"
+          "maxActivations": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Maximum number of activations allowed"
+          },
+          "activations": {
+            "type": "integer",
+            "description": "Current number of activations"
+          },
+          "activated": {
+            "type": "boolean",
+            "description": "Whether the license key is activated"
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Device"
+            },
+            "description": "List of devices using this license"
+          },
+          "expires": {
+            "type": "string",
+            "nullable": true,
+            "description": "Expiration date or 'Never'"
+          },
+          "customerCanSelfReset": {
+            "type": "boolean",
+            "description": "Whether customer can reset activations"
+          }
+        }
+      },
+      "Device": {
+        "type": "object",
+        "properties": {
+          "hostId": {
+            "type": "string",
+            "description": "Device host identifier"
+          },
+          "deviceTag": {
+            "type": "string",
+            "description": "Optional device tag"
+          },
+          "ipAddress": {
+            "type": "string",
+            "description": "Device IP address"
+          },
+          "activationTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the device was activated"
           }
         }
       },
       "NewCustomer": {
-        "required": [
-          "name"
-        ],
         "type": "object",
         "properties": {
           "name": {
-            "description": "Customer name",
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "description": "Customer name"
           },
           "email": {
-            "description": "Customer email address",
-            "type": "string"
+            "type": "string",
+            "format": "email",
+            "description": "Customer email address"
           }
-        }
+        },
+        "required": ["name", "email"]
       },
-      "CreateLicenseResponse": {
-        "required": [
-          "code",
-          "key"
-        ],
-        "type": "object",
-        "properties": {
-          "code": {
-            "description": "Response code (0 for success)",
-            "type": "integer"
-          },
-          "key": {
-            "description": "The generated license key",
-            "type": "string"
-          }
-        }
+      "CreateCustomerRequest": {
+        "$ref": "#/components/schemas/NewCustomer"
       },
-      "ActivateLicenseRequest": {
-        "required": [
-          "productId",
-          "licenseKey"
-        ],
+      "UpdateCustomerRequest": {
+        "$ref": "#/components/schemas/NewCustomer"
+      },
+      "CreateLicenseKeyRequest": {
         "type": "object",
         "properties": {
           "productId": {
-            "description": "Unique product identifier",
-            "type": "string"
-          },
-          "licenseKey": {
-            "description": "License key string",
-            "type": "string"
-          },
-          "hostId": {
-            "description": "Unique device identifier",
-            "type": "string"
-          },
-          "deviceTag": {
-            "description": "Optional user-friendly device name",
-            "type": "string"
-          }
-        }
-      },
-      "ActivateLicenseResponse": {
-        "required": [
-          "code",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "code": {
-            "description": "Response code (0 for success)",
-            "type": "integer"
-          },
-          "message": {
-            "description": "Status message",
-            "type": "string"
-          },
-          "licensee_name": {
-            "description": "Name of the license holder",
-            "type": "string"
-          },
-          "licensee_email": {
-            "description": "Email of the license holder",
-            "type": "string"
-          }
-        }
-      },
-      "GetLicenseRequest": {
-        "required": [
-          "productId",
-          "licenseKey"
-        ],
-        "type": "object",
-        "properties": {
-          "productId": {
-            "description": "Unique product identifier",
             "type": "string",
             "minLength": 22,
-            "maxLength": 256
+            "description": "Product ID for the license key"
           },
-          "licenseKey": {
-            "description": "License key string",
+          "maxActivations": {
             "type": "string",
-            "minLength": 23,
-            "maxLength": 256
-          }
-        }
-      },
-      "GetLicenseResponse": {
-        "required": [
-          "code",
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "code": {
-            "description": "Response code (0 for success)",
-            "type": "integer"
+            "description": "Maximum number of activations (as string)"
           },
-          "data": {
-            "$ref": "#/components/schemas/LicenseData"
-          }
-        }
-      },
-      "LicenseData": {
-        "required": [
-          "license"
-        ],
-        "type": "object",
-        "properties": {
-          "license": {
-            "$ref": "#/components/schemas/LicenseDetails"
-          },
-          "customer": {
-            "$ref": "#/components/schemas/CustomerDetails"
-          }
-        }
-      },
-      "LicenseDetails": {
-        "required": [
-          "id",
-          "key",
-          "product_id"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "License ID",
-            "type": "string"
-          },
-          "key": {
-            "description": "License key",
-            "type": "string"
-          },
-          "product_id": {
-            "description": "Product identifier",
-            "type": "string"
-          },
-          "max_activations": {
-            "description": "Maximum number of activations allowed",
-            "type": "integer"
-          },
-          "activations": {
-            "description": "Current number of activations",
-            "type": "integer"
-          },
-          "devices": {
-            "description": "List of activated devices",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DeviceInfo"
-            }
-          },
-          "activated": {
-            "description": "Whether the license is activated",
-            "type": "boolean"
-          },
-          "expiration_date": {
-            "description": "License expiration date",
+          "amountKeys": {
             "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "DeviceInfo": {
-        "type": "object",
-        "properties": {
-          "host_id": {
-            "description": "Unique device identifier",
-            "type": "string"
+            "description": "Number of keys to create (as string)"
           },
-          "device_tag": {
-            "description": "User-friendly device name",
-            "type": "string"
-          },
-          "ip_address": {
-            "description": "Device IP address",
-            "type": "string"
-          },
-          "activation_time": {
-            "description": "When the device was activated",
+          "customerId": {
             "type": "string",
-            "format": "date-time"
+            "description": "Existing customer ID (optional)"
+          },
+          "newCustomer": {
+            "$ref": "#/components/schemas/NewCustomer",
+            "description": "Create new customer with license key (optional)"
           }
-        }
+        },
+        "required": ["productId"]
       },
-      "CustomerDetails": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "description": "Customer ID",
-            "type": "string"
-          },
-          "name": {
-            "description": "Customer name",
-            "type": "string"
-          },
-          "email": {
-            "description": "Customer email",
-            "type": "string"
-          },
-          "active": {
-            "description": "Whether the customer is active",
-            "type": "boolean"
-          }
-        }
-      },
-      "DeactivateLicenseRequest": {
-        "required": [
-          "productId",
-          "licenseKey"
-        ],
+      "ActivateLicenseKeyRequest": {
         "type": "object",
         "properties": {
           "productId": {
-            "description": "Unique product identifier",
-            "type": "string"
+            "type": "string",
+            "minLength": 22,
+            "description": "Product ID"
           },
           "licenseKey": {
-            "description": "License key string",
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "description": "License key to activate"
           },
           "hostId": {
-            "description": "Unique identifier of the device to deactivate. If omitted, all devices for this key are deactivated.",
-            "type": "string"
-          }
-        }
-      },
-      "DeactivateLicenseResponse": {
-        "required": [
-          "message",
-          "code"
-        ],
-        "type": "object",
-        "properties": {
-          "message": {
-            "description": "Status message",
-            "type": "string"
+            "type": "string",
+            "description": "Device host identifier (optional)"
           },
-          "code": {
-            "description": "Response code (0 for success)",
-            "type": "integer"
+          "deviceTag": {
+            "type": "string",
+            "description": "Device tag (optional)"
           }
-        }
+        },
+        "required": ["productId", "licenseKey"]
       },
-      "BlockLicenseRequest": {
-        "required": [
-          "productId",
-          "licenseKey"
-        ],
+      "DeactivateLicenseKeyRequest": {
         "type": "object",
         "properties": {
           "productId": {
-            "description": "Unique product identifier",
-            "type": "string"
+            "type": "string",
+            "minLength": 22,
+            "description": "Product ID"
           },
           "licenseKey": {
-            "description": "License key string to block",
-            "type": "string"
-          }
-        }
-      },
-      "BlockLicenseResponse": {
-        "required": [
-          "message",
-          "code"
-        ],
-        "type": "object",
-        "properties": {
-          "message": {
-            "description": "Status message",
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "description": "License key to deactivate"
           },
-          "code": {
-            "description": "Response code (0 for success)",
-            "type": "integer"
+          "hostId": {
+            "type": "string",
+            "description": "Device host identifier (optional)"
           }
-        }
+        },
+        "required": ["productId", "licenseKey"]
       },
-      "UnblockLicenseRequest": {
-        "required": [
-          "productId",
-          "licenseKey"
-        ],
+      "BlockLicenseKeyRequest": {
         "type": "object",
         "properties": {
           "productId": {
-            "description": "Unique product identifier",
-            "type": "string"
+            "type": "string",
+            "minLength": 22,
+            "description": "Product ID"
           },
           "licenseKey": {
-            "description": "License key string to unblock",
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "description": "License key to block"
           }
-        }
+        },
+        "required": ["productId", "licenseKey"]
       },
-      "UnblockLicenseResponse": {
-        "required": [
-          "message",
-          "code"
-        ],
+      "UnblockLicenseKeyRequest": {
         "type": "object",
         "properties": {
-          "message": {
-            "description": "Status message",
-            "type": "string"
+          "productId": {
+            "type": "string",
+            "minLength": 22,
+            "description": "Product ID"
+          },
+          "licenseKey": {
+            "type": "string",
+            "minLength": 1,
+            "description": "License key to unblock"
+          }
+        },
+        "required": ["productId", "licenseKey"]
+      },
+      "CustomersResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "example": "getCustomers"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Customer"
+            }
           },
           "code": {
-            "description": "Response code (0 for success)",
-            "type": "integer"
+            "type": "integer",
+            "example": 0
           }
         }
       },
-      "NewLicense": {
+      "CustomersWithKeysResponse": {
         "type": "object",
         "properties": {
+          "action": {
+            "type": "string",
+            "example": "getCustomersWithLicenseKeys"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerWithKeys"
+            }
+          },
+          "code": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "example": "getCustomerById"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Customer"
+            }
+          },
+          "code": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "CreateCustomerResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "example": "createCustomer"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "code": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "UpdateCustomerResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "example": "updateCustomer"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "code": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "DeleteCustomerResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "example": "removeCustomer"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "code": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "ToggleCustomerResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "example": "toggleActive"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Customer disabled"
+          },
+          "code": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "CreateLicenseKeyResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 0
+          },
           "key": {
-            "description": "The license key",
-            "type": "string"
-          },
-          "id": {
-            "description": "License identifier",
-            "type": "string"
+            "type": "string",
+            "example": "NYCRU-AX8CZ-2MZM8-7MUKG"
           }
         }
       },
-      "Error": {
-        "required": [
-          "message",
-          "code"
-        ],
+      "LicenseKeyInfoResponse": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "example": "getLicenseKey"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/LicenseKey"
+          },
+          "code": {
+            "type": "integer",
+            "example": 0
+          }
+        }
+      },
+      "ActivateLicenseKeyResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "License valid"
+          },
+          "licenseeName": {
+            "type": "string",
+            "description": "Customer name (if available)"
+          },
+          "licenseeEmail": {
+            "type": "string",
+            "description": "Customer email (if available)"
+          }
+        }
+      },
+      "DeactivateLicenseKeyResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "License key deactivated successfully"
+          }
+        }
+      },
+      "BlockLicenseKeyResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "License key blocked successfully"
+          }
+        }
+      },
+      "UnblockLicenseKeyResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "example": 0
+          },
+          "message": {
+            "type": "string",
+            "example": "License key unblocked successfully"
+          }
+        }
+      },
+      "ValidationError": {
         "type": "object",
         "properties": {
           "message": {
-            "description": "Error message",
-            "type": "string"
+            "type": "string",
+            "example": "Customer name cannot be empty"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "example": "too_small"
+                },
+                "minimum": {
+                  "type": "integer",
+                  "example": 1
+                },
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "inclusive": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "exact": {
+                  "type": "boolean",
+                  "example": false
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Customer name cannot be empty"
+                },
+                "path": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": ["name"]
+                }
+              }
+            }
           },
           "code": {
-            "description": "Error code",
-            "type": "integer"
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "code": {
+            "type": "integer",
+            "description": "Error code (1 for errors, 0 for success)"
+          }
+        }
+      },
+      "MethodNotAllowedError": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Method not allowed"
           }
         }
       }
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Authentication required or invalid token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "examples": {
+              "missingToken": {
+                "summary": "Missing bearer token",
+                "value": {
+                  "message": "Unauthorized: Missing or invalid bearer token",
+                  "code": 1
+                }
+              },
+              "invalidToken": {
+                "summary": "Invalid access token",
+                "value": {
+                  "message": "Invalid access token",
+                  "code": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "ValidationError": {
+        "description": "Request validation failed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "BadRequestError": {
+        "description": "Bad request - missing required parameters or malformed data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "examples": {
+              "missingParams": {
+                "summary": "Missing required parameters",
+                "value": {
+                  "message": "Bad Request: productId and licenseKey query parameters are required",
+                  "code": 1
+                }
+              },
+              "malformedJson": {
+                "summary": "Malformed JSON",
+                "value": {
+                  "message": "Bad Request: Could not parse JSON body or invalid input structure.",
+                  "code": 1
+                }
+              }
+            }
+          }
+        }
+      },
+      "CustomerNotFound": {
+        "description": "Customer not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "message": "Customer not found",
+              "code": 1
+            }
+          }
+        }
+      },
+      "LicenseKeyNotFound": {
+        "description": "License key not found or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "message": "Invalid license key",
+              "code": 1
+            }
+          }
+        }
+      },
+      "ActivationLimitReached": {
+        "description": "License key activation limit reached",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "message": "Activation limit reached",
+              "code": 2
+            }
+          }
+        }
+      },
+      "RateLimitExceeded": {
+        "description": "Too many requests",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "message": "Too many activation attempts. Please try again later.",
+              "code": 3
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "message": "Server error",
+              "code": 1
+            }
+          }
+        }
+      },
+      "MethodNotAllowed": {
+        "description": "HTTP method not allowed for this endpoint",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/MethodNotAllowedError"
+            }
+          }
+        }
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Customer Management",
+      "description": "Operations for managing customers"
+    },
+    {
+      "name": "License Key Management",
+      "description": "Operations for managing license keys"
+    }
+  ]
 }

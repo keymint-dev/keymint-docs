@@ -55,14 +55,26 @@
             ]
           },
           {
-            "group": "Licenses API",
+            "group": "Customer Management",
             "pages": [
-              "api-reference/licenses/create",
-              "api-reference/licenses/get",
-              "api-reference/licenses/activate",
-              "api-reference/licenses/deactivate",
-              "api-reference/licenses/block",
-              "api-reference/licenses/unblock"
+              "api-reference/customers/get-all",
+              "api-reference/customers/create",
+              "api-reference/customers/get-with-keys",
+              "api-reference/customers/get-by-id",
+              "api-reference/customers/update",
+              "api-reference/customers/delete",
+              "api-reference/customers/toggle-status"
+            ]
+          },
+          {
+            "group": "License Key Management",
+            "pages": [
+              "api-reference/license-keys/get-info",
+              "api-reference/license-keys/create",
+              "api-reference/license-keys/activate",
+              "api-reference/license-keys/deactivate",
+              "api-reference/license-keys/block",
+              "api-reference/license-keys/unblock"
             ]
           }
         ]
