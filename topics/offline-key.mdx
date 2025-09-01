@@ -3,37 +3,51 @@ title: Offline License (Trust Model v2)
 description: Comprehensive guide for secure offline license verification with a trust store architecture.
 ---
 
+<Warning>
+**Security Enhancement in v2**: Offline verification no longer trusts embedded public keys in .lic files. Applications now maintain a local trust store that maps key IDs to trusted public keys, preventing attackers from crafting malicious licenses with their own keys.
+</Warning>
 
-## Key Changes in v2
+## What's Covered in This Guide
 
-<Callout type="warning">
-Security enhancement: Offline verification no longer trusts embedded public keys in .lic files. Instead, applications maintain a local trust store that maps key IDs to trusted public keys, preventing attackers from crafting malicious licenses with their own keys.
-</Callout>
+<CardGroup cols={2}>
+  <Card title="Trust Store Architecture" icon="shield-check">
+    Security model and key management concepts
+  </Card>
+  <Card title="License Generation" icon="file-plus">
+    Creating offline licenses in the Dashboard
+  </Card>
+  <Card title="Client-Side Verification" icon="magnifying-glass">
+    Implementing secure offline validation
+  </Card>
+  <Card title="Key Management" icon="key">
+    Key rotation and migration strategies
+  </Card>
+</CardGroup>
 
-This guide covers:
-
-1. Trust Store Architecture and security model
-2. Generating offline licenses in the Dashboard
-3. Enhanced .lic file structure (no embedded keys)
-4. Client-side verification with granular error handling
-5. Key ID computation and fingerprinting
-6. Key rotation strategies
-7. Migration from legacy approach
-8. Best practices for secure deployment
+<Tabs>
+  <Tab title="Quick Start">
+    1. **Set up trust store** with your public keys
+    2. **Generate .lic files** from the Dashboard
+    3. **Implement verification** in your application
+    4. **Handle key rotation** for long-term security
+  </Tab>
+  <Tab title="Migration">
+    - Review security implications of v2 changes
+    - Update client verification code
+    - Migrate existing licenses
+    - Test thoroughly before deployment
+  </Tab>
+</Tabs>
 
 ---
 
-## 1. Trust Store Architecture
+## Trust Store Architecture
 
-The trust store is a client-side concept that maps Key IDs (kid) to trusted public keys. This prevents malicious actors from crafting .lic files with their own public keys.
+The trust store is a client-side security mechanism that maps Key IDs (kid) to trusted public keys, preventing malicious license crafting.
 
-### Key ID Definition
-
-The Key ID (kid) is a stable fingerprint of the public key:
-
-```
-kid = base64url(SHA-256(SPKI DER))
-```
+<Info>
+The Key ID (kid) is a stable fingerprint of the public key computed as: `kid = base64url(SHA-256(SPKI DER))`
+</Info>
 
 ### Computing Key ID
 

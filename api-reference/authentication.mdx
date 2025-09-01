@@ -1,49 +1,247 @@
 ---
 title: API Authentication
-description: Authenticate requests to the Keymint API using Access Tokens and scopes.
+description: Secure authentication guide for Keymint API using Bearer tokens, access tokens, and best practices.
 ---
 
+<Info>
+All Keymint API requests require authentication using Bearer tokens in the Authorization header. This guide covers everything you need to know about API authentication.
+</Info>
 
-<Callout type="info">
-Access Tokens must be sent as a Bearer token in the Authorization header for every API request.
-</Callout>
+## Authentication Overview
 
-## Access Tokens
+The Keymint API uses **Bearer Token authentication** for all API requests. You'll need to include your access token in the `Authorization` header of every request.
 
-Access Tokens are unique strings required for authentication. Include them as a Bearer token in the `Authorization` header of every API request.
+<CardGroup cols={2}>
+  <Card title="Get Access Token" icon="key" href="https://app.keymint.dev">
+    Generate your API token from the Keymint Dashboard
+  </Card>
+  <Card title="Manage Scopes" icon="shield-check">
+    Control token permissions with granular scopes
+  </Card>
+</CardGroup>
 
-### Obtaining an Access Token
+## Obtaining Access Tokens
 
-1. Log in to your Keymint Dashboard.
-2. Navigate to Developer.
-3. Generate a token and set its scopes.
+<Steps>
+  <Step title="Login to Dashboard">
+    Navigate to [app.keymint.dev](https://app.keymint.dev) and log in to your account.
+  </Step>
+  <Step title="Access Developer Settings">
+    Go to **Settings** → **Developer** → **API Tokens** in your dashboard.
+  </Step>
+  <Step title="Generate New Token">
+    Click **"Generate Token"** and configure the following:
+    - **Token Name**: Descriptive name for your token
+    - **Scopes**: Select the appropriate permissions
+    - **Product Access**: Choose which products this token can access
+  </Step>
+  <Step title="Save Your Token">
+    <Warning>
+    **Important**: Copy and save your token immediately. For security reasons, you won't be able to view it again.
+    </Warning>
+  </Step>
+</Steps>
 
-### Using the Access Token
+## Using Access Tokens
 
-Include the token in the `Authorization` header of your API requests.
+Include your access token in the `Authorization` header of every API request using the Bearer token format:
 
-```http
-GET /activate-key HTTP/1.1
-Host: api.keymint.dev
-Authorization: Bearer at_your_token_here
-```
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X GET "https://api.keymint.dev/customer" \
+      -H "Authorization: Bearer at_your_token_here" \
+      -H "Content-Type: application/json"
+    ```
+  </Tab>
+  
+  <Tab title="JavaScript">
+    ```javascript
+    const response = await fetch('https://api.keymint.dev/customer', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer at_your_token_here',
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    const data = await response.json();
+    ```
+  </Tab>
+  
+  <Tab title="Python">
+    ```python
+    import requests
+    
+    headers = {
+        'Authorization': 'Bearer at_your_token_here',
+        'Content-Type': 'application/json'
+    }
+    
+    response = requests.get(
+        'https://api.keymint.dev/customer',
+        headers=headers
+    )
+    
+    data = response.json()
+    ```
+  </Tab>
+  
+  <Tab title="Node.js SDK">
+    ```javascript
+    import { KeymintClient } from '@keymint/sdk';
+    
+    const client = new KeymintClient({
+      apiToken: 'at_your_token_here'
+    });
+    
+    const customers = await client.customers.getAll();
+    ```
+  </Tab>
+</Tabs>
 
-### Scopes
+## Token Scopes & Permissions
 
-Scopes help restrict token permissions for better security and organization:
+Control what your API tokens can access using scopes:
 
-- Product scopes: Limit tokens to specific products.
+<AccordionGroup>
+  <Accordion title="Customer Management" icon="users">
+    - `customers:read` - View customer information
+    - `customers:write` - Create and update customers
+    - `customers:delete` - Remove customers
+  </Accordion>
+  
+  <Accordion title="License Operations" icon="key">
+    - `licenses:read` - View license information
+    - `licenses:write` - Create and modify licenses
+    - `licenses:activate` - Activate/deactivate licenses
+    - `licenses:block` - Block/unblock licenses
+  </Accordion>
+  
+  <Accordion title="Product Access" icon="box">
+    - `products:all` - Access all products in your account
+    - `products:specific` - Access only specified products
+  </Accordion>
+</AccordionGroup>
 
 ## Security Best Practices
 
-- Keep tokens secret and store them securely.
-- Use HTTPS for all API requests.
-- Generate tokens with the minimal required scopes.
-- Revoke compromised tokens immediately.
+<CardGroup cols={2}>
+  <Card title="Token Storage" icon="vault">
+    **Environment Variables**
+    ```bash
+    # .env file
+    KEYMINT_API_TOKEN=at_your_token_here
+    ```
+    
+    **Never** store tokens in:
+    - Source code repositories
+    - Client-side applications
+    - Log files or console output
+  </Card>
+  
+  <Card title="Access Control" icon="shield-halved">
+    **Principle of Least Privilege**
+    - Use minimal required scopes
+    - Create separate tokens for different services
+    - Regularly audit token permissions
+    - Set appropriate product restrictions
+  </Card>
+</CardGroup>
+
+### Token Rotation
+
+<Tip>
+Rotate your API tokens regularly (every 90 days) and immediately revoke any compromised tokens.
+</Tip>
+
+## Authentication Errors
+
+Common authentication error responses:
+
+<CodeGroup>
+  ```json Missing Token
+  {
+    "message": "Missing Authorization header",
+    "code": 1
+  }
+  ```
+  
+  ```json Invalid Token
+  {
+    "message": "Invalid access token",
+    "code": 1
+  }
+  ```
+  
+  ```json Insufficient Permissions
+  {
+    "message": "Insufficient permissions for this operation",
+    "code": 1
+  }
+  ```
+</CodeGroup>
+
+### Handling Authentication Errors
+
+<Steps>
+  <Step title="Verify Token Format">
+    Ensure you're using the correct Bearer token format:
+    ```
+    Authorization: Bearer at_your_token_here
+    ```
+  </Step>
+  
+  <Step title="Check Token Validity">
+    Tokens can become invalid due to:
+    - Expiration (if set)
+    - Manual revocation
+    - Account suspension
+  </Step>
+  
+  <Step title="Verify Scopes">
+    Ensure your token has the required scopes for the operation you're attempting.
+  </Step>
+</Steps>
 
 ## Token Management
 
-Manage your tokens directly in the Keymint Dashboard:
+<CardGroup cols={2}>
+  <Card title="View Active Tokens" icon="list" href="https://app.keymint.dev">
+    Monitor all active API tokens in your dashboard
+  </Card>
+  <Card title="Revoke Tokens" icon="ban">
+    Immediately revoke compromised or unused tokens
+  </Card>
+  <Card title="Audit Logs" icon="clipboard-list">
+    Review API usage and access patterns
+  </Card>
+  <Card title="Generate New Tokens" icon="plus">
+    Create tokens with specific scopes and permissions
+  </Card>
+</CardGroup>
 
-- Generate new tokens as needed.
-- Revoke existing tokens to maintain security.
+## Testing Authentication
+
+Test your authentication setup with a simple API call:
+
+<CodeGroup>
+  ```bash Test API Call
+  curl -X GET "https://api.keymint.dev/customer" \
+    -H "Authorization: Bearer at_your_token_here" \
+    -H "Content-Type: application/json"
+  ```
+  
+  ```json Success Response
+  {
+    "action": "getCustomers",
+    "status": true,
+    "data": [...],
+    "code": 0
+  }
+  ```
+</CodeGroup>
+
+<Check>
+If you receive customer data, your authentication is working correctly!
+</Check>

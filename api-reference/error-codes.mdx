@@ -3,24 +3,71 @@ title: Error Codes
 description: Understand Keymint API error handling and custom error codes.
 ---
 
-## Error Code Reference
+<Info>
+Keymint uses standard HTTP status codes combined with custom error codes to provide detailed error information for better debugging and error handling.
+</Info>
 
-| HTTP Status | Code | Description | Notes |
-| --- | --- | --- | --- |
-| 200 OK | 0 | Success: Request completed. | Operation successful. Check message for details. |
-| 400 Bad Request | 1 | Malformed Request: Missing/invalid params. | Check required fields (productId, licenseKey, etc.) and formatting (expiryDate). |
-| 401 Unauthorized | 1 | Invalid Token: accessToken missing, invalid, expired, or lacks scope. | Verify token validity, expiry, and productId permissions. |
-| 403 Forbidden | 2 | Operation Restricted: License state prevents action. | Examples: Expired, activation limit, inactive, blocked. |
-| 404 Not Found | 1 or 2 | Resource Not Found: Product, license, customer, or device. | Verify IDs (productId, licenseKey, hostId, customerId). code: 2 specific to 'Customer not found' in create. |
-| 409 Conflict | 2 | Resource Conflict: State prevents request. | Example: Creating customer (/create-key) with existing email. |
-| 429 Too Many Requests | 3 | Rate Limit Exceeded. | Use exponential backoff. Applies mainly to activation/validation. |
-| 500 Internal Server Error | 1 | Server Error: Unexpected issue. | Server-side problem (DB, code). Check specific message. Contact support if persistent. |
+## Error Response Structure
 
-## Additional Notes
+All error responses follow this consistent structure:
 
-- Some error codes (like 1 and 2) are reused across different HTTP statuses.
-- The HTTP status code provides the primary classification (e.g., Bad Request, Unauthorized).
-- The message field offers specific details about the error.
+```json
+{
+  "message": "Descriptive error message",
+  "code": 1
+}
+```
+
+<Tabs>
+  <Tab title="Success Response">
+    ```json
+    {
+      "message": "License activated successfully",
+      "code": 0,
+      "data": {
+        // Response data
+      }
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Error Response">
+    ```json
+    {
+      "message": "License key not found",
+      "code": 1
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Complete Error Code Reference
+
+<AccordionGroup>
+  <Accordion title="Success Codes">
+    | HTTP Status | Code | Description |
+    |-------------|------|-------------|
+    | 200 OK | 0 | **Success** - Request completed successfully |
+  </Accordion>
+
+  <Accordion title="Client Error Codes (4xx)">
+    | HTTP Status | Code | Description | Common Causes |
+    |-------------|------|-------------|---------------|
+    | 400 Bad Request | 1 | **Malformed Request** - Missing or invalid parameters | Missing productId, licenseKey, invalid date format |
+    | 401 Unauthorized | 1 | **Invalid Token** - Authentication failed | Missing, expired, or invalid access token |
+    | 403 Forbidden | 2 | **Operation Restricted** - License state prevents action | Expired license, activation limit reached, blocked |
+    | 404 Not Found | 1 | **Resource Not Found** - Requested resource doesn't exist | Invalid productId, licenseKey, customerId |
+    | 404 Not Found | 2 | **Customer Not Found** - Specific to customer operations | Customer ID doesn't exist |
+    | 409 Conflict | 2 | **Resource Conflict** - State prevents request | Duplicate customer email, existing activation |
+    | 429 Too Many Requests | 3 | **Rate Limit Exceeded** - Too many requests | Exceeded API rate limits |
+  </Accordion>
+
+  <Accordion title="Server Error Codes (5xx)">
+    | HTTP Status | Code | Description | Action Required |
+    |-------------|------|-------------|-----------------|
+    | 500 Internal Server Error | 1 | **Server Error** - Unexpected server issue | Contact support if persistent |
+  </Accordion>
+</AccordionGroup>
 
 ### Rate Limiting (429)
 
@@ -33,3 +80,108 @@ These usually indicate a problem beyond the client's control. Log the error and 
 ### code Field
 
 This custom code provides a secondary level of detail, differentiating between types of errors within the same HTTP status (e.g., 404 with code: 1 vs code: 2).
+
+## Error Handling Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Parse Error Codes" icon="code">
+    Always check both HTTP status and custom error code for complete error context.
+  </Card>
+  <Card title="Implement Retry Logic" icon="arrows-rotate">
+    Use exponential backoff for rate limit errors (code 3) and temporary server errors.
+  </Card>
+  <Card title="Log Error Details" icon="file-text">
+    Log both the error message and code for debugging and monitoring purposes.
+  </Card>
+  <Card title="User-Friendly Messages" icon="user">
+    Translate technical error messages into user-friendly notifications.
+  </Card>
+</CardGroup>
+
+### Error Handling Examples
+
+<Tabs>
+  <Tab title="JavaScript">
+    ```javascript
+    async function handleApiCall(apiFunction) {
+      try {
+        const response = await apiFunction();
+        return response;
+      } catch (error) {
+        switch (error.status) {
+          case 400:
+            console.error('Bad Request:', error.data.message);
+            // Handle validation errors
+            break;
+          case 401:
+            console.error('Unauthorized:', error.data.message);
+            // Refresh token or redirect to login
+            break;
+          case 403:
+            console.error('Forbidden:', error.data.message);
+            // Handle license restrictions
+            break;
+          case 404:
+            console.error('Not Found:', error.data.message);
+            // Handle missing resources
+            break;
+          case 429:
+            console.error('Rate Limited:', error.data.message);
+            // Implement exponential backoff
+            await retryWithBackoff(apiFunction);
+            break;
+          case 500:
+            console.error('Server Error:', error.data.message);
+            // Log for monitoring, show user-friendly message
+            break;
+          default:
+            console.error('Unexpected Error:', error);
+        }
+        throw error;
+      }
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Python">
+    ```python
+    import requests
+    import time
+    from typing import Dict, Any
+
+    def handle_api_call(api_function) -> Dict[str, Any]:
+        try:
+            response = api_function()
+            return response.json()
+        except requests.exceptions.HTTPError as e:
+            error_data = e.response.json()
+            status_code = e.response.status_code
+            
+            if status_code == 400:
+                print(f"Bad Request: {error_data['message']}")
+                # Handle validation errors
+            elif status_code == 401:
+                print(f"Unauthorized: {error_data['message']}")
+                # Refresh token or redirect to login
+            elif status_code == 403:
+                print(f"Forbidden: {error_data['message']}")
+                # Handle license restrictions
+            elif status_code == 404:
+                print(f"Not Found: {error_data['message']}")
+                # Handle missing resources
+            elif status_code == 429:
+                print(f"Rate Limited: {error_data['message']}")
+                # Implement exponential backoff
+                return retry_with_backoff(api_function)
+            elif status_code == 500:
+                print(f"Server Error: {error_data['message']}")
+                # Log for monitoring
+            
+            raise e
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+Always implement proper error handling in production applications. Never expose raw API error messages to end users without proper sanitization.
+</Warning>

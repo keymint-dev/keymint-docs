@@ -1,54 +1,69 @@
 ---
 title: "Node.js SDK"
-description: "Official Node.js SDK for Keymint license management with TypeScript support and comprehensive examples."
+description: "Official Node.js SDK for Keymint license management with TypeScript support and modern async/await."
 ---
 
-The official Keymint Node.js SDK provides a simple interface for integrating license management into your Node.js applications.
+<Info>
+The official Keymint Node.js SDK provides a modern, promise-based interface for integrating license management into your Node.js applications with full TypeScript support.
+</Info>
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="TypeScript Support" icon="code">
+    Full TypeScript definitions with autocomplete and type safety
+  </Card>
+  <Card title="Modern Async/Await" icon="bolt">
+    Promise-based API with async/await support
+  </Card>
+  <Card title="Comprehensive Coverage" icon="shield-check">
+    Complete API coverage for all Keymint endpoints
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation">
+    Built-in error handling with detailed error types
+  </Card>
+</CardGroup>
 
 ## Installation
 
-Install the SDK using npm:
+<Tabs>
+  <Tab title="npm">
+    ```bash
+    npm install keymint-nodejs
+    ```
+  </Tab>
+  
+  <Tab title="yarn">
+    ```bash
+    yarn add keymint-nodejs
+    ```
+  </Tab>
+  
+  <Tab title="pnpm">
+    ```bash
+    pnpm add keymint-nodejs
+    ```
+  </Tab>
+</Tabs>
 
-```bash
-npm install keymint-nodejs
-```
+<Note>
+The SDK automatically includes TypeScript definitions - no need to install `@types/keymint-nodejs` separately.
+</Note>
 
-## Quick Start
+## Resources
 
-```javascript
-const Keymint = require('keymint-nodejs');
+<CardGroup cols={2}>
+  <Card title="npm Package" icon="box" href="https://www.npmjs.com/package/keymint-nodejs">
+    View the official npm package with installation instructions
+  </Card>
+  <Card title="GitHub Repository" icon="github" href="https://github.com/keymint-dev/KeymintSDK-nodejs">
+    Source code, documentation, and contribution guidelines
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference/overview">
+    Complete REST API documentation
+  </Card>
+  <Card title="Example Projects" icon="code" href="https://github.com/keymint-dev/examples">
+    Real-world implementation examples and tutorials
+  </Card>
+</CardGroup>
 
-const keymint = new Keymint({
-  accessToken: 'YOUR_ACCESS_TOKEN'
-});
-
-// Create a customer
-const customer = await keymint.customer.create({
-  name: 'John Doe',
-  email: 'john@example.com'
-});
-
-// Create a license key
-const license = await keymint.key.create({
-  productId: 'your-product-id',
-  maxActivations: '5',
-  newCustomer: {
-    name: 'License Customer',
-    email: 'customer@example.com'
-  }
-});
-
-// Activate a license
-const activation = await keymint.key.activate({
-  productId: 'your-product-id',
-  licenseKey: 'LICENSE-KEY-HERE',
-  hostId: 'unique-machine-id',
-  deviceTag: 'user-device-name'
-});
-```
-
-## Links
-
-- [npm Package](https://www.npmjs.com/package/keymint-nodejs)
-- [GitHub Repository](https://github.com/keymint-dev/KeymintSDK-nodejs)
-- [TypeScript Definitions](https://www.npmjs.com/package/@types/keymint-nodejs)

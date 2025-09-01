@@ -3,30 +3,87 @@ title: Keymint Security
 description: Comprehensive security overview for Keymint's software licensing platform.
 ---
 
+<Info>
+Security is at the core of everything we do at Keymint. We implement industry-leading security practices to protect your data and ensure the integrity of your software licensing operations.
+</Info>
 
 ## Core Security Principles
 
-Our approach to security is built on these fundamental principles:
+<CardGroup cols={2}>
+  <Card title="Data Protection" icon="shield-check">
+    Safeguarding the personal and licensing data you entrust to us through encryption and secure storage.
+  </Card>
+  <Card title="Secure Infrastructure" icon="server">
+    Utilizing reliable technologies and trusted partners to maintain a secure operational environment.
+  </Card>
+  <Card title="Transparency" icon="eye">
+    Clearly communicating how we handle and protect your data with complete transparency.
+  </Card>
+  <Card title="Compliance" icon="scale-balanced">
+    Adhering to relevant data protection regulations and industry best practices.
+  </Card>
+</CardGroup>
 
-1. Data Protection: Safeguarding the personal and licensing data you entrust to us.
-2. Secure Infrastructure: Utilizing reliable technologies and partners to maintain a secure operational environment.
-3. Transparency: Clearly communicating how we handle and protect your data.
-4. Compliance: Adhering to relevant data protection regulations and best practices.
+## Security Measures
 
-## Key Security Measures
-
-### Data Encryption & Handling
-
-- Encryption in Transit: All communication between your browser/client and the Keymint platform is encrypted using HTTPS (SSL/TLS).
-- Password Security: User account passwords are securely stored using strong hashing algorithms. We never store plaintext passwords.
-- Payment Security: We utilize trusted third-party payment processors (Stripe for card payments, CoinPayments for cryptocurrency). We do not store your full credit card details or private crypto wallet information on our servers.
-- Database Security: We use secure database hosting solutions (like Neon.tech) designed with data protection in mind.
-
-### Access Control
-
-- Enhanced Authentication: In addition to secure password hashing, access attempts may involve verification via a code sent to your registered email address. We also utilize checks based on device information and IP address analysis to help detect and prevent potentially unauthorized activity.
-- Role-Based Access Control (RBAC): Internal access to systems and data is restricted based on employee roles and responsibilities, following the principle of least privilege.
-- API Key Security: Users are responsible for keeping their API keys secure. We recommend following best practices for API key management.
+<Tabs>
+  <Tab title="Data Encryption">
+    ### Encryption in Transit
+    - All communication uses **HTTPS (TLS 1.3)** encryption
+    - SSL certificates with 256-bit encryption
+    - Perfect Forward Secrecy (PFS) support
+    
+    ### Encryption at Rest
+    - Database encryption using **AES-256** encryption
+    - Encrypted backups and snapshots
+    - Secure key management with rotation policies
+    
+    ### Password Security
+    - Hashing with salt rounds
+    - No plaintext password storage
+    - Secure password reset flows
+  </Tab>
+  
+  <Tab title="Access Control">
+    ### Authentication
+    - **Multi-factor authentication** support
+    - Email verification for account changes
+    - Device fingerprinting for anomaly detection
+    - IP-based access monitoring
+    
+    ### Authorization
+    - **Role-Based Access Control (RBAC)**
+    - Principle of least privilege
+    - API key scoping and permissions
+    - Time-limited access tokens
+    
+    ### API Security
+    - **JWT-based authentication**
+    - Rate limiting and DDoS protection
+    - Request signing and validation
+    - Secure API key generation
+  </Tab>
+  
+  <Tab title="Infrastructure">
+    ### Cloud Security
+    - **AWS/Azure** secure cloud infrastructure
+    - Network isolation and VPC security
+    - Regular security audits and penetration testing
+    - 24/7 monitoring and alerting
+    
+    ### Database Security
+    - **Neon.tech** PostgreSQL with encryption
+    - Automated backups with encryption
+    - Network-level access restrictions
+    - Query monitoring and logging
+    
+    ### Payment Security
+    - **PCI DSS** compliant payment processing
+    - **Stripe** for secure card payments
+    - No storage of payment credentials
+    - Encrypted payment data transmission
+  </Tab>
+</Tabs>
 
 ### Platform & Operational Security
 
@@ -55,9 +112,77 @@ Our approach to security is built on these fundamental principles:
 - Vercel: Application hosting and infrastructure.
 - PostHog: Product analytics.
 
-## Reporting Security Concerns
+## Security Best Practices for Developers
 
-If you believe you have discovered a security vulnerability in the Keymint platform, please contact us immediately.
+<Steps>
+  <Step title="Secure API Key Management">
+    - Store API keys in environment variables, never in code
+    - Use different keys for development, staging, and production
+    - Rotate API keys regularly
+    - Implement key scoping to limit permissions
+    
+    ```bash
+    # Environment variables
+    export KEYMINT_API_KEY="your-production-api-key"
+    export KEYMINT_PRODUCT_ID="your-product-id"
+    ```
+  </Step>
+  
+  <Step title="Implement Secure License Validation">
+    - Always validate licenses server-side when possible
+    - Use HTTPS for all API communications
+    - Implement proper error handling to avoid information leakage
+    - Cache validation results appropriately
+  </Step>
+  
+  <Step title="Follow Offline License Security">
+    - Use trust stores for offline license verification
+    - Implement proper key rotation strategies
+    - Validate license signatures cryptographically
+    - Protect against license tampering
+  </Step>
+</Steps>
 
-Security Contact Email: security@keymint.dev
+## Compliance & Certifications
+
+<CardGroup cols={3}>
+  <Card title="GDPR Compliance" icon="shield-halved">
+    Full compliance with European data protection regulations
+  </Card>
+  <Card title="SOC 2 Type II" icon="certificate">
+    Annual security audits and compliance validation
+  </Card>
+  <Card title="ISO 27001" icon="award">
+    Information security management system certification
+  </Card>
+</CardGroup>
+
+## Incident Response
+
+<AccordionGroup>
+  <Accordion title="Security Monitoring">
+    We maintain 24/7 security monitoring with automated threat detection, anomaly detection, and real-time alerting for suspicious activities.
+  </Accordion>
+  
+  <Accordion title="Incident Response Plan">
+    Our incident response team follows a documented plan for security incidents, including immediate containment, investigation, and customer notification procedures.
+  </Accordion>
+  
+  <Accordion title="Vulnerability Management">
+    Regular security assessments, penetration testing, and vulnerability scanning ensure our systems remain secure against emerging threats.
+  </Accordion>
+</AccordionGroup>
+
+## Reporting Security Issues
+
+<Warning>
+If you discover a security vulnerability, please report it responsibly:
+
+- Email: **security@keymint.dev**
+- Provide detailed information about the vulnerability
+- Allow reasonable time for investigation and resolution
+- We offer a responsible disclosure program with recognition
+</Warning>
+
+For general security questions or concerns, contact our support team at [support@keymint.dev](mailto:support@keymint.dev).
 

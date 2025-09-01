@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://api.keymint.dev/api",
+      "url": "https://api.keymint.dev",
       "description": "Production server"
     }
   ],
@@ -122,15 +122,6 @@
                   "action": "getCustomers",
                   "status": true,
                   "data": [
-                    {
-                      "id": "e693d07f7d12aad796259a",
-                      "name": "Beans",
-                      "email": "beans@mail.com",
-                      "active": true,
-                      "createdAt": "2025-09-01T02:36:15.506Z",
-                      "updatedAt": "2025-09-01T02:36:15.014Z",
-                      "createdBy": "928b9f01e54dc6a2ed6769"
-                    },
                     {
                       "id": "c9cbdf88f01f516815a59f",
                       "name": "Test Customer",
@@ -674,8 +665,7 @@
           }
         },
         "required": [
-          "name",
-          "email"
+          "name"
         ]
       },
       "PostcustomerResponse": {
@@ -687,11 +677,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "message",
-          "code"
-        ]
+        }
       },
       "PostcustomerSuccessResponse": {
         "type": "object",
@@ -718,24 +704,12 @@
                 "type": "string",
                 "format": "email"
               }
-            },
-            "required": [
-              "id",
-              "name",
-              "email"
-            ]
+            }
           },
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "action",
-          "status",
-          "message",
-          "data",
-          "code"
-        ]
+        }
       },
       "GetcustomerResponse": {
         "type": "object",
@@ -775,28 +749,13 @@
                 "createdBy": {
                   "type": "string"
                 }
-              },
-              "required": [
-                "id",
-                "name",
-                "email",
-                "active",
-                "createdAt",
-                "updatedAt",
-                "createdBy"
-              ]
+              }
             }
           },
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "action",
-          "status",
-          "data",
-          "code"
-        ]
+        }
       },
       "GetcustomercustomerIdResponse": {
         "type": "object",
@@ -836,28 +795,13 @@
                 "createdBy": {
                   "type": "string"
                 }
-              },
-              "required": [
-                "id",
-                "name",
-                "email",
-                "active",
-                "createdAt",
-                "updatedAt",
-                "createdBy"
-              ]
+              }
             }
           },
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "action",
-          "status",
-          "data",
-          "code"
-        ]
+        }
       },
       "PutcustomercustomerIdRequest": {
         "type": "object",
@@ -871,8 +815,7 @@
           }
         },
         "required": [
-          "name",
-          "email"
+          "name"
         ]
       },
       "PutcustomercustomerIdResponse": {
@@ -887,12 +830,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "action",
-          "status",
-          "code"
-        ]
+        }
       },
       "DeletecustomercustomerIdResponse": {
         "type": "object",
@@ -906,12 +844,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "action",
-          "status",
-          "code"
-        ]
+        }
       },
       "GetcustomercustomerIdkeysResponse": {
         "type": "object",
@@ -931,13 +864,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "action",
-          "status",
-          "data",
-          "code"
-        ]
+        }
       },
       "PostcustomercustomerIddisableResponse": {
         "type": "object",
@@ -954,13 +881,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "action",
-          "status",
-          "message",
-          "code"
-        ]
+        }
       },
       "PostkeyRequest": {
         "type": "object",
@@ -983,8 +904,7 @@
               }
             },
             "required": [
-              "name",
-              "email"
+              "name"
             ]
           }
         },
@@ -1003,11 +923,7 @@
           "key": {
             "type": "string"
           }
-        },
-        "required": [
-          "code",
-          "key"
-        ]
+        }
       },
       "GetkeyResponse": {
         "type": "object",
@@ -1046,17 +962,7 @@
                     "type": "string",
                     "format": "date-time"
                   }
-                },
-                "required": [
-                  "id",
-                  "key",
-                  "productId",
-                  "maxActivations",
-                  "activations",
-                  "devices",
-                  "activated",
-                  "expirationDate"
-                ]
+                }
               },
               "customer": {
                 "type": "object",
@@ -1074,28 +980,14 @@
                   "active": {
                     "type": "boolean"
                   }
-                },
-                "required": [
-                  "id",
-                  "name",
-                  "email",
-                  "active"
-                ]
+                }
               }
-            },
-            "required": [
-              "license",
-              "customer"
-            ]
+            }
           },
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "data",
-          "code"
-        ]
+        }
       },
       "PostkeyactivateRequest": {
         "type": "object",
@@ -1115,9 +1007,7 @@
         },
         "required": [
           "productId",
-          "licenseKey",
-          "hostId",
-          "deviceTag"
+          "licenseKey"
         ]
       },
       "PostkeyactivateResponse": {
@@ -1136,13 +1026,7 @@
             "type": "string",
             "format": "email"
           }
-        },
-        "required": [
-          "code",
-          "message",
-          "licenseeName",
-          "licenseeEmail"
-        ]
+        }
       },
       "PostkeydeactivateRequest": {
         "type": "object",
@@ -1159,8 +1043,7 @@
         },
         "required": [
           "productId",
-          "licenseKey",
-          "hostId"
+          "licenseKey"
         ]
       },
       "PostkeydeactivateResponse": {
@@ -1172,11 +1055,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "message",
-          "code"
-        ]
+        }
       },
       "PostkeyblockRequest": {
         "type": "object",
@@ -1202,11 +1081,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "message",
-          "code"
-        ]
+        }
       },
       "PostkeyunblockRequest": {
         "type": "object",
@@ -1232,11 +1107,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "message",
-          "code"
-        ]
+        }
       },
       "ErrorResponse": {
         "type": "object",
@@ -1247,11 +1118,7 @@
           "code": {
             "type": "integer"
           }
-        },
-        "required": [
-          "message",
-          "code"
-        ]
+        }
       }
     },
     "responses": {}

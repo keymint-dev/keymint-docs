@@ -1,42 +1,158 @@
 ---
 title: Frequently Asked Questions
+description: Find answers to common questions about Keymint's software licensing platform.
 ---
 
+<Info>
+Can't find what you're looking for? Contact our support team at [support@keymint.dev](mailto:support@keymint.dev).
+</Info>
 
-## Licensing
+## Licensing Fundamentals
 
 <AccordionGroup>
   <Accordion title="What is software licensing?">
     Software licensing is a legal mechanism that governs the use and distribution of software. It defines the terms under which users can install, use, and sometimes modify software. Keymint provides the technical tools to implement and enforce these license agreements in your software products.
   </Accordion>
+  
   <Accordion title="What licensing models does Keymint support?">
-    Keymint supports four key licensing models: node-locked licenses, perpetual licenses, subscription-based licenses, and trial licenses. Each model offers flexibility for different software distribution strategies.
+    Keymint supports multiple licensing models to fit different business needs:
+    
+    - **Node-locked licenses**: Tied to specific hardware/device fingerprints
+    - **Perpetual licenses**: One-time purchase with indefinite usage rights
+    - **Subscription licenses**: Time-based licenses with renewal requirements
+    - **Trial licenses**: Limited-time evaluation licenses
+  </Accordion>
+  
+  <Accordion title="How does offline licensing work?">
+    Offline licensing allows your software to validate licenses without internet connectivity. Keymint generates cryptographically signed license files (.lic) that your application can verify locally using our trust store architecture, ensuring security even in offline environments.
+  </Accordion>
+  
+  <Accordion title="Can I migrate from another licensing solution?">
+    Yes! Keymint provides migration tools and support for transitioning from other licensing platforms. Our team can help you plan the migration strategy and provide custom scripts for data migration where needed.
   </Accordion>
 </AccordionGroup>
 
-## Technical
+## Technical Implementation
 
 <AccordionGroup>
   <Accordion title="What programming languages does Keymint support?">
-    Keymint provides a REST API that can be used with any programming language capable of making HTTP requests. We offer comprehensive API documentation and examples for Python, JavaScript, Java, C#, and more.
+    Keymint provides a REST API that works with any programming language capable of making HTTP requests. We offer:
+    
+    - **Official SDKs**: Node.js, Python (with TypeScript and type hints)
+    - **Code Examples**: Java, C#, PHP, Go, Ruby, and more
+    - **OpenAPI Specification**: For generating clients in any language
+    - **Comprehensive Documentation**: With examples for popular frameworks
   </Accordion>
+  
   <Accordion title="How secure is the Keymint API?">
-    Our API uses industry-standard security protocols including HTTPS, JWT authentication, and rate limiting. We implement robust encryption and provide detailed access logs to ensure maximum security.
+    Security is our top priority. The Keymint API features:
+    
+    - **TLS 1.3 encryption** for all communications
+    - **JWT-based authentication** with scoped access tokens
+    - **Rate limiting** and DDoS protection
+    - **Request signing** and validation
+    - **SOC 2 Type II** compliance and regular security audits
+  </Accordion>
+  
+  <Accordion title="What are the API rate limits?">
+    Rate limits vary by endpoint and account type, designed to support legitimate usage while preventing abuse. Critical endpoints like license validation have higher limits. If you need increased limits for production use, contact our support team.
+  </Accordion>
+  
+  <Accordion title="How do I handle license validation in my application?">
+    License validation can be implemented in multiple ways:
+    
+    - **Online validation**: Real-time API calls for immediate verification
+    - **Offline validation**: Using signed license files for environments without internet
+    - **Hybrid approach**: Online when possible, falling back to offline validation
+    - **Caching**: Store validation results to reduce API calls
+  </Accordion>
+  
+  <Accordion title="Can I integrate Keymint with my existing user management system?">
+    Yes! Keymint integrates well with existing systems through:
+    
+    - **REST API**: Connect your user database to Keymint's customer management
+    - **Custom fields**: Store additional metadata with customers and licenses
+    - **Bulk operations**: Import existing customer data and licenses
   </Accordion>
 </AccordionGroup>
 
-## Support
+## Billing & Pricing
 
 <AccordionGroup>
-  <Accordion title="How can I contact Keymint support?">
-    You can reach our support team via email at support@keymint.dev or through the live chat on our dashboard. Our standard support hours are 9 AM - 6 PM UTC, Monday through Friday.
+  <Accordion title="How does Keymint pricing work?">
+    Keymint offers flexible pricing based on your usage:
+    
+    - **Free Tier**: Perfect for development and small projects
+    - **Pay-as-you-grow**: Scales with your business needs
+    - **Enterprise Plans**: Custom solutions for large organizations
+    - **No setup fees**: Start immediately without upfront costs
+    
+    Visit our [pricing page](https://keymint.dev/#pricing) for current rates.
+  </Accordion>
+  
+  <Accordion title="What payment methods do you accept?">
+    We accept:
+    
+    - **Credit Cards**: Visa, MasterCard, American Express (via Stripe)
+    - **PayPal**: For convenient online payments
+    - **Bank Transfers**: For enterprise customers
+    - **Cryptocurrency**: Bitcoin and other major cryptocurrencies
+  </Accordion>
+  
+  <Accordion title="Can I change my plan anytime?">
+    Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately, and billing is prorated accordingly. Downgrades will preserve your existing licenses and data.
+  </Accordion>
+  
+  <Accordion title="Is there a free trial?">
+    Yes! Our free tier includes generous limits for development and testing. No credit card required to get started. You can explore all features and upgrade when you're ready to go to production.
   </Accordion>
 </AccordionGroup>
 
-## Billing
+## Support & Resources
 
 <AccordionGroup>
-  <Accordion title="How much does Keymint cost?">
-    Keymint offers flexible pricing plans starting with a free tier for startups and small projects. Our pricing is based on the number of active licenses you manage and the features you need. Visit our pricing page for detailed information on our plans and pricing structure.
+  <Accordion title="What support options are available?">
+    We offer multiple support channels:
+    
+    - **Email Support**: [support@keymint.dev](mailto:support@keymint.dev) with 24-hour response time
+    - **Documentation**: Comprehensive guides and API reference
+    - **Priority Support**: Available for enterprise customers
+  </Accordion>
+  
+  <Accordion title="How do I report a bug or request a feature?">
+    We welcome feedback! You can:
+    
+    - **Report bugs**: Email [support@keymint.dev](mailto:support@keymint.dev) with detailed information
+    - **Security issues**: Report to [security@keymint.dev](mailto:security@keymint.dev)
+    - **Documentation improvements**: Submit feedback through our docs
+  </Accordion>
+  
+  <Accordion title="Where can I find code examples?">
+    Code examples are available in:
+    
+    - **API Documentation**: Each endpoint includes working examples
+    - **SDK Documentation**: Comprehensive examples for Node.js and Python
+    - **GitHub Repository**: Sample applications and integration examples
+    - **Blog Posts**: Step-by-step tutorials and use cases
+  </Accordion>
+  
+  <Accordion title="Do you offer professional services?">
+    Yes! We offer:
+    
+    - **Migration Services**: Help transitioning from other platforms
+    - **Custom Integration**: Tailored solutions for complex requirements
+    - **Consulting**: Architecture advice and best practices
+    - **Training**: Team training sessions for your development team
+    
+    Contact [sales@keymint.dev](mailto:sales@keymint.dev) for more information.
   </Accordion>
 </AccordionGroup>
+
+<CardGroup cols={3}>
+  <Card title="Start Building" icon="rocket" href="/api-reference/introduction">
+    Get started with our API
+  </Card>
+  <Card title="Contact Support" icon="headset" href="mailto:support@keymint.dev">
+    Get help from our team
+  </Card>
+</CardGroup>

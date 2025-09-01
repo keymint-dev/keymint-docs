@@ -1,53 +1,71 @@
 ---
 title: "Python SDK"
-description: "Official Python SDK for Keymint license management with full API coverage and easy integration."
+description: "Official Python SDK for Keymint license management with type hints and async support."
 ---
 
-The official Keymint Python SDK provides a simple interface for integrating license management into your Python applications.
+<Info>
+The official Keymint Python SDK provides a modern, intuitive interface for integrating license management into your Python applications with full type hint support and async capabilities.
+</Info>
+
+## Features
+
+<CardGroup cols={2}>
+  <Card title="Type Hints" icon="code">
+    Full type hint support for better IDE integration and code safety
+  </Card>
+  <Card title="Async/Await Support" icon="bolt">
+    Built-in async support for high-performance applications
+  </Card>
+  <Card title="Comprehensive Coverage" icon="shield-check">
+    Complete API coverage for all Keymint endpoints
+  </Card>
+  <Card title="Pythonic Interface" icon="python">
+    Clean, intuitive API that follows Python conventions
+  </Card>
+</CardGroup>
 
 ## Installation
 
-Install the SDK using pip:
+<Tabs>
+  <Tab title="pip">
+    ```bash
+    pip install keymint
+    ```
+  </Tab>
+  
+  <Tab title="Poetry">
+    ```bash
+    poetry add keymint
+    ```
+  </Tab>
+  
+  <Tab title="pipenv">
+    ```bash
+    pipenv install keymint
+    ```
+  </Tab>
+  
+  <Tab title="requirements.txt">
+    ```text
+    keymint>=1.0.0
+    ```
+  </Tab>
+</Tabs>
 
-```bash
-pip install keymint
-```
+## Resources
 
-## Quick Start
+<CardGroup cols={2}>
+  <Card title="PyPI Package" icon="box" href="https://pypi.org/project/keymint/">
+    View the official PyPI package with installation instructions
+  </Card>
+  <Card title="GitHub Repository" icon="github" href="https://github.com/keymint-dev/keymint-python">
+    Source code, documentation, and contribution guidelines
+  </Card>
+  <Card title="API Reference" icon="book" href="/api-reference/overview">
+    Complete REST API documentation
+  </Card>
+  <Card title="Example Projects" icon="code" href="https://github.com/keymint-dev/examples">
+    Real-world implementation examples and tutorials
+  </Card>
+</CardGroup>
 
-```python
-from keymint import KeymintClient
-
-# Initialize the client
-client = KeymintClient(access_token='YOUR_ACCESS_TOKEN')
-
-# Create a customer
-customer = client.customers.create({
-    'name': 'John Doe',
-    'email': 'john@example.com'
-})
-
-# Create a license key
-license_key = client.keys.create({
-    'productId': 'your-product-id',
-    'maxActivations': '5',
-    'newCustomer': {
-        'name': 'License Customer',
-        'email': 'customer@example.com'
-    }
-})
-
-# Activate a license
-activation = client.keys.activate({
-    'productId': 'your-product-id',
-    'licenseKey': 'LICENSE-KEY-HERE',
-    'hostId': 'unique-machine-id',
-    'deviceTag': 'user-device-name'
-})
-```
-
-## Links
-
-- [PyPI Package](https://pypi.org/project/keymint/)
-- [GitHub Repository](https://github.com/keymint-dev/keymint-python)
-- [Documentation](https://github.com/keymint-dev/keymint-python#readme)

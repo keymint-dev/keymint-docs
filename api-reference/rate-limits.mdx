@@ -3,31 +3,68 @@ title: Rate Limiting
 description: Learn about the API rate limiting policies for the Keymint API.
 ---
 
-## How It Works
+<Info>
+Rate limiting helps ensure fair usage and protects against abuse while maintaining optimal API performance for all users.
+</Info>
 
-Rate limits are applied based on several factors, including:
+## How Rate Limiting Works
 
-- Source IP Address: The originating IP of the request.
-- API Access Token: The token used to authenticate the request.
-- Specific Resources: Certain endpoints, such as License Key validation, may have additional limits.
+<CardGroup cols={3}>
+  <Card title="IP-Based Limits" icon="location-dot">
+    Limits are applied per source IP address to prevent abuse from specific locations.
+  </Card>
+  <Card title="Token-Based Limits" icon="key">
+    Each API access token has its own rate limit allocation for fair resource distribution.
+  </Card>
+  <Card title="Endpoint-Specific Limits" icon="gauge-high">
+    Critical endpoints like license validation have additional protective limits.
+  </Card>
+</CardGroup>
 
-<Callout>
+### Rate Limiting Factors
+
+Rate limits are calculated based on:
+
+<AccordionGroup>
+  <Accordion title="Source IP Address">
+    The originating IP address of the request. This helps prevent abuse from specific sources while allowing legitimate distributed usage.
+  </Accordion>
+  
+  <Accordion title="API Access Token">
+    Each authenticated token has its own rate limit allocation, ensuring fair usage across different applications and users.
+  </Accordion>
+  
+  <Accordion title="Specific Resources">
+    Critical endpoints such as License Key validation and activation have additional protective limits to maintain system integrity.
+  </Accordion>
+</AccordionGroup>
+
+<Callout type="info">
 The exact limits are not published and may change over time. They are designed to support legitimate application use while preventing abuse, such as brute-force attacks or excessive polling.
 </Callout>
 
-## Exceeding the Limit
+## Rate Limit Exceeded Response
 
-If you exceed the rate limit, the API will respond with:
+When you exceed the rate limit, the API responds with:
 
-- HTTP Status Code: 429 Too Many Requests
-- Response Body: A JSON object, for example:
-
-```json
-{
-  "message": "Too many activation attempts. Please try again later.",
-  "code": 3
-}
-```
+<Tabs>
+  <Tab title="HTTP Response">
+    ```http
+    HTTP/1.1 429 Too Many Requests
+    Content-Type: application/json
+    Retry-After: 60
+    ```
+  </Tab>
+  
+  <Tab title="JSON Response">
+    ```json
+    {
+      "message": "Too many activation attempts. Please try again later.",
+      "code": 3
+    }
+    ```
+  </Tab>
+</Tabs>
 
 The message may vary depending on the endpoint.
 
@@ -43,5 +80,46 @@ The message may vary depending on the endpoint.
 <Callout type="tip">
 If you consistently encounter rate limits during normal operation, contact support to discuss your use case.
 </Callout>
+
+## Best Practices
+
+<Steps>
+  <Step title="Implement Exponential Backoff">
+    When you receive a 429 response, wait progressively longer between retries (e.g., 1s, 2s, 4s, 8s).
+    
+    ```javascript
+    async function retryWithBackoff(apiCall, maxRetries = 3) {
+      for (let i = 0; i < maxRetries; i++) {
+        try {
+          return await apiCall();
+        } catch (error) {
+          if (error.status === 429 && i < maxRetries - 1) {
+            const delay = Math.pow(2, i) * 1000; // 1s, 2s, 4s
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+          throw error;
+        }
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Cache API Responses">
+    Reduce API calls by caching responses when appropriate, especially for license validation results.
+  </Step>
+  
+  <Step title="Use Batch Operations">
+    Where available, use batch endpoints to reduce the total number of API calls required.
+  </Step>
+  
+  <Step title="Monitor Rate Limit Headers">
+    Check for rate limit headers in responses to proactively adjust your request frequency.
+  </Step>
+</Steps>
+
+<Warning>
+Avoid polling endpoints unnecessarily. Implement webhook handlers where possible to receive real-time updates instead of frequent polling.
+</Warning>
 
 By following these guidelines, you can ensure a smoother experience while using the Keymint API.

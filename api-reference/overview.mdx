@@ -143,12 +143,6 @@ Always implement proper error handling in your application to gracefully handle 
 
 ## Rate Limits
 
-The Keymint API implements rate limiting to ensure fair usage:
-
-- **Standard Plan**: 1,000 requests per minute
-- **Pro Plan**: 5,000 requests per minute  
-- **Enterprise**: Custom limits available
-
 When you hit the rate limit, you'll receive a `429 Too Many Requests` response. Implement exponential backoff to handle rate limiting gracefully.
 
 ## Next Steps
@@ -167,9 +161,7 @@ When you hit the rate limit, you'll receive a `429 Too Many Requests` response. 
     Use our official SDKs for faster integration.
   </Card>
 </CardGroup>
-}
-```
 
 <Callout>
-Learn more in the Error Codes reference and Rate Limits pages.
+Learn more in the [Error Codes](/api-reference/error-codes) reference and [Rate Limits](/api-reference/rate-limits) pages.
 </Callout>

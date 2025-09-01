@@ -3,63 +3,98 @@ title: Customer Portal Login
 description: How customers can securely access their license details in the Keymint Customer Dashboard.
 ---
 
+<Info>
+The Customer Portal allows you to view your license information, download license files, and manage your account details securely.
+</Info>
 
-<Callout type="info">
-Portal URL: https://app.keymint.dev
-</Callout>
+<CardGroup cols={2}>
+  <Card title="Quick Access" icon="external-link" href="https://app.keymint.dev">
+    Go directly to the Customer Portal
+  </Card>
+  <Card title="Need Help?" icon="life-ring" href="mailto:support@keymint.dev">
+    Contact our support team
+  </Card>
+</CardGroup>
 
-## How Login Works
+## Login Process
 
-<Steps>
-  <Step>
-    Go to <a href="https://app.keymint.dev" target="_blank" rel="noreferrer">app.keymint.dev</a>.
-  </Step>
-  <Step>
-    Click the <b>Customer</b> tab on the login screen.
-  </Step>
-  <Step>
-    Enter the <b>Vendor Code</b> and your <b>Email</b>.
-  </Step>
-</Steps>
+<Tabs>
+  <Tab title="Regular Login">
+    <Steps>
+      <Step title="Navigate to Portal">
+        Go to [app.keymint.dev](https://app.keymint.dev) and click the **Customer** tab.
+      </Step>
+      <Step title="Enter Credentials">
+        Enter your **Vendor Code**, **Email**, and **Password**.
+      </Step>
+      <Step title="Access Dashboard">
+        Click **Login** to access your license dashboard.
+      </Step>
+    </Steps>
+  </Tab>
+  
+  <Tab title="First-Time Login">
+    <Steps>
+      <Step title="Navigate to Portal">
+        Go to [app.keymint.dev](https://app.keymint.dev) and click the **Customer** tab.
+      </Step>
+      <Step title="Request Password">
+        Check **"First time login / Need password"** and enter your **Vendor Code** and **Email**.
+      </Step>
+      <Step title="Check Email">
+        Click **Send Password** and check your email for the temporary password.
+      </Step>
+      <Step title="Complete Login">
+        Return to the portal, uncheck the first-time box, and enter your credentials.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
 
-## First-Time Login
+## What You Can Do in the Portal
 
-If this is your first time logging in:
-
-<Steps>
-  <Step>
-    Check the box labeled <b>“First time login / Need password”</b>.
-  </Step>
-  <Step>
-    Click <b>Send Password</b>.
-  </Step>
-  <Step>
-    A password will be emailed to the provided address.
-  </Step>
-</Steps>
-
-## Logging In
-
-Once you’ve received your password:
-
-<Steps>
-  <Step>
-    Uncheck the <b>“First time login / Need password”</b> box.
-  </Step>
-  <Step>
-    Enter your <b>Vendor Code</b>, <b>Email</b>, and the <b>Password</b> from your email.
-  </Step>
-  <Step>
-    Click <b>Login</b> to access your dashboard.
-  </Step>
-</Steps>
+<AccordionGroup>
+  <Accordion title="View License Information" icon="key">
+    See all your active licenses, their status, expiration dates, and usage details.
+  </Accordion>
+  
+  <Accordion title="Manage Account Details" icon="user">
+    Update your contact information.
+  </Accordion>
+  
+  <Accordion title="Monitor Usage" icon="chart-line">
+    Track license activations, deactivations, and usage analytics.
+  </Accordion>
+</AccordionGroup>
 
 ## Troubleshooting
 
-- Make sure the email matches the one registered by your vendor.
-- Passwords are case-sensitive.
-- If you don't receive an email, check your spam folder.
+<CardGroup cols={2}>
+  <Card title="Login Issues" icon="triangle-exclamation">
+    - Verify email matches vendor registration
+    - Check passwords are case-sensitive
+    - Ensure vendor code is correct
+    - Try clearing browser cache
+  </Card>
+  <Card title="Email Issues" icon="envelope">
+    - Check spam/junk folders
+    - Verify email address spelling
+    - Contact vendor for email verification
+    - Try alternative email if available
+  </Card>
+</CardGroup>
 
-<Callout type="tip">
-Need help? Contact your vendor or email support@keymint.dev.
-</Callout>
+## Security Features
+
+<Info>
+Your customer portal is protected by industry-standard security measures including encrypted connections, secure authentication, and access logging.
+</Info>
+
+- **Secure HTTPS** connection for all communications
+- **Email-based authentication** for account verification
+- **Session management** with automatic timeout
+- **Access logging** for security monitoring
+
+<Warning>
+Never share your login credentials with others. If you suspect your account has been compromised, contact support immediately.
+</Warning>

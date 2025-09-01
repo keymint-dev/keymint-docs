@@ -1,14 +1,124 @@
 ---
-title: 'Introduction'
-description: 'Keymint API overview and how to use these docs'
+title: 'API Introduction'
+description: 'Complete REST API reference for Keymint license management platform'
 ---
 
-<Info>
-This section documents the Keymint API. For a concise starting point, see the <a href="/api-reference/overview">API Overview</a>.
-</Info>
+<Note>
+**New to Keymint?** Start with our [API Overview](/api-reference/overview) for core concepts, or explore our [Authentication Guide](/api-reference/authentication) to get started.
+</Note>
 
-- Base URL: https://api.keymint.dev
-- Auth: Bearer access token in the Authorization header
-- Formats: JSON requests and responses
+## Welcome to the Keymint API
 
-<Callout type="tip">Use the Licenses API pages for endpoint details and examples.</Callout>
+The Keymint API is a modern REST API designed for comprehensive license key management. Whether you're building a simple license validator or a complex enterprise licensing system, our API provides all the tools you need.
+
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="rocket" href="/api-reference/overview">
+    Get up and running with your first API call in minutes.
+  </Card>
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">
+    Learn how to securely authenticate with bearer tokens.
+  </Card>
+  <Card title="Rate Limits" icon="gauge" href="/api-reference/rate-limits">
+    Understand API limits and best practices.
+  </Card>
+  <Card title="Error Codes" icon="triangle-exclamation" href="/api-reference/error-codes">
+    Complete reference for handling API responses.
+  </Card>
+</CardGroup>
+
+## API Specifications
+
+<CardGroup cols={1}>
+  <Card title="Base Configuration" icon="gear">
+    **Base URL**: `https://api.keymint.dev`
+    
+    **Authentication**: Bearer token in Authorization header
+    
+    **Content Type**: `application/json` for all requests and responses
+    
+    **Rate Limiting**: 1000 requests per hour per API key
+  </Card>
+</CardGroup>
+
+## Core Resources
+
+Explore the main API endpoints organized by functionality:
+
+<Tabs>
+  <Tab title="Customers">
+    Manage your customer base and account relationships.
+    
+    <CardGroup cols={2}>
+      <Card title="List Customers" icon="users" href="/api-reference/customers/get-all">
+        Get all customers with pagination support
+      </Card>
+      <Card title="Create Customer" icon="user-plus" href="/api-reference/customers/create">
+        Add new customers to your system
+      </Card>
+      <Card title="Get Customer" icon="user" href="/api-reference/customers/get-by-id">
+        Retrieve individual customer details
+      </Card>
+      <Card title="Update Customer" icon="user-pen" href="/api-reference/customers/update">
+        Modify customer information
+      </Card>
+    </CardGroup>
+  </Tab>
+  
+  <Tab title="License Keys">
+    Complete license key lifecycle management.
+    
+    <CardGroup cols={2}>
+      <Card title="Create License" icon="plus" href="/api-reference/license-keys/create">
+        Generate new license keys
+      </Card>
+      <Card title="Get License Info" icon="magnifying-glass" href="/api-reference/license-keys/get-info">
+        Retrieve license details and status
+      </Card>
+      <Card title="Activate License" icon="circle-check" href="/api-reference/license-keys/activate">
+        Bind licenses to devices
+      </Card>
+      <Card title="Deactivate License" icon="circle-xmark" href="/api-reference/license-keys/deactivate">
+        Release device activations
+      </Card>
+    </CardGroup>
+  </Tab>
+  
+  <Tab title="License Management">
+    Advanced license control and security features.
+    
+    <CardGroup cols={2}>
+      <Card title="Block License" icon="ban" href="/api-reference/license-keys/block">
+        Immediately disable compromised licenses
+      </Card>
+      <Card title="Unblock License" icon="arrow-rotate-left" href="/api-reference/license-keys/unblock">
+        Restore blocked licenses
+      </Card>
+      <Card title="Customer Keys" icon="key" href="/api-reference/customers/get-with-keys">
+        View all keys for a customer
+      </Card>
+      <Card title="Toggle Status" icon="toggle-off" href="/api-reference/customers/toggle-status">
+        Enable/disable customer accounts
+      </Card>
+    </CardGroup>
+  </Tab>
+</Tabs>
+
+## Need Help?
+
+<AccordionGroup>
+  <Accordion title="Getting Support" icon="life-ring">
+    - 📧 **Email**: [support@keymint.dev](mailto:support@keymint.dev)
+    - 📚 **Documentation**: You're here!
+    - 🚀 **Dashboard**: [app.keymint.dev](https://app.keymint.dev)
+  </Accordion>
+  
+  <Accordion title="API Status & Updates" icon="signal">
+    - 📊 **Status Page**: [status.keymint.dev](http://keymint.statuspage.io)
+  </Accordion>
+  
+  <Accordion title="SDK & Libraries" icon="code">
+    - **Node.js**: Official SDK with TypeScript support
+    - **Python**: Native Python package for easy integration
+    - **Custom Integration**: REST API works with any HTTP client
+  </Accordion>
+</AccordionGroup>
