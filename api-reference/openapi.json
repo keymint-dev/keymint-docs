@@ -411,7 +411,7 @@
     "/key": {
       "post": {
         "summary": "Create a new license key",
-        "description": "Generates a new license key for the specified product with the given activation limits and customer information",
+        "description": "Generates a new license key for the specified product with the given activation limits. The key can be assigned to an existing customer (using customerId), assigned to a new customer (using newCustomer), or left unassigned. Only one of customerId or newCustomer should be provided, or neither for an unassigned key.",
         "tags": [
           "License Keys"
         ],
@@ -423,9 +423,61 @@
                 "schema": {
                   "$ref": "#/components/schemas/PostkeyResponse"
                 },
+                "examples": {
+                  "success": {
+                    "summary": "Successful key creation",
+                    "value": {
+                      "code": 0,
+                      "key": "T8XTR-AI21B-2990H-85SB5"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters or conflicting customer data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "missingParams": {
+                    "summary": "Missing required parameters",
+                    "value": {
+                      "message": "Missing required params",
+                      "code": 1
+                    }
+                  },
+                  "conflictingCustomer": {
+                    "summary": "Both customerId and newCustomer provided",
+                    "value": {
+                      "message": "Cannot specify both customerId and newCustomer",
+                      "code": 1
+                    }
+                  },
+                  "customerNotFound": {
+                    "summary": "Customer ID not found",
+                    "value": {
+                      "message": "Customer not found",
+                      "code": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid access token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
                 "example": {
-                  "code": 0,
-                  "key": "T8XTR-AI21B-2990H-85SB5"
+                  "message": "Invalid access token",
+                  "code": 1
                 }
               }
             }
@@ -437,6 +489,37 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/PostkeyRequest"
+              },
+              "examples": {
+                "newCustomer": {
+                  "summary": "Create key for new customer",
+                  "description": "Creates a license key and assigns it to a new customer",
+                  "value": {
+                    "productId": "4898d6707ffa56ed9b0eea",
+                    "maxActivations": "5",
+                    "newCustomer": {
+                      "name": "John Doe",
+                      "email": "john.doe@example.com"
+                    }
+                  }
+                },
+                "existingCustomer": {
+                  "summary": "Create key for existing customer",
+                  "description": "Creates a license key and assigns it to an existing customer",
+                  "value": {
+                    "productId": "4898d6707ffa56ed9b0eea",
+                    "maxActivations": "5",
+                    "customerId": "078116d0069c32407b4f63"
+                  }
+                },
+                "unassignedKey": {
+                  "summary": "Create unassigned key",
+                  "description": "Creates a license key without assigning it to any customer",
+                  "value": {
+                    "productId": "4898d6707ffa56ed9b0eea",
+                    "maxActivations": "5"
+                  }
+                }
               }
             }
           }
@@ -890,13 +973,20 @@
         "type": "object",
         "properties": {
           "productId": {
-            "type": "string"
+            "type": "string",
+            "description": "The product ID for which to create the license key"
           },
           "maxActivations": {
-            "type": "string"
+            "type": "string",
+            "description": "Maximum number of activations allowed for this license key"
+          },
+          "customerId": {
+            "type": "string",
+            "description": "Optional: ID of an existing customer to assign the license key to. Cannot be used together with newCustomer."
           },
           "newCustomer": {
             "type": "object",
+            "description": "Optional: Details for creating a new customer and assigning the license key to them. Cannot be used together with customerId.",
             "properties": {
               "name": {
                 "type": "string"
@@ -913,9 +1003,18 @@
         },
         "required": [
           "productId",
-          "maxActivations",
-          "newCustomer"
-        ]
+          "maxActivations"
+        ],
+        "not": {
+          "allOf": [
+            {
+              "required": ["customerId"]
+            },
+            {
+              "required": ["newCustomer"]
+            }
+          ]
+        }
       },
       "PostkeyResponse": {
         "type": "object",
