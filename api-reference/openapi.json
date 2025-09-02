@@ -1002,9 +1002,7 @@
           }
         },
         "required": [
-          "productId",
-          "maxActivations"
-        ],
+          "productId"        ],
         "not": {
           "allOf": [
             {
