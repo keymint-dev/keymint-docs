@@ -211,17 +211,30 @@
         "tags": [
           "Customers"
         ],
-        "parameters": [
-          {
-            "name": "customerId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "The unique identifier of the customer to update"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/PutcustomercustomerIdRequest"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "customerId": {
+                        "type": "string",
+                        "description": "The unique identifier of the customer to update"
+                      }
+                    },
+                    "required": ["customerId"]
+                  }
+                ]
+              }
+            }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "Customer updated successfully",
@@ -235,16 +248,6 @@
                   "status": true,
                   "code": 0
                 }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PutcustomercustomerIdRequest"
               }
             }
           }
