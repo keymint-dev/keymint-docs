@@ -28,7 +28,8 @@
             "group": "SDKs & Libraries",
             "pages": [
               "sdks/nodejs",
-              "sdks/python"
+              "sdks/python",
+              "sdks/csharp"
             ]
           },
           {
