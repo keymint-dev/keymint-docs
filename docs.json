@@ -29,7 +29,8 @@
             "pages": [
               "sdks/nodejs",
               "sdks/python",
-              "sdks/csharp"
+              "sdks/csharp",
+              "sdks/go"
             ]
           },
           {
