@@ -10,11 +10,11 @@ Rate limiting helps ensure fair usage and protects against abuse while maintaini
 ## How Rate Limiting Works
 
 <CardGroup cols={3}>
-  <Card title="IP-Based Limits" icon="location-dot">
-    Limits are applied per source IP address to prevent abuse from specific locations.
+  <Card title="Plan-Based Limits" icon="crown">
+    Limits are determined by your subscription plan (Startup vs Standard).
   </Card>
-  <Card title="Token-Based Limits" icon="key">
-    Each API access token has its own rate limit allocation for fair resource distribution.
+  <Card title="IP-Based Limits" icon="location-dot">
+    Unauthenticated requests are limited by IP address to prevent abuse.
   </Card>
   <Card title="Endpoint-Specific Limits" icon="gauge-high">
     Critical endpoints like license validation have additional protective limits.
@@ -23,24 +23,28 @@ Rate limiting helps ensure fair usage and protects against abuse while maintaini
 
 ### Rate Limiting Factors
 
-Rate limits are calculated based on:
+Rate limits are primarily determined by your **API Access Token**:
 
 <AccordionGroup>
-  <Accordion title="Source IP Address">
-    The originating IP address of the request. This helps prevent abuse from specific sources while allowing legitimate distributed usage.
+  <Accordion title="Subscription Plan (Authenticated)">
+    Your rate limit depends on your active subscription plan:
+    - **Free Plan**: 10 requests / minute
+    - **Startup Plan**: 100 requests / minute
+    - **Standard Plan**: 1,000 requests / minute
+    - **Enterprise**: Custom limits
   </Accordion>
   
-  <Accordion title="API Access Token">
-    Each authenticated token has its own rate limit allocation, ensuring fair usage across different applications and users.
+  <Accordion title="Source IP Address (Unauthenticated)">
+    For requests without an API token (or if the token is invalid), limits are applied per source IP address to prevent abuse.
   </Accordion>
   
   <Accordion title="Specific Resources">
-    Critical endpoints such as License Key validation and activation have additional protective limits to maintain system integrity.
+    Critical endpoints such as License Key validation and activation may have additional protective limits to maintain system integrity.
   </Accordion>
 </AccordionGroup>
 
 <Callout type="info">
-The exact limits are not published and may change over time. They are designed to support legitimate application use while preventing abuse, such as brute-force attacks or excessive polling.
+Authenticated requests are counted against your **Plan Limit**, not your IP limit. This allows you to deploy your application to many users without hitting IP-based restrictions.
 </Callout>
 
 ## Rate Limit Exceeded Response
@@ -59,33 +63,34 @@ When you exceed the rate limit, the API responds with:
   <Tab title="JSON Response">
     ```json
     {
-      "message": "Too many activation attempts. Please try again later.",
+      "message": "Too many requests. Please upgrade your plan for higher limits.",
       "code": 3
     }
     ```
   </Tab>
 </Tabs>
 
-The message may vary depending on the endpoint.
-
 ## Handling 429 Too Many Requests
 
-1. Do Not Retry Immediately: Avoid sending repeated requests immediately after receiving a 429.
-2. Implement Exponential Backoff:
+1. **Check Your Plan**: Ensure your current plan supports your application's traffic volume. You may need to upgrade to **Standard** or **Enterprise**.
+2. **Implement Exponential Backoff**:
    - Wait for a short period (e.g., 1 second) before retrying.
-   - If the request fails again, double the wait time (e.g., 2 seconds, then 4 seconds, etc.).
-   - Continue this pattern up to a reasonable maximum delay.
-3. Review Your Request Patterns: Persistent 429 errors may indicate overly frequent calls. Optimize your integration to reduce unnecessary requests.
+   - If the request fails again, double the wait time.
+3. **Cache Responses**: Reduce API calls by caching license validation results locally.
 
 <Callout type="tip">
-If you consistently encounter rate limits during normal operation, contact support to discuss your use case.
+If you consistently encounter rate limits, consider upgrading your plan to increase your allowance from 100/min to 1,000/min or higher.
 </Callout>
 
 ## Best Practices
 
 <Steps>
+  <Step title="Use an Access Token">
+    Always include your API Key in the `Authorization` header. Unauthenticated requests have very low rate limits.
+  </Step>
+
   <Step title="Implement Exponential Backoff">
-    When you receive a 429 response, wait progressively longer between retries (e.g., 1s, 2s, 4s, 8s).
+    When you receive a 429 response, wait progressively longer between retries.
     
     ```javascript
     async function retryWithBackoff(apiCall, maxRetries = 3) {
@@ -106,20 +111,6 @@ If you consistently encounter rate limits during normal operation, contact suppo
   </Step>
   
   <Step title="Cache API Responses">
-    Reduce API calls by caching responses when appropriate, especially for license validation results.
-  </Step>
-  
-  <Step title="Use Batch Operations">
-    Where available, use batch endpoints to reduce the total number of API calls required.
-  </Step>
-  
-  <Step title="Monitor Rate Limit Headers">
-    Check for rate limit headers in responses to proactively adjust your request frequency.
+    Reduce API calls by caching responses when appropriate.
   </Step>
 </Steps>
-
-<Warning>
-Avoid polling endpoints unnecessarily. Implement webhook handlers where possible to receive real-time updates instead of frequent polling.
-</Warning>
-
-By following these guidelines, you can ensure a smoother experience while using the Keymint API.
