@@ -110,6 +110,34 @@
         "tags": [
           "Customers"
         ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "default": 10
+            },
+            "description": "Number of items per page (max 100)"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter customers by email address"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved all customers",
@@ -150,6 +178,12 @@
                       "createdBy": "928b9f01e54dc6a2ed6769"
                     }
                   ],
+                  "meta": {
+                    "total": 3,
+                    "page": 1,
+                    "limit": 10,
+                    "totalPages": 1
+                  },
                   "code": 0
                 }
               }
@@ -228,7 +262,9 @@
                         "description": "The unique identifier of the customer to update"
                       }
                     },
-                    "required": ["customerId"]
+                    "required": [
+                      "customerId"
+                    ]
                   }
                 ]
               }
@@ -336,7 +372,7 @@
         "summary": "Get customer license keys",
         "description": "Retrieves all license keys associated with a specific customer",
         "tags": [
-          "Customers", 
+          "Customers",
           "License Keys"
         ],
         "parameters": [
@@ -838,6 +874,23 @@
               }
             }
           },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "total": {
+                "type": "integer"
+              },
+              "page": {
+                "type": "integer"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "totalPages": {
+                "type": "integer"
+              }
+            }
+          },
           "code": {
             "type": "integer"
           }
@@ -1002,14 +1055,19 @@
           }
         },
         "required": [
-          "productId"        ],
+          "productId"
+        ],
         "not": {
           "allOf": [
             {
-              "required": ["customerId"]
+              "required": [
+                "customerId"
+              ]
             },
             {
-              "required": ["newCustomer"]
+              "required": [
+                "newCustomer"
+              ]
             }
           ]
         }
